@@ -25,17 +25,14 @@ public class TopicController {
 
     @ResponseBody
     @RequestMapping(value = "/topicSelectAll")
-    public ModelAndView topicSelectAll(HttpServletRequest request, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+    public ModelAndView topicSelectAll(HttpServletRequest request,String sSno, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5);
         List<Topic> topics = topicService.selectAll();
         System.out.println(topics.size());
         for (int i = 0; i < topics.size(); i++) {
             System.out.println(topics.get(i).toString());
         }
-
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         PageInfo page = new PageInfo(topics, 5);
-        System.out.println(page.getPageSize());
         request.getSession().setAttribute("topicList", page);
         return new ModelAndView("topic");
     }

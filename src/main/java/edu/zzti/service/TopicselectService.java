@@ -9,4 +9,7 @@ import java.util.List;
 public interface TopicselectService {
     int addTopicselect(Topicselect topicselect);
     List<Topicselect> findBySSno(String sSno);
+    int findExistBySSno(String sSno);
+    int findExistBySSnoandtpid(String sSno,int tpId);
+    int deleteBySSnoandtpid(String sSno,int tpId);
 }

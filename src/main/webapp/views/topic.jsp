@@ -33,26 +33,64 @@
             var sstatus=${student.status};
             var ssno=${student.sno};
 
-            if (sstatus==0){
-                if (num>0){
-                    $.ajax({
-                        type:"post",
-                        url:"/system/topicselectAdd",
-                        data:{"sSno":ssno,"tTno":tno,"tpId":id},
-                        dataType:"json",
-                        success:function(data){
-                            if(data == "1"){
-                               alert("报名成功，等待老师确认！")
-                            }
-                        }
+            $.ajax({
+                type:"post",
+                url:"/system/topicselectExistBySSno",
+                data:{"sSno":ssno,"tpId":id},
+                dataType:"json",
+                success:function(exist){
+                  /*  alert("exist进来了"+exist);*/
+                    if (sstatus==0){
+                        if (num>0){
+                         /*   alert("num进来了");*/
+                            if (exist<3){
+                            /*    alert("要提交了");*/
+                                $.ajax({
+                                    type:"post",
+                                    url:"/system/topicselectExistBySSnoandtpid",
+                                    data:{"sSno":ssno,"tpId":id},
+                                    dataType:"json",
+                                    success:function(data){
+                                      /*  alert("我回来啦");*/
+                                        if(data == "0"){
+                                            $.ajax({
+                                                type:"post",
+                                                url:"/system/topicselectAdd",
+                                                data:{"sSno":ssno,"tTno":tno,"tpId":id},
+                                                dateType:"json",
+                                                success:function (data) {
+                                                  /*  alert("我you回来啦");*/
+                                                    if(data=="1"){
+                                                        alert("报名成功，等待老师确认！")
+                                                        $.ajax({
+                                                            type:"post",
+                                                            url:"/system/topicselectExist",
+                                                            data:{"sSno":ssno,"tpId":id},
+                                                            dataType:"json"
+                                                        });
+                                                    }
+                                                }
+                                            })
 
-                    })
-                }else {
-                    alert("该课题人数已满！请选择其他课题");
+                                        }else {
+                                            alert("您已报名该课题！")
+                                        }
+                                    }
+                                });
+                            } else {alert("您已报名3个课题！达到上限！");}
+
+                        }else {
+                            alert("该课题人数已满！请选择其他课题");
+                        }
+                    } else {
+                        alert("已被老师确认，无法报名!");
+                    };
+
+
+
                 }
-            } else {
-                alert("已被老师确认，无法报名!");
-            }
+            });
+
 
 
         }
@@ -116,6 +154,7 @@
     </style>
 </head>
 <body>
+
 <header >
     <div class="header" style="text-align: center">
         <row>
@@ -235,5 +274,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>

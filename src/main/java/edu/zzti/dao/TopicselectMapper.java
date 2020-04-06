@@ -8,6 +8,9 @@ import org.apache.ibatis.annotations.Param;
 
 public interface TopicselectMapper {
     List<Topicselect> findBySSno(String sSno);
+    int findExistBySSno(String sSno);
+    int findExistBySSnoandtpid(@Param("sSno") String sSno, @Param("tpId") int tpId);
+    int deleteBySSnoandtpid(@Param("sSno") String sSno, @Param("tpId") int tpId);
     long countByExample(TopicselectExample example);
 
     int deleteByExample(TopicselectExample example);

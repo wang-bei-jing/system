@@ -96,7 +96,7 @@
                 <div class="row">
                     <div class="col-xs-6 col-md-3">
                         <div class="thumbnail">
-                            <a href="${pageContext.request.contextPath}/topicSelectAll" class="thumbnail">
+                            <a href="${pageContext.request.contextPath}/topicSelectAll?sSno=${student.sno}" class="thumbnail">
                                 <img src="${pageContext.request.contextPath}/static/img/bg_6.jpg">
                             </a>
                             <div>

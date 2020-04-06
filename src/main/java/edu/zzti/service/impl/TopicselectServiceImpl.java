@@ -25,4 +25,19 @@ public class TopicselectServiceImpl implements TopicselectService {
     public List<Topicselect> findBySSno(String sSno) {
         return topicselectMapper.findBySSno(sSno);
     }
+
+    @Override
+    public int findExistBySSno(String sSno) {
+        return topicselectMapper.findExistBySSno(sSno);
+    }
+
+    @Override
+    public int findExistBySSnoandtpid(String sSno, int tpId) {
+        return topicselectMapper.findExistBySSnoandtpid(sSno, tpId);
+    }
+
+    @Override
+    public int deleteBySSnoandtpid(String sSno, int tpId) {
+        return topicselectMapper.deleteBySSnoandtpid(sSno, tpId);
+    }
 }

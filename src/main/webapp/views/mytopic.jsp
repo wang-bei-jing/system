@@ -28,35 +28,34 @@
        }, 50);*/
     </script>
     <script type="text/javascript">
-       /* function signup(num,tno,id){
+       function signup(tpId,tpsStatus){
 
-            var sstatus=${student.status};
             var ssno=${student.sno};
 
-            if (sstatus==0){
-                if (num>0){
-                    $.ajax({
-                        type:"post",
-                        url:"/system/topicselectAdd",
-                        data:{"sSno":ssno,"tTno":tno,"tpId":id},
-                        dataType:"json",
-                        success:function(data){
-                            if(data == "1"){
-                               alert("报名成功，等待老师确认！")
-                            }
+
+            if (tpsStatus=='0'||tpsStatus=='2'){
+                $.ajax({
+                    type:"post",
+                    url:"/system/topicselectDel",
+                    data:{"sSno":ssno,"tpId":tpId},
+                    dateType:"json",
+                    success:function(data){
+                        if(data == "1"){
+                            alert("退选成功！")
+                           $("#tr_"+tpId).remove();
+                            /*$("#mytopic-information").reload();*/
+                            window.location.reload();
+                         /*location.href="${pageContext.request.contextPath}/myTopic?sSno=${student.sno}"*/
+                        }else {
+                            alert("退选失败！请联系管理员！")
                         }
-
-                    })
-                }else {
-                    alert("该课题人数已满！请选择其他课题");
-                }
-            } else {
-                alert("已被老师确认，无法报名!");
-            }
-
+                    }
+                });
+            }else {
+               alert("已被老师确认，无法取消!");
+           }
 
         }
-*/
 
     </script>
     <script type="text/javascript">
@@ -134,7 +133,7 @@
     <!-- 搭建显示页面 -->
     <div class="container" style="width: 100%">
         <div class="modal-header">
-            <h1>我的课题信息 <small>(Information  of my topic)</small></h1>
+            <h1>我的选题信息 <small>(Information  of my topic)</small></h1>
             <!-- 按钮 -->
             <div class="row">
                 <div class="col-md-4 col-md-offset-10">
@@ -146,102 +145,77 @@
         <!-- 显示表格数据 -->
         <div class="row" id="table_page">
             <div class="col-md-12">
-                <table class="table table-hover" >
-                    <thead style="color: red">
-                    <tr>
-                        <th>操作</th>
-                        <th>状态</th>
-                        <th>课题名</th>
-                        <th>英文名称</th>
-                        <th>简介</th>
-                        <th>是否双学位</th>
-                        <th>教师姓名</th>
-                        <th>类型</th>
-                        <th>来源</th>
-                        <th>性质</th>
-                        <th>难度</th>
-                        <th>是否重点扶持项目</th>
-                        <th>审题教研室</th>
-                        <th>所需人数</th>
-                        <th>职称</th>
-                        <th>办公室</th>
-                        <th>联系方式</th>
-                        <th>电子邮箱</th>
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${topicsandteacherList.list}" var="list">
-                        <tr class="mytr">
-                            <td><a  href="javascript:void(0)" <%--onclick="signup('${student.sno}','${list.topic.id}')"--%>>退选</a></td>
-                            <c:choose>
-                                <c:when  test="${list.status=='0'}">
-                                    <td>等待教师确认</td>
-                                </c:when>
-                                <c:otherwise>
-                                    <td>教师已确认</td>
-                                </c:otherwise>
-                            </c:choose>
-                            <td>${list.topic.cname}</td>
-                            <td>${list.topic.ename}</td>
-                            <td>${list.topic.contents}</td>
-                            <td>${list.topic.degree}</td>
-                            <td>${list.teacher.name}</td>
-                            <td>${list.topic.type}</td>
-                            <td>${list.topic.source}</td>
-                            <td>${list.topic.nature}</td>
-                            <td>${list.topic.difficulty}</td>
-                            <td>${list.topic.support}</td>
-                            <td>${list.topic.department}</td>
-                            <td>${list.topic.num}</td>
-                            <td>${list.teacher.title}</td>
-                            <td>${list.teacher.office}</td>
-                            <td>${list.teacher.tel}</td>
-                            <td>${list.teacher.email}</td>
+                <c:choose>
+                    <c:when test="${topicsandteacherList.list[0]!=null}">
+                    <table class="table table-hover" >
+                        <thead style="color: red">
+                        <tr>
+                            <th>操作</th>
+                            <th>状态</th>
+                            <th>课题名</th>
+                            <th>英文名称</th>
+                            <th>简介</th>
+                            <th>是否双学位</th>
+                            <th>教师姓名</th>
+                            <th>类型</th>
+                            <th>来源</th>
+                            <th>性质</th>
+                            <th>难度</th>
+                            <th>是否重点扶持项目</th>
+                            <th>审题教研室</th>
+                            <th>所需人数</th>
+                            <th>职称</th>
+                            <th>办公室</th>
+                            <th>联系方式</th>
+                            <th>电子邮箱</th>
 
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <%--分页信息--%>
-        <div class="row">
-            <div class="col-md-6">
-                当前是第${topicsandteacherList.pageNum }页,
-                共${topicsandteacherList.pages }页,
-                共 ${topicsandteacherList.total }条记录
-            </div>
-            <div class="col-md-6">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li><a href="${pageContext.request.contextPath}/myTopic?pn=1&sSno=${student.sno}">首页</a></li>
-                        <c:if test="${topicsandteacherList.hasPreviousPage }">
-                            <li><a href="${pageContext.request.contextPath}/myTopic?pn=${topicsandteacherList.pageNum-1}&sSno=${student.sno}"
-                                   aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-                            </a></li>
-                        </c:if>
+                        </thead>
+                        <tbody id="mytopic-information">
+                        <c:forEach items="${topicsandteacherList.list}" var="list">
+                            <tr class="mytr">
+                                <td id="td_${list.tpId}"><a  href="javascript:void(0)"  onclick="signup('${list.tpId}','${list.status}')">退选</a></td>
+                                <c:choose>
+                                    <c:when  test="${list.status=='0'}">
+                                        <td>等待教师确认中</td>
+                                    </c:when>
+                                    <c:when  test="${list.status=='1'}">
+                                        <td>教师已确认</td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>教师驳回申请!</td>
+                                    </c:otherwise>
+                                </c:choose>
+                                <td>${list.topic.cname}</td>
+                                <td>${list.topic.ename}</td>
+                                <td>${list.topic.contents}</td>
+                                <td>${list.topic.degree}</td>
+                                <td>${list.teacher.name}</td>
+                                <td>${list.topic.type}</td>
+                                <td>${list.topic.source}</td>
+                                <td>${list.topic.nature}</td>
+                                <td>${list.topic.difficulty}</td>
+                                <td>${list.topic.support}</td>
+                                <td>${list.topic.department}</td>
+                                <td>${list.topic.num}</td>
+                                <td>${list.teacher.title}</td>
+                                <td>${list.teacher.office}</td>
+                                <td>${list.teacher.tel}</td>
+                                <td>${list.teacher.email}</td>
 
-                        <c:forEach items="${topicsandteacherList.navigatepageNums }" var="page_Num">
-                            <c:if test="${page_Num == topicsandteacherList.pageNum }">
-                                <li class="active"><a href="#">${page_Num }</a></li>
-                            </c:if>
-                            <c:if test="${page_Num != topicsandteacherList.pageNum }">
-                                <li><a href="${pageContext.request.contextPath}/myTopic?pn=${page_Num }&sSno=${student.sno}">${page_Num }</a></li>
-                            </c:if>
+                            </tr>
                         </c:forEach>
+                        </tbody>
+                    </table>
 
-                        <c:if test="${topicsandteacherList.hasNextPage }">
-                            <li><a href="${pageContext.request.contextPath}/myTopic?pn=${topicsandteacherList.pageNum+1 }&sSno=${student.sno}"
-                                   aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-                            </a></li>
-                        </c:if>
-
-                        <li><a href="${pageContext.request.contextPath}/myTopic?pn=${topicsandteacherList.pages}&sSno=${student.sno}">末页</a></li>
-                    </ul>
-                </nav>
+                    </c:when>
+                    <c:otherwise>
+                        <span><strong>您现在没有选题</strong></span>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
+
     </div>
 </div>
 </body>

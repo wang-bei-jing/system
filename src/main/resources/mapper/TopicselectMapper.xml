@@ -64,7 +64,7 @@
 
   <select id="findBySSno" parameterType="java.lang.String" resultMap="BaseResultMapWithTopicAndTeacher">
 
- SELECT distinct  tps.status,
+ SELECT distinct  tps.status,tps.tp_id,
  f.id tpid,f.cname,f.ename,f.contents,f.degree,f.type,f.source,f.nature,f.difficulty,f.support,f.department,f.num,f.name,f.title,f.office,f.tel,f.email
  FROM
  (
@@ -74,15 +74,26 @@
 	from t_topicselect tps
 	where s_sno=#{sSno,jdbcType=VARCHAR})
 	) as f left join  t_topicselect tps  on f.id=tps.tp_id
-
-
-
   </select>
 
 
+  <select id="findExistBySSno" parameterType="java.lang.String" resultType="java.lang.Integer">
+select count(*)
+from t_topicselect
+where s_sno=#{sSno,jdbcType=VARCHAR}
 
+  </select>
 
+  <select id="findExistBySSnoandtpid" parameterType="map"  resultType="java.lang.Integer">
+  select count(*)
+from t_topicselect
+where s_sno=#{sSno,jdbcType=VARCHAR} and tp_id=#{tpId,jdbcType=INTEGER}
+  </select>
 
+  <delete id="deleteBySSnoandtpid" parameterType="map">
+    delete from t_topicselect
+    where s_sno=#{sSno,jdbcType=VARCHAR} and tp_id=#{tpId,jdbcType=INTEGER}
+  </delete>
 
 
 
