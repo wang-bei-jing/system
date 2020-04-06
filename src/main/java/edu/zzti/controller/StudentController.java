@@ -87,6 +87,7 @@ public class StudentController {
                  if(!dir.exists()){
                          dir.mkdirs();
                      }
+
                  //MultipartFile自带的解析方法
                  file.transferTo(dir);
                  return "ok!";
