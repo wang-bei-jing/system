@@ -17,6 +17,7 @@ public interface TopicSelectMapper {
     int findExistBySSnoandtpid(@Param("sSno") String sSno, @Param("tpId") int tpId);
     int deleteBySSnoandtpid(@Param("sSno") String sSno, @Param("tpId") int tpId);
     int addSelective(TopicSelect record);
+    TopicSelect myTopicSelect(@Param("sSno") String sSno, @Param("status") String status);
     //shc
     long countByExample(TopicSelectExample example);
 

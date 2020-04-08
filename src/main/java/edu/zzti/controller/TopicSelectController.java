@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class TopicSelectController {
     @Autowired
-    TopicSelectService TopicSelectService;
+    TopicSelectService topicSelectService;
 
     @RequestMapping("/TopicSelectAdd")
     public String TopicSelectAdd(TopicSelect topicSelect) {
@@ -23,7 +24,7 @@ public class TopicSelectController {
         System.out.println(topicSelect.toString());
         int i=0;
         System.out.println(i);
-        i= TopicSelectService.addTopicSelect(topicSelect);
+        i= topicSelectService.addTopicSelect(topicSelect);
         System.out.println(i);
         if (i != 0) {
             System.out.println("1");
@@ -35,14 +36,14 @@ public class TopicSelectController {
 
     @RequestMapping("/TopicSelectExistBySSno")
     public Integer TopicSelectExistBySSno(HttpServletRequest request, String sSno) {
-        int exist=TopicSelectService.findExistBySSno(sSno);
+        int exist=topicSelectService.findExistBySSno(sSno);
         System.out.println(exist);
         return exist;
     }
 
     @RequestMapping("/TopicSelectExistBySSnoandtpid")
     public String TopicSelectExistBySSnoandtpid(String sSno, int tpId) {
-        int exist=TopicSelectService.findExistBySSnoandtpid(sSno,tpId);
+        int exist=topicSelectService.findExistBySSnoandtpid(sSno,tpId);
         if (exist==0){
             System.out.println("0");
             return "0";
@@ -55,13 +56,25 @@ public class TopicSelectController {
     public String TopicSelectDel(String sSno, int tpId){
         System.out.println("111111111");
         int i=0;
-        i=TopicSelectService.deleteBySSnoandtpid(sSno,tpId);
+        i=topicSelectService.deleteBySSnoandtpid(sSno,tpId);
         if (i != 0) {
             System.out.println("1");
             return "1";
         }
         return "0";
-
     }
+
+    @RequestMapping("/myTopicSelect")
+    public ModelAndView myTopicSelect(HttpServletRequest request,String sSno) {
+     String status="1";
+        System.out.println(status);
+        System.out.println(sSno);
+     System.out.println("123");
+     TopicSelect topicSelect=topicSelectService.myTopicSelect(sSno,status);
+     System.out.println(topicSelect.toString());
+     request.getSession().setAttribute("mytopicSelect",topicSelect);
+     return new ModelAndView("student/myworktopic");
+    }
+
 
 }

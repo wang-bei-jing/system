@@ -20,6 +20,7 @@ public interface TopicSelectService {
     int findExistBySSno(String sSno);
     int findExistBySSnoandtpid(String sSno,int tpId);
     int deleteBySSnoandtpid(String sSno,int tpId);
+    TopicSelect myTopicSelect(String sSno,String status);
 
 
 

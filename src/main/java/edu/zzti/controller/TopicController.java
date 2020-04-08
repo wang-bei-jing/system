@@ -21,7 +21,7 @@ public class TopicController {
     @Autowired
     TopicService topicService;
     @Autowired
-    TopicSelectService TopicSelectService;
+    TopicSelectService topicSelectService;
 
     @ResponseBody
     @RequestMapping(value = "/TopicSelectAll")
@@ -60,7 +60,7 @@ public class TopicController {
     @RequestMapping(value = "/myTopic")
     public ModelAndView myTopic(HttpServletRequest request,String sSno,@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5);
-        List<TopicSelect> topicsandteacher = TopicSelectService.findBySSno(sSno);
+        List<TopicSelect> topicsandteacher = topicSelectService.findBySSno(sSno);
         System.out.println(topicsandteacher.size());
         System.out.println(topicsandteacher.toString());
         PageInfo page = new PageInfo(topicsandteacher, 5);

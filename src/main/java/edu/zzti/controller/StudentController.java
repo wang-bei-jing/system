@@ -82,6 +82,7 @@ public class StudentController {
     @RequestMapping(value="/upload",method=RequestMethod.POST)
     public String upload(MultipartFile file, HttpServletRequest request) throws IOException {
         String path = request.getSession().getServletContext().getRealPath("upload");
+        System.out.println(path);
         String fileName = file.getOriginalFilename();
         File dir = new File(path,fileName);
         if(!dir.exists()){
@@ -94,13 +95,14 @@ public class StudentController {
 
 
     @RequestMapping("/down")
-    public void down(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public void down(HttpServletRequest request, HttpServletResponse response,String fname) throws Exception{
         //模拟文件，myfile.txt为需要下载的文件
-        String fileName = request.getSession().getServletContext().getRealPath("upload")+"/译文.docx";
+        String fileName = request.getSession().getServletContext().getRealPath("upload")+"/"+fname;
+        System.out.println(fileName);
         //获取输入流
         InputStream bis = new BufferedInputStream(new FileInputStream(new File(fileName)));
         //假如以中文名下载的话
-        String filename = "下载文件.docx";
+        String filename = fname;
         //转码，免得文件名中文乱码
         filename = URLEncoder.encode(filename,"UTF-8");
         //设置文件下载头

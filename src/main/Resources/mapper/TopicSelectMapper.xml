@@ -335,31 +335,31 @@
  select tp.id,tp.name tpname,tp.contents,tp.type,tp.source,tp.difficulty,tp.support,tp.department,tp.num,tr.name trname,tr.title,tr.office,tr.tel,tr.email from t_topic tp left join t_teacher tr on tp.tno=tr.tno
 	where tp.id in
 	(select tp_id
-	from t_TopicSelect tps
+	from t_topicselect tps
 	where s_sno=#{sSno,jdbcType=VARCHAR})
-	) as f left join  t_TopicSelect tps  on f.id=tps.tp_id
+	) as f left join  t_topicselect tps  on f.id=tps.tp_id
   </select>
 
   <select id="findExistBySSno" parameterType="java.lang.String" resultType="java.lang.Integer">
 select count(*)
-from t_TopicSelect
+from t_topicselect
 where s_sno=#{sSno,jdbcType=VARCHAR}
 
   </select>
 
   <select id="findExistBySSnoandtpid" parameterType="map"  resultType="java.lang.Integer">
   select count(*)
-from t_TopicSelect
+from t_topicselect
 where s_sno=#{sSno,jdbcType=VARCHAR} and tp_id=#{tpId,jdbcType=INTEGER}
   </select>
 
   <delete id="deleteBySSnoandtpid" parameterType="map">
-    delete from t_TopicSelect
+    delete from t_topicselect
     where s_sno=#{sSno,jdbcType=VARCHAR} and tp_id=#{tpId,jdbcType=INTEGER}
   </delete>
 
   <insert id="addSelective" parameterType="edu.zzti.bean.TopicSelect" >
-    insert into t_TopicSelect
+    insert into t_topicselect
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -397,6 +397,12 @@ where s_sno=#{sSno,jdbcType=VARCHAR} and tp_id=#{tpId,jdbcType=INTEGER}
   </insert>
 
 
+  <select id="myTopicSelect" parameterType="map"  resultMap="BaseResultMapWithTopicAndTeacher">
+ SELECT
+tp.name tpname,tp.contents,tr.name trname,tr.title,tr.office,tr.tel,tr.email
+FROM t_topic tp left JOIN t_teacher tr on tp.tno=tr.tno
+WHERE tp.id = (select tp_id from t_topicselect where s_sno=#{sSno,jdbcType=VARCHAR} and status=#{status,jdbcType=VARCHAR})
+  </select>
 
 
 

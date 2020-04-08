@@ -261,7 +261,7 @@
                             <a href="${pageContext.request.contextPath}/myTopic?sSno=${student.sno}" target="myfrm"> 我的申报课题  </a>
                         </li>
                         <li>
-                            <a href="component_modal.html"> 我的实训题目 </a>
+                            <a href="${pageContext.request.contextPath}/myTopicSelect?sSno=${student.sno}" target="myfrm"> 我的实训题目 </a>
                         </li>
 
                     </ul>
@@ -271,7 +271,7 @@
                     <a href="#elements" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                            <span>Elements</span>
+                            <span>文件管理</span>
                         </div>
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -279,67 +279,19 @@
                     </a>
                     <ul class="collapse submenu list-unstyled" id="elements" data-parent="#accordionExample">
                         <li>
-                            <a href="element_alerts.html"> Alerts </a>
+                            <a href="element_alerts.html"> 周报 </a>
                         </li>
                         <li>
-                            <a href="element_avatar.html"> Avatar </a>
-                        </li>
-                        <li>
-                            <a href="element_badges.html"> Badges </a>
-                        </li>
-                        <li>
-                            <a href="element_breadcrumbs.html"> Breadcrumbs </a>
-                        </li>
-                        <li>
-                            <a href="element_buttons.html"> Buttons </a>
-                        </li>
-                        <li>
-                            <a href="element_buttons_group.html"> Button Groups </a>
-                        </li>
-                        <li>
-                            <a href="element_color_library.html"> Color Library </a>
-                        </li>
-                        <li>
-                            <a href="element_dropdown.html"> Dropdown </a>
-                        </li>
-                        <li>
-                            <a href="element_infobox.html"> Infobox </a>
-                        </li>
-                        <li>
-                            <a href="element_jumbotron.html"> Jumbotron </a>
-                        </li>
-                        <li>
-                            <a href="element_loader.html"> Loader </a>
-                        </li>
-                        <li>
-                            <a href="element_pagination.html"> Pagination </a>
-                        </li>
-                        <li>
-                            <a href="element_popovers.html"> Popovers </a>
-                        </li>
-                        <li>
-                            <a href="element_progress_bar.html"> Progress Bar </a>
-                        </li>
-                        <li>
-                            <a href="element_search.html"> Search </a>
-                        </li>
-                        <li>
-                            <a href="element_tooltips.html"> Tooltips </a>
-                        </li>
-                        <li>
-                            <a href="element_treeview.html"> Treeview </a>
-                        </li>
-                        <li>
-                            <a href="element_typography.html"> Typography </a>
+                            <a href="element_avatar.html"> 实训文件 </a>
                         </li>
                     </ul>
                 </li>
 
                 <li class="menu">
-                    <a href="fonticons.html" aria-expanded="false" class="dropdown-toggle">
+                    <a href="${pageContext.request.contextPath}/views/student/studentpersonal.jsp" target="myfrm" aria-expanded="false" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-target"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-                            <span>Font Icons</span>
+                            <span>个人信息</span>
                         </div>
                     </a>
                 </li>

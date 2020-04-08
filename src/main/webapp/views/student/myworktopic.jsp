@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>我的课题</title>
+    <title>我的实训课题</title>
     <link href="${pageContext.request.contextPath}/static/mainstatic/css/index.css" rel="stylesheet" type="text/css" />
     <script src="${pageContext.request.contextPath}/static/mainstatic/js/index.js"></script>
     <%--引入jquery--%>
@@ -13,7 +13,12 @@
     <c:set var="request" value="${pageContext.request.contextPath}"></c:set>
 
     <script type="text/javascript">
-
+        /*弹出上传模块框*/
+        $(document).on("click",".edit_btn",function(){
+            $("#Update").modal({
+                backdrop: "static"
+            });
+        });
       /*  $(function () {
             document.getElementById("seeall").trigger().click();
         })*/
@@ -27,7 +32,7 @@
                document.getElementById("seeall").dispatchEvent(e);
        }, 50);*/
     </script>
-    <script type="text/javascript">
+   <%-- <script type="text/javascript">
        function signup(tpId,tpsStatus){
 
             var ssno=${student.sno};
@@ -57,7 +62,7 @@
 
         }
 
-    </script>
+    </script>--%>
     <script type="text/javascript">
         $(document).ready(function(){
             $("tbody>tr:odd").css("background-color","#e4e4e4");
@@ -70,18 +75,17 @@
             border-collapse: collapse;
             border-spacing: 0;
             border: 1px solid #404060;
-            width: auto;
+            width: 500px;
             font-size: 10px;
             font-family: "微软雅黑";
 
 
         }
-        th{
+        th {
             text-align: center;
             vertical-align: middle;
             border: 1px solid #404060;
             padding: 10px;
-            width: auto;
             background-color: rgba(0, 56, 78, 0.74);
             font: bold 15px "微软雅黑";
             color: #fff;
@@ -129,15 +133,9 @@
 </header>
 <div id="main_page" class="page-header">
     <!-- 搭建显示页面 -->
-    <div class="container" style="width: 200%">
+    <div class="container" style="width: 100%">
         <div class="modal-header">
-            <h1>我的选题信息 <small>(Information  of my topic)</small></h1>
-            <!-- 按钮 -->
-            <div class="row">
-                <div class="col-md-4 col-md-offset-10">
-                    <a id="seeall"  href="${request}/myTopic?sSno=${student.sno}" methods="post" class="btn btn-primary">查看所有已报名课程</a>
-                </div>
-            </div>
+            <h1>我的实训课题 <small>(Information  of my topic)</small></h1>
         </div>
         <br>
         <!-- 显示表格数据 -->
@@ -149,53 +147,44 @@
                         <thead style="color: red">
                         <tr>
                             <th>操作</th>
-                            <th>状态</th>
                             <th>课题名</th>
                             <th>简介</th>
+                            <th>周报</th>
+                            <th>实训文件</th>
                             <th>教师姓名</th>
-                            <th>类型</th>
-                            <th>来源</th>
-                            <th>难度</th>
-                            <th>是否重点扶持项目</th>
-                            <th>审题教研室</th>
-                            <th>所需人数</th>
                             <th>职称</th>
                             <th>办公室</th>
                             <th>联系方式</th>
                             <th>电子邮箱</th>
+                            <th>平时成绩</th>
+                            <th>期中检查成绩</th>
+                            <th>验收成绩</th>
+                            <th>报告成绩</th>
+                            <th>总成绩</th>
                         </tr>
                         </thead>
                         <tbody id="mytopic-information">
-                        <c:forEach items="${topicsandteacherList.list}" var="list">
                             <tr class="mytr">
-                                <td id="td_${list.tpId}"><a  href="javascript:void(0)"  onclick="signup('${list.tpId}','${list.status}')">退选</a></td>
-                                <c:choose>
-                                    <c:when  test="${list.status=='0'}">
-                                        <td>等待教师确认</td>
-                                    </c:when>
-                                    <c:when  test="${list.status=='1'}">
-                                        <td>教师已确认</td>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <td>教师驳回申请!</td>
-                                    </c:otherwise>
-                                </c:choose>
-                                <td>${list.topic.name}</td>
-                                <td>${list.topic.contents}</td>
-                                <td>${list.teacher.name}</td>
-                                <td>${list.topic.type}</td>
-                                <td>${list.topic.source}</td>
-                                <td>${list.topic.difficulty}</td>
-                                <td>${list.topic.support}</td>
-                                <td>${list.topic.department}</td>
-                                <td>${list.topic.num}</td>
-                                <td>${list.teacher.title}</td>
-                                <td>${list.teacher.office}</td>
-                                <td>${list.teacher.tel}</td>
-                                <td>${list.teacher.email}</td>
-
+                                <td>教师已确认</td>
+                                <td>${mytopicSelect.topic.name}</td>
+                                <td>${mytopicSelect.topic.contents}</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm edit_btn" id="edit_btn">
+                                        <span class="glyphicon glyphicon-pencil">上传</span>
+                                    </button>
+                                </td>
+                                <td></td>
+                                <td>${mytopicSelect.teacher.name}</td>
+                                <td>${mytopicSelect.teacher.title}</td>
+                                <td>${mytopicSelect.teacher.office}</td>
+                                <td>${mytopicSelect.teacher.tel}</td>
+                                <td>${mytopicSelect.teacher.email}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
-                        </c:forEach>
                         </tbody>
                     </table>
 
@@ -204,6 +193,24 @@
                         <span><strong>您现在没有选题</strong></span>
                     </c:otherwise>
                 </c:choose>
+            </div>
+        </div>
+        <!-- 修改模态框 -->
+        <div class="modal fade" id="Update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">周报</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="${pageContext.request.contextPath}/upload" method="post" enctype="multipart/form-data">
+                            上传<input type="file" name="file" width="120px">
+                            <button type="submit" class="btn btn-primary" >上传</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 

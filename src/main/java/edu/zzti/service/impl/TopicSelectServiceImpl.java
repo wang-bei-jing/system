@@ -10,18 +10,18 @@ import java.util.List;
 @Service
 public class TopicSelectServiceImpl implements TopicSelectService {
 
-    private TopicSelectMapper TopicSelectMapper;
+    private TopicSelectMapper topicSelectMapper;
 
     public TopicSelectServiceImpl(TopicSelectMapper TopicSelectMapper) {
-        this.TopicSelectMapper = TopicSelectMapper;
+        this.topicSelectMapper = TopicSelectMapper;
     }
 
     public int acceptStudent(Integer id) {
-        return TopicSelectMapper.acceptStudent(id);
+        return topicSelectMapper.acceptStudent(id);
     }
 
     public List<TopicSelect> selectStudentByTno(Integer tno) {
-        return TopicSelectMapper.selectStudentByTno(tno);
+        return topicSelectMapper.selectStudentByTno(tno);
     }
 
 
@@ -30,28 +30,33 @@ public class TopicSelectServiceImpl implements TopicSelectService {
 
 
     public int addTopicSelect(TopicSelect topicSelect) {
-        System.out.println("实现类");
-        return TopicSelectMapper.addSelective(topicSelect);
+
+        return topicSelectMapper.addSelective(topicSelect);
     }
 
 
     public List<TopicSelect> findBySSno(String sSno) {
-        return TopicSelectMapper.findBySSno(sSno);
+        return topicSelectMapper.findBySSno(sSno);
     }
 
 
     public int findExistBySSno(String sSno) {
-        return TopicSelectMapper.findExistBySSno(sSno);
+        return topicSelectMapper.findExistBySSno(sSno);
     }
 
 
     public int findExistBySSnoandtpid(String sSno, int tpId) {
-        return TopicSelectMapper.findExistBySSnoandtpid(sSno, tpId);
+        return topicSelectMapper.findExistBySSnoandtpid(sSno, tpId);
     }
 
 
     public int deleteBySSnoandtpid(String sSno, int tpId) {
-        return TopicSelectMapper.deleteBySSnoandtpid(sSno, tpId);
+        return topicSelectMapper.deleteBySSnoandtpid(sSno, tpId);
+    }
+
+    public TopicSelect myTopicSelect(String sSno, String status) {
+        System.out.println("进来了");
+        return topicSelectMapper.myTopicSelect(sSno, status);
     }
 }
 

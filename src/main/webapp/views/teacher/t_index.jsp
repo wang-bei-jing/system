@@ -212,7 +212,7 @@
 
     <!--  BEGIN CONTENT PART  -->
     <div id="content" class="main-content">
-        <iframe name="mainFrame" frameborder="0" width="99%" height="99%" src="${pageContext.request.contextPath}/views/teacher/welcome.jsp"></iframe>
+        <iframe name="mainFrame" frameborder="0" width="99%" height="99%" src="${pageContext.request.contextPath}/views/welcome.jsp"></iframe>
         <div class="footer-wrapper">
             <div class="footer-section f-section-1">
                 <p class="">Copyright © 2020 <a target="_blank" href="">DesignReset</a>, All rights <a href="http://www.bootstrapmb.com">Reserved </a>.</p>

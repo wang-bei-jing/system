@@ -61,15 +61,11 @@
 </head>
 <body>
     <div>
-        <header class="header">
-            <div class="row">
-                <div class="col-md-offset-10">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="${pageContext.request.contextPath}/views/student/student.jsp">
-                            <span style="color: white;line-height:36px;">服务大厅</span>
-                        </a>
-                    </div>
-                </div>
+        <header >
+            <div class="header" style="text-align: center">
+                <row>
+                    <h3>修改个人信息</h3>
+                </row>
             </div>
         </header>
         <div class="student_page">
