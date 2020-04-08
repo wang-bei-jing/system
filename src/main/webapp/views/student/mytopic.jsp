@@ -120,9 +120,6 @@
 
             <div class="header" style="text-align: center">
                 <row>
-                <a class="navbar-brand" href="${pageContext.request.contextPath}/views/student/student.jspdent.jsp">
-                    <span style="color: white;border-top:15px ;line-height:36px;font-size: 22px" >首页</span>
-                </a>
                 <h3>我的课题</h3>
                 </row>
             </div>
