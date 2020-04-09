@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>Sales Admin | CORK - Multipurpose Bootstrap Dashboard Template </title>
+    <title>数据库软件综合实训管理系统</title>
 
     <link href="${pageContext.request.contextPath}/static/corkstatic/assets/css/loader.css" rel="stylesheet" type="text/css" />
     <script src="${pageContext.request.contextPath}/static/corkstatic/assets/js/loader.js"></script>
@@ -279,10 +279,10 @@
                     </a>
                     <ul class="collapse submenu list-unstyled" id="elements" data-parent="#accordionExample">
                         <li>
-                            <a href="element_alerts.html"> 周报 </a>
+                            <a href="${pageContext.request.contextPath}/findWeekDocument?sSno=${student.sno}" target="myfrm"> 周报 </a>
                         </li>
                         <li>
-                            <a href="element_avatar.html"> 实训文件 </a>
+                            <a href="${pageContext.request.contextPath}/findTestfile?sSno=${student.sno}" target="myfrm"> 实训文件 </a>
                         </li>
                     </ul>
                 </li>

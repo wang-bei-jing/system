@@ -55,8 +55,11 @@ public class TopicSelectServiceImpl implements TopicSelectService {
     }
 
     public TopicSelect myTopicSelect(String sSno, String status) {
-        System.out.println("进来了");
         return topicSelectMapper.myTopicSelect(sSno, status);
+    }
+
+    public TopicSelect myWeekfile(String sSno, String status) {
+        return topicSelectMapper.myWeekfile(sSno, status);
     }
 }
 

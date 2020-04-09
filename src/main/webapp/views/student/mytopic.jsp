@@ -111,7 +111,7 @@
             z-index: 3;
             color: white;
             font-size: 18px;
-            height: 11%;
+            height: 7%;
             background:#204d74;
         }
     </style>
@@ -121,7 +121,7 @@
 
             <div class="header" style="text-align: center">
                 <row>
-                <h3>我的课题</h3>
+                <h4>我的课题</h4>
                 </row>
             </div>
 

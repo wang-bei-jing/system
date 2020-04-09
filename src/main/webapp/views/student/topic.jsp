@@ -39,7 +39,7 @@
                 data:{"sSno":ssno,"tpId":id},
                 dataType:"json",
                 success:function(exist){
-                    alert("exist进来了"+exist);
+                   /* alert("exist进来了"+exist);*/
                     if (sstatus==0){
                         if (num>0){
                            /* alert("num进来了");*/
@@ -53,14 +53,14 @@
                                     success:function(data){
                                       /*  alert("我回来啦");*/
                                         if(data == "0"){
-                                            alert("我回来啦2");
+                                            /*alert("我回来啦2");*/
                                             $.ajax({
                                                 type:"post",
                                                 url:"/system/TopicSelectAdd",
                                                 data:{"sSno":ssno,"tTno":tno,"tpId":id},
                                                 dateType:"json",
                                                 success:function (data) {
-                                                    alert("我you回来啦");
+                                                   /* alert("我you回来啦");*/
                                                     if(data=="1"){
                                                         alert("报名成功，等待老师确认！")
                                                         $.ajax({
@@ -149,7 +149,7 @@
             z-index: 3;
             color: white;
             font-size: 18px;
-            height: 11%;
+            height: 7%;
             background:#204d74;
         }
     </style>
@@ -159,7 +159,7 @@
 <header >
     <div class="header" style="text-align: center">
         <row>
-            <h3>全部课题</h3>
+            <h4>全部课题</h4>
         </row>
     </div>
 </header>

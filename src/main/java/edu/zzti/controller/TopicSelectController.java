@@ -71,10 +71,11 @@ public class TopicSelectController {
         System.out.println(sSno);
      System.out.println("123");
      TopicSelect topicSelect=topicSelectService.myTopicSelect(sSno,status);
-     System.out.println(topicSelect.toString());
-     request.getSession().setAttribute("mytopicSelect",topicSelect);
-     return new ModelAndView("student/myworktopic");
+     if (topicSelect!=null){
+         System.out.println(topicSelect.toString());
+         request.getSession().setAttribute("mytopicSelect",topicSelect);
+         return new ModelAndView("student/myworktopic");
+     }else
+         return new ModelAndView("student/notbeselected");
     }
-
-
 }

@@ -13,12 +13,6 @@
     <c:set var="request" value="${pageContext.request.contextPath}"></c:set>
 
     <script type="text/javascript">
-        /*弹出上传模块框*/
-        $(document).on("click",".edit_btn",function(){
-            $("#Update").modal({
-                backdrop: "static"
-            });
-        });
       /*  $(function () {
             document.getElementById("seeall").trigger().click();
         })*/
@@ -115,7 +109,7 @@
             z-index: 3;
             color: white;
             font-size: 18px;
-            height: 11%;
+            height: 7%;
             background:#204d74;
         }
     </style>
@@ -125,7 +119,7 @@
 
             <div class="header" style="text-align: center">
                 <row>
-                <h3>我的课题</h3>
+                <h4>我的课题</h4>
                 </row>
             </div>
 
@@ -149,8 +143,6 @@
                             <th>操作</th>
                             <th>课题名</th>
                             <th>简介</th>
-                            <th>周报</th>
-                            <th>实训文件</th>
                             <th>教师姓名</th>
                             <th>职称</th>
                             <th>办公室</th>
@@ -168,12 +160,12 @@
                                 <td>教师已确认</td>
                                 <td>${mytopicSelect.topic.name}</td>
                                 <td>${mytopicSelect.topic.contents}</td>
-                                <td>
+                                <%--<td>
                                     <button class="btn btn-primary btn-sm edit_btn" id="edit_btn">
                                         <span class="glyphicon glyphicon-pencil">上传</span>
                                     </button>
                                 </td>
-                                <td></td>
+                                <td></td>--%>
                                 <td>${mytopicSelect.teacher.name}</td>
                                 <td>${mytopicSelect.teacher.title}</td>
                                 <td>${mytopicSelect.teacher.office}</td>
@@ -195,24 +187,7 @@
                 </c:choose>
             </div>
         </div>
-        <!-- 修改模态框 -->
-        <div class="modal fade" id="Update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">周报</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form action="${pageContext.request.contextPath}/upload" method="post" enctype="multipart/form-data">
-                            上传<input type="file" name="file" width="120px">
-                            <button type="submit" class="btn btn-primary" >上传</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
     </div>
 </div>

@@ -21,7 +21,7 @@ public interface TopicSelectService {
     int findExistBySSnoandtpid(String sSno,int tpId);
     int deleteBySSnoandtpid(String sSno,int tpId);
     TopicSelect myTopicSelect(String sSno,String status);
-
+    TopicSelect myWeekfile(String sSno,String status);
 
 
 
