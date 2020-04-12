@@ -6,10 +6,11 @@
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="name" jdbcType="VARCHAR" property="name" />
   </resultMap>
-  <select id="adminLogin" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+  <select id="adminLogin" parameterType="map" resultType="java.lang.Integer">
     select count(*)
     from  t_admin
     where loginname=#{loginname,jdbcType=VARCHAR} and password=#{password,jdbcType=VARCHAR}
+
   </select>
 
   <select id="findByLoginname" parameterType="java.lang.String" resultMap="BaseResultMap">

@@ -17,9 +17,10 @@ public class WeekDocumentServiceImpl implements WeekDocumentService {
         return weekDocumentMapper.addWeekDocumentSelective(weekDocument);
     }
 
-    public List<WeekDocument> findAll(String category) {
-        return weekDocumentMapper.findAll(category);
+    public List<WeekDocument> findByCateory(Integer tpsId, String category) {
+        return weekDocumentMapper.findByCateory(tpsId, category);
     }
+
 
     public int deleteByPrimaryKey(Integer dId) {
         return weekDocumentMapper.deleteByPrimaryKey(dId);

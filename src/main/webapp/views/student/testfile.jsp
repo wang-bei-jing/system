@@ -118,7 +118,7 @@
         <div class="row" id="table_page" >
             <div class="col-md-12">
                 <c:choose>
-                <c:when test="${weekDocuments[0]!=null}">
+                <c:when test="${testfiles[0]!=null}">
                 <table class="table table-hover" >
                     <thead style="color: red">
                     <tr>
@@ -143,7 +143,7 @@
                                 <button class="btn btn-primary btn-sm edit_btn" id="edit_btn">
                                 <span class="glyphicon glyphicon-pencil"></span>编辑
                                 </button>
-                                <a href="${pageContext.request.contextPath}/deleteTestfile?documentname=${testfile.documentname}&dId=${weekDocument.dId}&sSno=${student.sno}" class="btn btn-danger btn-sm delete_btn">
+                                <a href="${pageContext.request.contextPath}/deleteTestfile?documentname=${testfile.documentname}&dId=${testfile.dId}&sSno=${student.sno}" class="btn btn-danger btn-sm delete_btn">
                                     <span class="glyphicon glyphicon-trash"></span>删除
                                 </a>
                             </td>
@@ -154,7 +154,7 @@
 
                 </c:when>
                     <c:otherwise>
-                        <span><strong>您还没有上传周报哦</strong></span>
+                        <span><strong>您还没有上传实训文件哦</strong></span>
                     </c:otherwise>
                 </c:choose>
             </div>

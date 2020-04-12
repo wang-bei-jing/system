@@ -54,7 +54,7 @@
             z-index: 3;
             color: white;
             font-size: 18px;
-            height: 11%;
+            height: 7%;
             background:#204d74;
         }
     </style>
@@ -64,7 +64,7 @@
         <header >
             <div class="header" style="text-align: center">
                 <row>
-                    <h3>修改个人信息</h3>
+                    <h4>修改个人信息</h4>
                 </row>
             </div>
         </header>

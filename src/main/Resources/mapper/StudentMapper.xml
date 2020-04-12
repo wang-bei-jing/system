@@ -15,44 +15,6 @@
 
 
 
-  <select id="studentLogin" parameterType="java.util.HashMap" resultType="java.lang.Integer">
-    select count(*)
-    from  t_student
-    where sno=#{sno,jdbcType=VARCHAR} and password=#{password,jdbcType=VARCHAR}
-  </select>
-  <select id="findBySno" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select *
-    from t_student
-    where sno=#{sno,jdbcType=VARCHAR}
-  </select>
-
-  <update id="updateByAll" parameterType="java.util.HashMap">
-    update t_student
-    set
-    name = #{name,jdbcType=VARCHAR},
-    sex = #{sex,jdbcType=VARCHAR},
-    tel = #{tel,jdbcType=VARCHAR},
-    email = #{email,jdbcType=VARCHAR},
-    department = #{department,jdbcType=VARCHAR},
-    classes = #{classes,jdbcType=VARCHAR}
-    where sno = #{sno,jdbcType=VARCHAR}
-  </update>
-
-  <update id="updatePassword" parameterType="map" >
-    update t_student
-    set password =#{password,jdbcType=VARCHAR}
-    where sno =#{sno,jdbcType=VARCHAR}
-  </update>
-
-
-
-
-
-
-
-
-
-
 
   <sql id="Example_Where_Clause">
     <where>
@@ -317,4 +279,55 @@
       status = #{status,jdbcType=INTEGER}
     where sno = #{sno,jdbcType=VARCHAR}
   </update>
+
+
+
+
+
+
+
+
+  <select id="studentLogin" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+    select count(*)
+    from  t_student
+    where sno=#{sno,jdbcType=VARCHAR} and password=#{password,jdbcType=VARCHAR}
+  </select>
+  <select id="findBySno" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from t_student
+    where sno=#{sno,jdbcType=VARCHAR}
+  </select>
+
+  <update id="updateByAll" parameterType="java.util.HashMap">
+    update t_student
+    set
+    name = #{name,jdbcType=VARCHAR},
+    sex = #{sex,jdbcType=VARCHAR},
+    tel = #{tel,jdbcType=VARCHAR},
+    email = #{email,jdbcType=VARCHAR},
+    department = #{department,jdbcType=VARCHAR},
+    classes = #{classes,jdbcType=VARCHAR}
+    where sno = #{sno,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updatePassword" parameterType="map" >
+    update t_student
+    set password =#{password,jdbcType=VARCHAR}
+    where sno =#{sno,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findAllStudent" resultMap="BaseResultMap">
+    select * from t_student
+  </select>
+  <select id="findAllStudentByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from t_student where name like concat('%',#{name},'%')
+  </select>
+  <delete id="studentDel" parameterType="java.lang.String" >
+    delete from  t_student where  sno=#{sno,jdbcType=VARCHAR}
+  </delete>
+
+  <select id="findAllStudentByStatus" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from t_student where status=#{status,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

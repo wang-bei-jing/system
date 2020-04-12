@@ -13,7 +13,12 @@ public interface TeacherMapper {
 
     Integer countTeacher(@Param("tno") Integer tno, @Param("password") String password);
 
-    //分界线
+    //shc
+    List<Teacher> finAllTeacher();
+    List<Teacher> selectAllTeacherByName(String name);
+    Integer deleteTeacherByTno(Integer tno);
+    //shc
+
     long countByExample(TeacherExample example);
 
     int deleteByExample(TeacherExample example);
@@ -35,4 +40,5 @@ public interface TeacherMapper {
     int updateByPrimaryKeySelective(Teacher record);
 
     int updateByPrimaryKey(Teacher record);
+
 }

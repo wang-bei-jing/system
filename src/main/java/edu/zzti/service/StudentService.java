@@ -15,7 +15,12 @@ public interface StudentService {
     Student studentFindBySno(String sno);
     void studentUpdateByAll(HashMap map);
     void studentUpdatePassword(String sno,String newPassword);
-
+    List<Student> findAllStudent();
+    List<Student> findAllStudentByName(String name);
+    int studentDel(String sno);
+    int studentAdd(Student student);
+    int studentUpdSelective(Student record);
+    List<Student> findAllStudentByStatus(String status);
 
 }
 

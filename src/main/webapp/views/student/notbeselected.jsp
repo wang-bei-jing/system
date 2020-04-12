@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-
+<span>您还未被老师确认，请耐心等待！</span>
 </body>
 </html>

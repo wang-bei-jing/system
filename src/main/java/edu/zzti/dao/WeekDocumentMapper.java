@@ -9,7 +9,7 @@ public interface WeekDocumentMapper {
 
     //shc
     int addWeekDocumentSelective(WeekDocument weekDocument);
-    List<WeekDocument> findAll(String category);
+    List<WeekDocument> findByCateory(@Param("tpsId") Integer tpsId,@Param("category")String category);
     //shc
     long countByExample(WeekDocumentExample example);
 

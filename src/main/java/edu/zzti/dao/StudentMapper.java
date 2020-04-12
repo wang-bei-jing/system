@@ -16,6 +16,10 @@ public interface StudentMapper {
     Student findBySno(String sno);
     int updateByAll(HashMap map);
     void updatePassword(@Param("sno") String sno,@Param("password") String password);
+    List<Student> findAllStudent();
+    List<Student> findAllStudentByName(String name);
+    Integer studentDel(String sno);
+    List<Student> findAllStudentByStatus(String status);
     //shc
 
 

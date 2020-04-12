@@ -22,7 +22,8 @@ public interface TopicSelectService {
     int deleteBySSnoandtpid(String sSno,int tpId);
     TopicSelect myTopicSelect(String sSno,String status);
     TopicSelect myWeekfile(String sSno,String status);
-
+    List<TopicSelect> adminFindAllStudentAndTopicAndTeacher(String status);
+    List<TopicSelect> adminFindAllStudentAndTopicAndTeacherByName(String name,String status);
 
 
 

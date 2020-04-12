@@ -1,6 +1,8 @@
 package edu.zzti.controller;
 
+import edu.zzti.bean.Grade;
 import edu.zzti.bean.TopicSelect;
+import edu.zzti.service.GradeService;
 import edu.zzti.service.TopicSelectService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,7 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 public class TopicSelectController {
     @Autowired
     TopicSelectService topicSelectService;
-
+    @Autowired
+    GradeService gradeService;
     @RequestMapping("/TopicSelectAdd")
     public String TopicSelectAdd(TopicSelect topicSelect) {
         //springmvc内置数据类型转换器
@@ -71,9 +74,11 @@ public class TopicSelectController {
         System.out.println(sSno);
      System.out.println("123");
      TopicSelect topicSelect=topicSelectService.myTopicSelect(sSno,status);
+     Grade grade=gradeService.findStudentGradeBySno(sSno,status);
      if (topicSelect!=null){
          System.out.println(topicSelect.toString());
          request.getSession().setAttribute("mytopicSelect",topicSelect);
+         request.getSession().setAttribute("grade",grade);
          return new ModelAndView("student/myworktopic");
      }else
          return new ModelAndView("student/notbeselected");

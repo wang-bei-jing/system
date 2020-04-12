@@ -9,7 +9,7 @@ public interface WeekDocumentService {
 
     //shc
     int addWeekDocument(WeekDocument weekDocument);
-    List<WeekDocument> findAll(String category);
+    List<WeekDocument> findByCateory(Integer tpsId,String category);
     int deleteByPrimaryKey(Integer dId);
 
 

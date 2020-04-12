@@ -121,7 +121,7 @@
 
             <div class="header" style="text-align: center">
                 <row>
-                <h4>我的课题</h4>
+                <h4>我的申报课题</h4>
                 </row>
             </div>
 
@@ -131,7 +131,7 @@
     <!-- 搭建显示页面 -->
     <div class="container" style="width: 200%">
         <div class="modal-header">
-            <h1>我的选题信息 <small>(Information  of my topic)</small></h1>
+            <h2>我的选题信息 <small>(Information  of my topic)</small></h2>
             <!-- 按钮 -->
             <div class="row">
                 <div class="col-md-4 col-md-offset-10">

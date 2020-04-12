@@ -310,6 +310,50 @@
     </association>
   </resultMap>
 
+
+  <resultMap id="BaseResultMapWithStudentTopicAndTeacher" type="edu.zzti.bean.TopicSelect">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="s_sno" jdbcType="VARCHAR" property="sSno" />
+    <result column="t_tno" jdbcType="INTEGER" property="tTno" />
+    <result column="tp_id" jdbcType="INTEGER" property="tpId" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <association property="student" javaType="edu.zzti.bean.Student">
+      <id column="sno" jdbcType="VARCHAR" property="sno" />
+      <result column="password" jdbcType="VARCHAR" property="password" />
+      <result column="tsname" jdbcType="VARCHAR" property="name" />
+      <result column="sex" jdbcType="VARCHAR" property="sex" />
+      <result column="tel" jdbcType="VARCHAR" property="tel" />
+      <result column="email" jdbcType="VARCHAR" property="email" />
+      <result column="department" jdbcType="VARCHAR" property="department" />
+      <result column="classes" jdbcType="VARCHAR" property="classes" />
+      <result column="status" jdbcType="INTEGER" property="status" />
+    </association>
+    <association property="topic" javaType="edu.zzti.bean.Topic">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="tpname" jdbcType="VARCHAR" property="name" />
+      <result column="contents" jdbcType="VARCHAR" property="contents" />
+      <result column="tno" jdbcType="INTEGER" property="tno" />
+      <result column="type" jdbcType="VARCHAR" property="type" />
+      <result column="source" jdbcType="VARCHAR" property="source" />
+      <result column="difficulty" jdbcType="VARCHAR" property="difficulty" />
+      <result column="support" jdbcType="VARCHAR" property="support" />
+      <result column="department" jdbcType="VARCHAR" property="department" />
+      <result column="status" jdbcType="INTEGER" property="status" />
+      <result column="num" jdbcType="INTEGER" property="num" />
+    </association>
+    <association property="teacher" javaType="edu.zzti.bean.Teacher">
+      <result column="tno"  property="tno"  jdbcType="INTEGER"/>
+      <result column="password"  property="password"  jdbcType="VARCHAR"/>
+      <result column="trname"  property="name"  jdbcType="VARCHAR"/>
+      <result column="sex"  property="sex"  jdbcType="VARCHAR"/>
+      <result column="title"  property="title"  jdbcType="VARCHAR"/>
+      <result column="department"  property="department"  jdbcType="VARCHAR"/>
+      <result column="office"  property="office"  jdbcType="VARCHAR"/>
+      <result column="tel"  property="tel"  jdbcType="VARCHAR"/>
+      <result column="email"  property="email"  jdbcType="VARCHAR"/>
+      <result column="status"  property="status"  jdbcType="INTEGER"/>
+    </association>
+  </resultMap>
   <sql id="BaseWithTopicAndTeacher_Column_List">
     tps.id, tps.s_sno, tps.t_tno, tps.tp_id, tps.status,
     tp.id, tp.name,  tp.contents, tp.tno, tp.type, tp.nature, tp.difficulty, tp.support,
@@ -408,12 +452,16 @@ select id from t_topicselect where s_sno=#{sSno,jdbcType=VARCHAR} and status=#{s
   </select>
 
 
+  <select id="adminFindAllStudentAndTopicAndTeacher" parameterType="java.lang.String" resultMap="BaseResultMapWithStudentTopicAndTeacher">
+select ts.name tsname,tp.name tpname,tr.name trname from t_teacher tr,t_topic tp,t_student ts,t_topicselect tps
+ WHERE ts.sno=tps.s_sno and tps.t_tno=tr.tno and tps.tp_id=tp.id and tps.status=#{status,jdbcType=VARCHAR}
+  </select>
 
+  <select id="adminFindAllStudentAndTopicAndTeacherByName" parameterType="map" resultMap="BaseResultMapWithStudentTopicAndTeacher">
+select ts.department,ts.classes,ts.tel,ts.name tsname,tp.name tpname,tr.name trname from t_teacher tr,t_topic tp,t_student ts,t_topicselect tps
+ WHERE ts.sno=tps.s_sno and tps.t_tno=tr.tno and tps.tp_id=tp.id and tps.status=#{status,jdbcType=VARCHAR} and ts.name=#{name,jdbcType=VARCHAR}
 
-
-
-
-
+  </select>
 
 
 

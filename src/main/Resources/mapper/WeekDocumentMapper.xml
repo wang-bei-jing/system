@@ -246,6 +246,8 @@
 
 
 
+
+
   <insert id="addWeekDocumentSelective" parameterType="edu.zzti.bean.WeekDocument">
     insert into t_weekdocument
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -297,8 +299,8 @@
   </insert>
 
 
-<select id="findAll" resultMap="BaseResultMap">
-        select * from t_weekdocument where  category=#{category,jdbcType=VARCHAR};
+<select id="findByCateory" parameterType="map" resultMap="BaseResultMap">
+        select * from t_weekdocument where  tps_id=#{tpsId,jdbcType=INTEGER} and category=#{category,jdbcType=VARCHAR};
  </select>
 
 

@@ -129,14 +129,12 @@
     <!-- 搭建显示页面 -->
     <div class="container" style="width: 100%">
         <div class="modal-header">
-            <h1>我的实训课题 <small>(Information  of my topic)</small></h1>
+            <h2>我的实训课题 <small>(Information  of my topic)</small></h2>
         </div>
         <br>
         <!-- 显示表格数据 -->
         <div class="row" id="table_page">
             <div class="col-md-12">
-                <c:choose>
-                    <c:when test="${topicsandteacherList.list[0]!=null}">
                     <table class="table table-hover" >
                         <thead style="color: red">
                         <tr>
@@ -160,31 +158,20 @@
                                 <td>教师已确认</td>
                                 <td>${mytopicSelect.topic.name}</td>
                                 <td>${mytopicSelect.topic.contents}</td>
-                                <%--<td>
-                                    <button class="btn btn-primary btn-sm edit_btn" id="edit_btn">
-                                        <span class="glyphicon glyphicon-pencil">上传</span>
-                                    </button>
-                                </td>
-                                <td></td>--%>
                                 <td>${mytopicSelect.teacher.name}</td>
                                 <td>${mytopicSelect.teacher.title}</td>
                                 <td>${mytopicSelect.teacher.office}</td>
                                 <td>${mytopicSelect.teacher.tel}</td>
                                 <td>${mytopicSelect.teacher.email}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>${grade.gPeacetime}</td>
+                                <td>${grade.gMidterm}</td>
+                                <td>${grade.gCheck}</td>
+                                <td>${grade.gPresentation}</td>
+                                <td>${grade.gTotal}</td>
                             </tr>
                         </tbody>
                     </table>
 
-                    </c:when>
-                    <c:otherwise>
-                        <span><strong>您现在没有选题</strong></span>
-                    </c:otherwise>
-                </c:choose>
             </div>
         </div>
 

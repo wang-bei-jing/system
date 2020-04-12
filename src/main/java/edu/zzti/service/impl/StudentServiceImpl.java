@@ -47,6 +47,31 @@ public class StudentServiceImpl implements StudentService {
         studentMapper.updatePassword(sno, newPassword);
     }
 
+    public List<Student> findAllStudent() {
+        return studentMapper.findAllStudent();
+    }
+
+    public List<Student> findAllStudentByName(String name) {
+        return studentMapper.findAllStudentByName(name);
+    }
+
+    public int studentDel(String sno) {
+        return studentMapper.studentDel(sno);
+    }
+
+    public int studentAdd(Student student) {
+        return studentMapper.insertSelective(student);
+    }
+
+    public int studentUpdSelective(Student student) {
+        return studentMapper.updateByPrimaryKeySelective(student);
+
+    }
+
+    public List<Student> findAllStudentByStatus(String status) {
+        return studentMapper.findAllStudentByStatus(status);
+    }
+
 
 }
 

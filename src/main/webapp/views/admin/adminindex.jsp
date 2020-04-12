@@ -27,11 +27,11 @@
 
 <!--  BEGIN NAVBAR  -->
 <div class="header-container fixed-top">
-    <header class="header navbar navbar-expand-sm">
+    <header class="header navbar navbar-expand-sm " >
 
-        <ul class="navbar-item theme-brand flex-row  text-center">
+        <ul class="navbar-item theme-brand flex-row  text-center ">
             <li class="nav-item theme-logo">
-                <a href="index.html">
+                <a>
                     <img src="${pageContext.request.contextPath}/static/corkstatic/assets/img/logo.svg" class="navbar-logo" alt="logo">
                 </a>
             </li>
@@ -40,7 +40,7 @@
             </li>
         </ul>
 
-        <ul class="navbar-item flex-row ml-md-0 ml-auto">
+      <%--  <ul class="navbar-item flex-row ml-md-0 ml-auto">
             <li class="nav-item align-self-center search-animated">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search toggle-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 <form class="form-inline search-full form-inline search" role="search">
@@ -49,7 +49,7 @@
                     </div>
                 </form>
             </li>
-        </ul>
+        </ul>--%>
 
        <%-- <ul class="navbar-item flex-row ml-md-auto">
 
@@ -201,8 +201,8 @@
 
                     <nav class="breadcrumb-one" aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0);">学生端</a></li>
-                            <li class="breadcrumb-item active" aria-current="page"><span>${student.name}</span></li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0);">管理员端</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><span>${admin.name}</span></li>
                         </ol>
                     </nav>
 
@@ -241,36 +241,44 @@
             <div class="shadow-bottom"></div>
             <ul class="list-unstyled menu-categories" id="accordionExample">
 
-
                 <li class="menu">
-                    <a href="#components" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <a href="#teachers" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <div class="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-box"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                            <span>课题管理</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            <span>教师管理</span>
                         </div>
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </div>
                     </a>
-                    <ul class="collapse submenu list-unstyled" id="components" data-parent="#accordionExample">
+                    <ul class="collapse submenu list-unstyled" id="teachers" data-parent="#accordionExample">
                         <li>
-                            <a href="${pageContext.request.contextPath}/TopicSelectAll" target="myfrm"> 全部课题 </a>
+                            <a href="${pageContext.request.contextPath}/teacherSelectAll" target="myfrm"> 全部教师 </a>
                         </li>
+                    </ul>
+                </li>
+                <li class="menu">
+                    <a href="#students" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            <span>学生管理</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                    </a>
+                    <ul class="collapse submenu list-unstyled" id="students" data-parent="#accordionExample">
                         <li>
-                            <a href="${pageContext.request.contextPath}/myTopic" target="myfrm"> 我的申报课题  </a>
+                            <a href="${pageContext.request.contextPath}/studentSelectAll" target="myfrm"> 全部学生  </a>
                         </li>
-                        <li>
-                            <a href="${pageContext.request.contextPath}/myTopicSelect?sSno=${student.sno}" target="myfrm"> 我的实训题目 </a>
-                        </li>
-
                     </ul>
                 </li>
 
                 <li class="menu">
                     <a href="#elements" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <div class="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                            <span>文件管理</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                            <span>课题管理</span>
                         </div>
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -278,16 +286,60 @@
                     </a>
                     <ul class="collapse submenu list-unstyled" id="elements" data-parent="#accordionExample">
                         <li>
-                            <a href="${pageContext.request.contextPath}/findWeekDocument?sSno=${student.sno}" target="myfrm"> 周报 </a>
+                            <a href="${pageContext.request.contextPath}/adminTopicSelectAll" target="myfrm"> 全部课题 </a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath}/findTestfile?sSno=${student.sno}" target="myfrm"> 实训文件 </a>
+                            <a href="${pageContext.request.contextPath}/adminFindAllStudentAndTopicAndTeacher" target="myfrm"> 已选题学生 </a>
+                        </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/findAllStudentNotSelect" target="myfrm"> 未选题学生 </a>
                         </li>
                     </ul>
                 </li>
-
                 <li class="menu">
-                    <a href="${pageContext.request.contextPath}/views/student/studentpersonal.jsp" target="myfrm" aria-expanded="false" class="dropdown-toggle">
+                    <a href="#datatables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                            <span>成绩管理</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                    </a>
+                    <ul class="collapse submenu list-unstyled" id="datatables" data-parent="#accordionExample">
+                        <li>
+                            <a href="table_dt_basic.html"> 学生成绩 模糊查询</a>
+                        </li>
+                        <li>
+                            <a href="table_dt_basic-dark.html"> 成绩分类 </a>
+                        </li>
+                        <li>
+                            <a href="table_dt_ordering_sorting.html">饼图 </a>
+                        </li>
+
+                    </ul>
+                </li>
+               <%-- <li class="menu">
+                    <a href="#components" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-box"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            <span>暂无</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                    </a>
+                    <ul class="collapse submenu list-unstyled" id="components" data-parent="#accordionExample">
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/}" target="myfrm"> 暂无 </a>
+                        </li>
+
+                    </ul>
+                </li>--%>
+                <li class="menu">
+                    <a href="${pageContext.request.contextPath}/views/admin/adminpersonal.jsp" target="myfrm" aria-expanded="false" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-target"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
                             <span>个人信息</span>
@@ -296,29 +348,24 @@
                 </li>
 
 
-
             </ul>
-            <!-- <div class="shadow-bottom"></div> -->
+
 
         </nav>
 
     </div>
-    <!--  END SIDEBAR  -->
+
 
     <!--  ————————————————————————————右侧显示区——————————————————————————  -->
     <div id="content" class="main-content">
-       <%-- <div class="layout-px-spacing">--%>
             <iframe src="${pageContext.request.contextPath}/views/welcome.jsp" id="myfrm"name="myfrm"  width="100%" height="100%" frameborder=0>
-
 
             </iframe>
 
-      <%--  </div>--%>
     </div>
-    <!--  END CONTENT AREA  -->
 
 </div>
-<!-- END MAIN CONTAINER -->
+
 
 
 

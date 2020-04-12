@@ -61,6 +61,14 @@ public class TopicSelectServiceImpl implements TopicSelectService {
     public TopicSelect myWeekfile(String sSno, String status) {
         return topicSelectMapper.myWeekfile(sSno, status);
     }
+
+    public List<TopicSelect> adminFindAllStudentAndTopicAndTeacher(String status) {
+        return topicSelectMapper.adminFindAllStudentAndTopicAndTeacher(status);
+    }
+
+    public List<TopicSelect> adminFindAllStudentAndTopicAndTeacherByName(String name, String status) {
+        return topicSelectMapper.adminFindAllStudentAndTopicAndTeacherByName(name, status);
+    }
 }
 
 

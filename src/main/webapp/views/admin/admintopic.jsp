@@ -13,92 +13,6 @@
     <c:set var="request" value="${pageContext.request.contextPath}"></c:set>
 
     <script type="text/javascript">
-
-      /*  $(function () {
-            document.getElementById("seeall").trigger().click();
-        })*/
-        /*
-                $(function(){
-                    $('#seeall').trigger("click");
-                })*/
-     /* setTimeout(function() {
-               var e = document.createEvent("MouseEvents");
-               e.initEvent("click", true, true);
-               document.getElementById("seeall").dispatchEvent(e);
-       }, 50);*/
-    </script>
-    <script type="text/javascript">
-        function signup(num,tno,id){
-
-            var sstatus=${student.status};
-            var ssno=${student.sno};
-
-            $.ajax({
-                type:"post",
-                url:"/system/TopicSelectExistBySSno",
-                data:{"sSno":ssno,"tpId":id},
-                dataType:"json",
-                success:function(exist){
-                   /* alert("exist进来了"+exist);*/
-                    if (sstatus==0){
-                        if (num>0){
-                           /* alert("num进来了");*/
-                            if (exist<3){
-                            /*    alert("要提交了");*/
-                                $.ajax({
-                                    type:"post",
-                                    url:"/system/TopicSelectExistBySSnoandtpid",
-                                    data:{"sSno":ssno,"tpId":id},
-                                    dataType:"json",
-                                    success:function(data){
-                                      /*  alert("我回来啦");*/
-                                        if(data == "0"){
-                                            /*alert("我回来啦2");*/
-                                            $.ajax({
-                                                type:"post",
-                                                url:"/system/TopicSelectAdd",
-                                                data:{"sSno":ssno,"tTno":tno,"tpId":id},
-                                                dateType:"json",
-                                                success:function (data) {
-                                                   /* alert("我you回来啦");*/
-                                                    if(data=="1"){
-                                                        alert("报名成功，等待老师确认！")
-                                                        $.ajax({
-                                                            type:"post",
-                                                            url:"/system/TopicSelectExist",
-                                                            data:{"sSno":ssno,"tpId":id},
-                                                            dataType:"json"
-                                                        });
-                                                    }
-                                                }
-                                            });
-
-                                        }else {
-                                            alert("您已报名该课题！")
-                                        }
-                                    }
-                                });
-                            } else {alert("您已报名3个课题！达到上限！");}
-
-                        }else {
-                            alert("该课题人数已满！请选择其他课题");
-                        }
-                    } else {
-                        alert("已被老师确认，无法报名!");
-                    };
-
-
-
-                }
-            });
-
-
-
-        }
-
-
-    </script>
-    <script type="text/javascript">
         $(document).ready(function(){
             $("tbody>tr:odd").css("background-color","#e4e4e4");
             $("tbody>tr:even").css("background-color","white");
@@ -176,8 +90,8 @@
                         <button type="submit" class="btn btn-info">查询</button>
                     </form>
                 </div>
-                <div class="col-md-4 col-md-offset-10">
-                    <a id="seeall"  href="${request}/TopicSelectAll" methods="post" class="btn btn-primary">查看所有课程</a>
+                <div class="col-md-6 col-md-offset-10">
+                    <a id="seeall"  href="${request}/TopicSelectAll" methods="post" class="btn btn-primary">查看全部课程</a>
                 </div>
             </div>
         </div>
@@ -188,7 +102,6 @@
                 <table class="table table-hover" >
                     <thead style="color: red">
                     <tr>
-                        <th>操作</th>
                         <th>课题名</th>
                         <th>简介</th>
                         <th>教师姓名</th>
@@ -207,7 +120,7 @@
                     <tbody>
                     <c:forEach items="${topicList.list}" var="list">
                         <tr class="mytr">
-                            <td><a  href="javascript:void(0)" onclick="signup('${list.num}','${list.tno}','${list.id}')">报名</a></td>
+
                             <td>${list.name}</td>
                             <td>${list.contents}</td>
                             <td>${list.teacher.name}</td>

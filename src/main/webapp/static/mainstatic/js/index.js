@@ -3,7 +3,7 @@ function loadTeacher() {
     });
 }
 function loadIndex(){
-    $("#main_page").load("../jsp/index.jsp",function(){ $("#main_page").fadeIn(100);
+    $("#main_page").load("../jsp/adminindex.jsp",function(){ $("#main_page").fadeIn(100);
     });
 }
 /*function openPersonMessage(){

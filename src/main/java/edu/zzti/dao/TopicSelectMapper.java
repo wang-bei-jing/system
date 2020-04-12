@@ -20,7 +20,8 @@ public interface TopicSelectMapper {
     TopicSelect myTopicSelect(@Param("sSno") String sSno, @Param("status") String status);
 
     TopicSelect myWeekfile(@Param("sSno") String sSno, @Param("status") String status);
-
+    List<TopicSelect> adminFindAllStudentAndTopicAndTeacher(String status);
+    List<TopicSelect> adminFindAllStudentAndTopicAndTeacherByName(@Param("name") String name,@Param("status") String status);
     //shc
     long countByExample(TopicSelectExample example);
 

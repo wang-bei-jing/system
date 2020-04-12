@@ -326,4 +326,23 @@
       status = #{status,jdbcType=INTEGER}
     where tno = #{tno,jdbcType=INTEGER}
   </update>
+
+
+
+
+
+
+
+  <select id="finAllTeacher" resultMap="BaseResultMap">
+    select * from t_teacher
+  </select>
+
+  <select id="selectAllTeacherByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from t_teacher where  name  like concat('%',#{name},'%')
+  </select>
+
+  <select id="deleteTeacherByTno" parameterType="java.lang.Integer">
+    delete  from t_teacher where  tno=#{tno,jdbcType=INTEGER}
+  </select>
+
 </mapper>

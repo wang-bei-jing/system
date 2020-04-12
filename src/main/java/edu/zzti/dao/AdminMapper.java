@@ -14,6 +14,7 @@ public interface AdminMapper {
     int adminLogin(HashMap map);
     Admin findByLoginname(String loginname);
     void updatePassword(@Param("loginname") String sno,@Param("password") String password);
+
     //shc
     long countByExample(AdminExample example);
 

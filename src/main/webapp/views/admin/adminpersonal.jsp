@@ -14,11 +14,6 @@
         function openPasswordRevise(){
             document.getElementById('passwordRevise').style.display='block';
         }
-        $(document).ready(function() {
-            $("#revisePassword", this).click(function () {
-                alert("密码重置成功")
-            });
-        });
     </script>
     <style>
         .admin_page {
@@ -51,14 +46,10 @@
 <body>
     <div>
         <header class="header">
-            <div class="row">
-                <div class="col-md-offset-10">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="${pageContext.request.contextPath}/views/admin/admin.jspin.jsp">
-                            <span style="color: white">服务大厅</span>
-                        </a>
-                    </div>
-                </div>
+            <div class="header" style="text-align: center">
+                <row>
+                    <h4>修改个人信息</h4>
+                </row>
             </div>
         </header>
         <div class="admin_page">

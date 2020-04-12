@@ -38,7 +38,9 @@ public class WeekDocumentController {
         TopicSelect topicSelect=topicSelectService.myWeekfile(sSno,status);
         System.out.println(topicSelect.toString());
         String category="1";
-        List<WeekDocument> weekDocuments=weekDocumentService.findAll(category);
+        int tpsId=topicSelect.getId();
+        System.out.println(tpsId);
+        List<WeekDocument> weekDocuments=weekDocumentService.findByCateory(tpsId,category);
         for(int i=0;i<weekDocuments.size();i++){
             System.out.println(weekDocuments.get(i).toString());
         }
@@ -118,8 +120,9 @@ public class WeekDocumentController {
         //通过sSno,status="1"查询实训课题的id来删除周报
         TopicSelect topicSelect=topicSelectService.myWeekfile(sSno,status);
         System.out.println(topicSelect.toString());
+        int tpsId=topicSelect.getId();
         String category="2";
-        List<WeekDocument> testfiles=weekDocumentService.findAll(category);
+        List<WeekDocument> testfiles=weekDocumentService.findByCateory(tpsId,category);
         for(int i=0;i<testfiles.size();i++){
             System.out.println(testfiles.get(i).toString());
         }
