@@ -82,7 +82,18 @@
     <div class="container" style="width: 100%">
         <div class="modal-header">
             <h2>未选题学生信息</h2>
-
+            <!-- 按钮 -->
+            <div class="row">
+                <div class="col-md-8">
+                    <form action="${pageContext.request.contextPath}/adminFindAllStudentNOTSELECTByName" method="post" class="navbar-form navbar-left" role="search">
+                        <input  type="text" value="${studentname}" name="name" class="form-control" placeholder="按学生姓名查询">
+                        <button type="submit" class="btn btn-info">查询</button>
+                    </form>
+                </div>
+                <div class="col-md-4 col-md-offset-10">
+                    <a id="seeall"  href="${request}/findAllStudentNotSelect" methods="post" class="btn btn-primary">查看所有未选题学生</a>
+                </div>
+            </div>
         </div>
         <br>
         <c:choose>

@@ -135,6 +135,8 @@
         <!-- 显示表格数据 -->
         <div class="row" id="table_page">
             <div class="col-md-12">
+            <c:choose>
+                <c:when test="${just=='1'}">
                     <table class="table table-hover" >
                         <thead style="color: red">
                         <tr>
@@ -171,7 +173,11 @@
                             </tr>
                         </tbody>
                     </table>
-
+                </c:when>
+                <c:otherwise>
+                    <span style="color: red"><strong>您还未被老师确认，请耐心等待！</strong></span>
+                </c:otherwise>
+            </c:choose>
             </div>
         </div>
 

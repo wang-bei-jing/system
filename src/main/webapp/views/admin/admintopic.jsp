@@ -85,8 +85,8 @@
             <!-- 按钮 -->
             <div class="row">
                 <div class="col-md-8">
-                    <form action="${pageContext.request.contextPath}/TopicSelectByName" method="post" class="navbar-form navbar-left" role="search">
-                        <input  type="text" name="name" class="form-control" placeholder="按课程名称查询">
+                    <form action="${pageContext.request.contextPath}/adminTopicSelectByName" method="post" class="navbar-form navbar-left" role="search">
+                        <input  type="text" value="${topicname}" name="name" class="form-control" placeholder="按课程名称查询">
                         <button type="submit" class="btn btn-info">查询</button>
                     </form>
                 </div>

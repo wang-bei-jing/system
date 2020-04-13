@@ -40,7 +40,7 @@
             </li>
         </ul>
 
-        <ul class="navbar-item flex-row ml-md-0 ml-auto">
+       <%-- <ul class="navbar-item flex-row ml-md-0 ml-auto">
             <li class="nav-item align-self-center search-animated">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search toggle-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 <form class="form-inline search-full form-inline search" role="search">
@@ -49,7 +49,7 @@
                     </div>
                 </form>
             </li>
-        </ul>
+        </ul>--%>
 
        <%-- <ul class="navbar-item flex-row ml-md-auto">
 
@@ -257,7 +257,7 @@
                             <a href="${pageContext.request.contextPath}/TopicSelectAll" target="myfrm"> 全部课题 </a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath}/myTopic" target="myfrm"> 我的申报课题  </a>
+                            <a href="${pageContext.request.contextPath}/myTopic?sSno=${student.sno}" target="myfrm"> 我的申报课题  </a>
                         </li>
                         <li>
                             <a href="${pageContext.request.contextPath}/myTopicSelect?sSno=${student.sno}" target="myfrm"> 我的实训题目 </a>
@@ -281,7 +281,7 @@
                             <a href="${pageContext.request.contextPath}/findWeekDocument?sSno=${student.sno}" target="myfrm"> 周报 </a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath}/findTestfile?sSno=${student.sno}" target="myfrm"> 实训文件 </a>
+                            <a href="${pageContext.request.contextPath}/findTestfile?sSno=${student.sno}" target="myfrm"> 实训报告 </a>
                         </li>
                     </ul>
                 </li>

@@ -91,7 +91,7 @@
 <header >
     <div class="header" style="text-align: center">
         <row>
-            <h4>我的实训文件</h4>
+            <h4>我的实训报告</h4>
         </row>
     </div>
 </header>
@@ -101,64 +101,69 @@
 
 <div style="text-align: center;margin-top: 0%;margin-right: 1%;height:100%;">
     <div class="container page-header" style="border: 1px solid #DBDBDB;border-radius: 15px;width: auto;background: white;box-shadow: 2px 2px 2px #888888;">
+        <c:choose>
+            <c:when test="${student.status=='1'}">
         <div class="modal-header">
-            <h1>我的周报 <small>(Information  of all topic)</small></h1>
+            <h2>我的实训报告</h2>
             <div class="modal-header">
                 <!-- 按钮 -->
                 <div class="row">
                     <div class="col-md-4 col-md-offset-8">
                         <%--   <a href="../selectUserProject.do?userId=${user.userid}" class="btn btn-primary">查看我的项目</a>--%>
-                        <button class="btn btn-success" id="add_modal" >上传实训文件</button>
+                        <button class="btn btn-success" id="add_modal" >上传实训报告</button>
                     </div>
                 </div>
             </div>
         </div>
+                <!-- 显示表格数据 -->
+                <div class="row" id="table_page" >
+                    <div class="col-md-12">
+                        <c:choose>
+                            <c:when test="${testfiles[0]!=null}">
+                                <table class="table table-hover" >
+                                    <thead style="color: red">
+                                    <tr>
+                                        <th>文件</th>
+                                        <th>备注</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach items="${testfiles}" var="testfile">
+                                        <tr class="mytr">
+                                            <td>${testfile.documentname}</td>
+                                            <td>${testfile.remark}</td>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/downTestfile?documentname=${testfile.documentname}" >
+                                                    <button class="btn btn-primary btn-sm edit_btn" id="down_btn" >
+                                                        下载
+                                                    </button>
+                                                </a>
+                                               <%-- <button class="btn btn-primary btn-sm edit_btn" id="edit_btn">
+                                                    <span class="glyphicon glyphicon-pencil"></span>编辑
+                                                </button>--%>
+                                                <a href="${pageContext.request.contextPath}/deleteTestfile?documentname=${testfile.documentname}&dId=${testfile.dId}&sSno=${student.sno}" class="btn btn-danger btn-sm delete_btn">
+                                                    <span class="glyphicon glyphicon-trash"></span>删除
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
 
-        <!-- 显示表格数据 -->
-        <div class="row" id="table_page" >
-            <div class="col-md-12">
-                <c:choose>
-                <c:when test="${testfiles[0]!=null}">
-                <table class="table table-hover" >
-                    <thead style="color: red">
-                    <tr>
-                        <th>文件</th>
-                        <th>备注</th>
-                        <th>教师批注</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${testfiles}" var="testfile">
-                        <tr class="mytr">
-                            <td>${testfile.documentname}</td>
-                            <td>${testfile.remark}</td>
-                            <td>${testfile.annotation}</td>
-                            <td>
-                                <a href="${pageContext.request.contextPath}/downTestfile?documentname=${testfile.documentname}" >
-                                <button class="btn btn-primary btn-sm edit_btn" id="down_btn" >
-                                   下载
-                                </button>
-                                </a>
-                                <button class="btn btn-primary btn-sm edit_btn" id="edit_btn">
-                                <span class="glyphicon glyphicon-pencil"></span>编辑
-                                </button>
-                                <a href="${pageContext.request.contextPath}/deleteTestfile?documentname=${testfile.documentname}&dId=${testfile.dId}&sSno=${student.sno}" class="btn btn-danger btn-sm delete_btn">
-                                    <span class="glyphicon glyphicon-trash"></span>删除
-                                </a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                            </c:when>
+                            <c:otherwise>
+                                <span><strong>您还没有上传实训报告！</strong></span>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <span style="color: red"><strong>您还没有被老师确认！请耐心等待</strong></span>
+            </c:otherwise>
+        </c:choose>
 
-                </c:when>
-                    <c:otherwise>
-                        <span><strong>您还没有上传实训文件哦</strong></span>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-        </div>
 
         <!-- 添加模态框 -->
         <div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -166,7 +171,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">上传实训文件</h4>
+                        <h4 class="modal-title" id="myModalLabel">上传实训报告</h4>
                     </div>
                     <div class="modal-body">
                         <form  action="${pageContext.request.contextPath}/uploadTestfile" method="post" class="form-horizontal" enctype="multipart/form-data">

@@ -101,8 +101,10 @@
 
 <div style="text-align: center;margin-top: 0%;margin-right: 1%;height:100%;">
     <div class="container page-header" style="border: 1px solid #DBDBDB;border-radius: 15px;width: auto;background: white;box-shadow: 2px 2px 2px #888888;">
+        <c:choose>
+            <c:when test="${student.status=='1'}">
         <div class="modal-header">
-            <h1>我的周报 <small>(Information  of all topic)</small></h1>
+            <h1>我的周报</h1>
             <div class="modal-header">
                 <!-- 按钮 -->
                 <div class="row">
@@ -114,53 +116,58 @@
             </div>
         </div>
 
-        <!-- 显示表格数据 -->
-        <div class="row" id="table_page" >
-            <div class="col-md-12">
-                <c:choose>
-                <c:when test="${weekDocuments[0]!=null}">
-                <table class="table table-hover" >
-                    <thead style="color: red">
-                    <tr>
-                        <th>周次</th>
-                        <th>文件名</th>
-                        <th>备注</th>
-                        <th>教师批注</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${weekDocuments}" var="weekDocument">
-                        <tr class="mytr">
-                            <td>${weekDocument.week}</td>
-                            <td>${weekDocument.documentname}</td>
-                            <td>${weekDocument.remark}</td>
-                            <td>${weekDocument.annotation}</td>
-                            <td>
-                                <a href="${pageContext.request.contextPath}/downWeekDocument?documentname=${weekDocument.documentname}" >
-                                <button class="btn btn-primary btn-sm edit_btn" id="down_btn" >
-                                   下载
-                                </button>
-                                </a>
-                                <button class="btn btn-primary btn-sm edit_btn" id="edit_btn">
-                                <span class="glyphicon glyphicon-pencil"></span>编辑
-                                </button>
-                                <a href="${pageContext.request.contextPath}/deleteWeekDocument?documentname=${weekDocument.documentname}&dId=${weekDocument.dId}&sSno=${student.sno}" class="btn btn-danger btn-sm delete_btn">
-                                    <span class="glyphicon glyphicon-trash"></span>删除
-                                </a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                <!-- 显示表格数据 -->
+                <div class="row" id="table_page" >
+                    <div class="col-md-12">
+                        <c:choose>
+                            <c:when test="${just=='1'}">
+                                <table class="table table-hover" >
+                                    <thead style="color: red">
+                                    <tr>
+                                        <th>周次</th>
+                                        <th>文件名</th>
+                                        <th>备注</th>
+                                        <th>教师批注</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach items="${weekDocuments}" var="weekDocument">
+                                        <tr class="mytr">
+                                            <td>${weekDocument.week}</td>
+                                            <td>${weekDocument.documentname}</td>
+                                            <td>${weekDocument.remark}</td>
+                                            <td>${weekDocument.annotation}</td>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/downWeekDocument?documentname=${weekDocument.documentname}" >
+                                                    <button class="btn btn-primary btn-sm edit_btn" id="down_btn" >
+                                                        下载
+                                                    </button>
+                                                </a>
+                                               <%-- <button class="btn btn-primary btn-sm edit_btn" id="edit_btn">
+                                                    <span class="glyphicon glyphicon-pencil"></span>编辑
+                                                </button>--%>
+                                                <a href="${pageContext.request.contextPath}/deleteWeekDocument?documentname=${weekDocument.documentname}&dId=${weekDocument.dId}&sSno=${student.sno}" class="btn btn-danger btn-sm delete_btn">
+                                                    <span class="glyphicon glyphicon-trash"></span>删除
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
 
-                </c:when>
-                    <c:otherwise>
-                        <span><strong>您还没有上传周报哦</strong></span>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-
+                            </c:when>
+                            <c:otherwise>
+                                <span><strong>您还没有上传周报!</strong></span>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <span style="color: red"><strong>您还没有被老师确认！请耐心等待</strong></span>
+            </c:otherwise>
+        </c:choose>
 
         <!-- 添加模态框 -->
         <div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -204,15 +211,15 @@
                                            </c:if>
                                        </c:when>
                                        <c:otherwise>--%>
-                                                <option>第一周</option>
-                                                <option>第二周</option>
-                                                <option>第三周</option>
-                                                <option>第四周</option>
-                                                <option>第五周</option>
-                                                <option>第六周</option>
-                                                <option>第七周</option>
-                                    <%--  </c:otherwise>
-                                          </c:choose>--%>
+                                        <option>第一周</option>
+                                        <option>第二周</option>
+                                        <option>第三周</option>
+                                        <option>第四周</option>
+                                        <option>第五周</option>
+                                        <option>第六周</option>
+                                        <option>第七周</option>
+                                        <%--  </c:otherwise>
+                                              </c:choose>--%>
                                     </select>
                                 </div>
                             </div>
@@ -226,7 +233,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">备注</label>
                                 <div class="col-sm-10">
-                                 <%--   <input type="textarea" name="remark" class="form-control" style="height: 120px">--%>
+                                    <%--   <input type="textarea" name="remark" class="form-control" style="height: 120px">--%>
                                     <textarea cols="62px" rows="5px" name="remark"></textarea>
                                 </div>
                             </div>
@@ -240,7 +247,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
         </div>
 

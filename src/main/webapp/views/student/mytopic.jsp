@@ -127,24 +127,24 @@
 
 
 </header>
-<div id="main_page" class="page-header">
+<div id="main_page" class="page-header" style="width: 200%">
     <!-- 搭建显示页面 -->
-    <div class="container" style="width: 200%">
+    <div class="container" style="width: 100%">
         <div class="modal-header">
-            <h2>我的选题信息 <small>(Information  of my topic)</small></h2>
-            <!-- 按钮 -->
+            <h2>我的申报课题 <small>(Information  of my selected topics)</small></h2>
+          <%--  <!-- 按钮 -->
             <div class="row">
                 <div class="col-md-4 col-md-offset-10">
                     <a id="seeall"  href="${request}/myTopic?sSno=${student.sno}" methods="post" class="btn btn-primary">查看所有已报名课程</a>
                 </div>
-            </div>
+            </div>--%>
         </div>
         <br>
         <!-- 显示表格数据 -->
         <div class="row" id="table_page">
             <div class="col-md-12">
                 <c:choose>
-                    <c:when test="${topicsandteacherList.list[0]!=null}">
+                    <c:when test="${topicsandteacherList!=null}">
                     <table class="table table-hover" >
                         <thead style="color: red">
                         <tr>
@@ -166,7 +166,7 @@
                         </tr>
                         </thead>
                         <tbody id="mytopic-information">
-                        <c:forEach items="${topicsandteacherList.list}" var="list">
+                        <c:forEach items="${topicsandteacherList}" var="list">
                             <tr class="mytr">
                                 <td id="td_${list.tpId}"><a  href="javascript:void(0)"  onclick="signup('${list.tpId}','${list.status}')">退选</a></td>
                                 <c:choose>
@@ -193,15 +193,13 @@
                                 <td>${list.teacher.office}</td>
                                 <td>${list.teacher.tel}</td>
                                 <td>${list.teacher.email}</td>
-
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
-
                     </c:when>
                     <c:otherwise>
-                        <span><strong>您现在没有选题</strong></span>
+                        <span style="color: red"><strong>您还没有申报题目！</strong></span>
                     </c:otherwise>
                 </c:choose>
             </div>

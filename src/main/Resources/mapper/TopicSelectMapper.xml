@@ -378,9 +378,9 @@
  (
   select tp.id,tp.name tpname,tp.contents,tp.type,tp.source,tp.difficulty,tp.support,tp.department,tp.num,tr.name trname,tr.title,tr.office,tr.tel,tr.email
  from t_topic tp left join t_teacher tr on tp.tno=tr.tno
-where tp.id in(select tps.tp_id  from t_topicselect tps where s_sno='201608020223')
+where tp.id in(select tps.tp_id  from t_topicselect tps where s_sno=#{sSno,jdbcType=VARCHAR})
 	) as f left join  t_topicselect tps  on f.id=tps.tp_id
-WHERE s_sno='201608020223'
+WHERE s_sno=#{sSno,jdbcType=VARCHAR}
   </select>
 
   <select id="findExistBySSno" parameterType="java.lang.String" resultType="java.lang.Integer">
@@ -459,7 +459,7 @@ select ts.name tsname,tp.name tpname,tr.name trname from t_teacher tr,t_topic tp
 
   <select id="adminFindAllStudentAndTopicAndTeacherByName" parameterType="map" resultMap="BaseResultMapWithStudentTopicAndTeacher">
 select ts.department,ts.classes,ts.tel,ts.name tsname,tp.name tpname,tr.name trname from t_teacher tr,t_topic tp,t_student ts,t_topicselect tps
- WHERE ts.sno=tps.s_sno and tps.t_tno=tr.tno and tps.tp_id=tp.id and tps.status=#{status,jdbcType=VARCHAR} and ts.name=#{name,jdbcType=VARCHAR}
+ WHERE ts.sno=tps.s_sno and tps.t_tno=tr.tno and tps.tp_id=tp.id and tps.status=#{status,jdbcType=VARCHAR} and ts.name like concat('%',#{name},'%')
 
   </select>
 

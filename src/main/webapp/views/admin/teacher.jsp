@@ -313,7 +313,6 @@
                             <input id="office" name="office" type="text" style="display: none" value="">
                             <input id="tel"   name="tel" type="text" style="display: none" value="">
                             <input id="email" name="email" type="text" style="display: none" value="">
-                            <input id="password" name="password"  type="text" style="display: none" value="">
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">教师编号</label>
@@ -356,7 +355,13 @@
                                     </label>
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">密码</label>
+                                <div class="col-sm-10">
+                                    <input id="password" type="text" name="password" class="form-control"  placeholder="密码">
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                                 <button type="submit" class="btn btn-primary" >保存更改</button>

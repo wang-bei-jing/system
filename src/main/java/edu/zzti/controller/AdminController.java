@@ -259,6 +259,7 @@ public class AdminController {
         /*  request.setAttribute("oneteacher",oneteacher);*/
         return new ModelAndView("redirect:/studentSelectAll");
     }
+    //=====================================课题管理================================================
     /**
      * @Author ：shc
      * @Param ：
@@ -284,9 +285,32 @@ public class AdminController {
     /**
      * @Author ：shc
      * @Param ：
-     * @Return ：adminFindAllStudentAndTopicAndTeacher
+     * @Return ：
+     * @Date ：2020/4/14
+     * @Description ：name模糊查询全部选题
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/adminTopicSelectByName")
+    public ModelAndView TopicSelectByCname(HttpServletRequest request,String name, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+        PageHelper.startPage(pn, 5);
+        List<Topic> topics = topicService.selectByName(name);
+        System.out.println(topics.size());
+        for (int i = 0; i < topics.size(); i++) {
+            System.out.println(topics.get(i).toString());
+        }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        PageInfo page = new PageInfo(topics, 5);
+        System.out.println(page.getPageSize());
+        request.getSession().setAttribute("topicname", name);
+        request.getSession().setAttribute("topicList", page);
+        return new ModelAndView("admin/admintopic");
+    }
+    /**
+     * @Author ：shc
+     * @Param ：
+     * @Return ：
      * @Date ：2020/4/13
-     * @Description ：
+     * @Description ：已选课题学生及其课题信息
      **/
     @ResponseBody
     @RequestMapping(value = "/adminFindAllStudentAndTopicAndTeacher")
@@ -308,7 +332,7 @@ public class AdminController {
      * @Param ：
      * @Return ：
      * @Date ：2020/4/13
-     * @Description ：查询已选课题学生及其课题信息
+     * @Description ：name模糊查询已选课题学生及其课题信息
      **/
     @ResponseBody
     @RequestMapping(value = "/adminFindAllStudentAndTopicAndTeacherByName")
@@ -320,11 +344,18 @@ public class AdminController {
         for (int i = 0; i < topicSelectList.size(); i++) {
             System.out.println(topicSelectList.get(i).toString());
         }
-
         PageInfo page = new PageInfo(topicSelectList, 5);
+        request.getSession().setAttribute("studentname", name);
         request.getSession().setAttribute("sttList", page);
         return new ModelAndView("admin/adminstudentselect");
     }
+    /**
+     * @Author ：shc
+     * @Param ：
+     * @Return ：
+     * @Date ：2020/4/14
+     * @Description ：未选题学生
+     **/
     @ResponseBody
     @RequestMapping(value = "/findAllStudentNotSelect")
     public ModelAndView findAllStudentNotSelect(HttpServletRequest request,@RequestParam(value = "pn", defaultValue = "1") Integer pn){
@@ -336,6 +367,28 @@ public class AdminController {
             System.out.println(studentList.get(i).toString());
         }
         PageInfo page = new PageInfo(studentList, 5);
+        request.getSession().setAttribute("studentList",page);
+        return new ModelAndView("admin/adminstudentnotselect");
+    }
+    /**
+     * @Author ：shc
+     * @Param ：
+     * @Return ：
+     * @Date ：2020/4/14
+     * @Description ：name模糊查询未选题学生
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/adminFindAllStudentNOTSELECTByName")
+    public ModelAndView adminFindAllStudentNOTSELECTByName(HttpServletRequest request,@RequestParam String name, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+        PageHelper.startPage(pn, 5);
+        String status="0";
+        List<TopicSelect> topicSelectList=topicSelectService.adminFindAllStudentAndTopicAndTeacherByName(name,status);
+        System.out.println(topicSelectList.size());
+        for (int i = 0; i < topicSelectList.size(); i++) {
+            System.out.println(topicSelectList.get(i).toString());
+        }
+        PageInfo page = new PageInfo(topicSelectList, 5);
+        request.getSession().setAttribute("studentname", name);
         request.getSession().setAttribute("studentList",page);
         return new ModelAndView("admin/adminstudentnotselect");
     }

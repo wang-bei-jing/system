@@ -86,7 +86,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <form action="${pageContext.request.contextPath}/adminFindAllStudentAndTopicAndTeacherByName" method="post" class="navbar-form navbar-left" role="search">
-                        <input  type="text" name="name" class="form-control" placeholder="按学生姓名查询">
+                        <input  type="text" value="${studentname}" name="name" class="form-control" placeholder="按学生姓名查询">
                         <button type="submit" class="btn btn-info">查询</button>
                     </form>
                 </div>

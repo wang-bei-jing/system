@@ -41,7 +41,7 @@ public class TopicController {
 
     @ResponseBody
     @RequestMapping(value = "/TopicSelectByName")
-    public ModelAndView TopicSelectByCname(HttpServletRequest request, @RequestParam String name, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+    public ModelAndView TopicSelectByCname(HttpServletRequest request,String name, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5);
         List<Topic> topics = topicService.selectByName(name);
         System.out.println(topics.size());
@@ -51,6 +51,7 @@ public class TopicController {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         PageInfo page = new PageInfo(topics, 5);
         System.out.println(page.getPageSize());
+        request.getSession().setAttribute("topicname", name);
         request.getSession().setAttribute("topicList", page);
         return new ModelAndView("student/topic");
     }
@@ -58,13 +59,14 @@ public class TopicController {
 
     @ResponseBody
     @RequestMapping(value = "/myTopic")
-    public ModelAndView myTopic(HttpServletRequest request,String sSno,@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
-        PageHelper.startPage(pn, 5);
+    public ModelAndView myTopic(HttpServletRequest request,String sSno) {
         List<TopicSelect> topicsandteacher = topicSelectService.findBySSno(sSno);
         System.out.println(topicsandteacher.size());
         System.out.println(topicsandteacher.toString());
-        PageInfo page = new PageInfo(topicsandteacher, 5);
-        request.getSession().setAttribute("topicsandteacherList", page);
+        if (topicsandteacher.size()==0){
+             topicsandteacher=null;
+        }
+        request.getSession().setAttribute("topicsandteacherList", topicsandteacher);
         return new ModelAndView("student/mytopic");
     }
 

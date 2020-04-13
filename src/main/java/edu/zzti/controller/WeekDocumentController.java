@@ -30,35 +30,43 @@ public class WeekDocumentController {
     @Autowired
     WeekDocumentService weekDocumentService;
 
-    //周报部分---------------------------------------------------------------------------
+    //------------------------------------周报部分---------------------------------------
     @RequestMapping("/findWeekDocument")
     public ModelAndView myTopicSelect(HttpServletRequest request, String sSno) {
         String status="1";
+        String just="1";
         //通过sSno,status="1"查询实训课题的id来删除周报
         TopicSelect topicSelect=topicSelectService.myWeekfile(sSno,status);
-        System.out.println(topicSelect.toString());
-        String category="1";
-        int tpsId=topicSelect.getId();
-        System.out.println(tpsId);
-        List<WeekDocument> weekDocuments=weekDocumentService.findByCateory(tpsId,category);
-        for(int i=0;i<weekDocuments.size();i++){
+      /*  System.out.println(topicSelect.toString());*/
+        if (topicSelect!=null){
+            String category="1";
+            int tpsId=topicSelect.getId();
+            System.out.println(tpsId);
+            List<WeekDocument> weekDocuments=weekDocumentService.findByCateory(tpsId,category);
+       /* for(int i=0;i<weekDocuments.size();i++){
             System.out.println(weekDocuments.get(i).toString());
+        }*/
+            request.getSession().setAttribute("mytopicSelect",topicSelect);
+            request.getSession().setAttribute("weekDocuments",weekDocuments);
+            return new ModelAndView("student/weekfileupdown");
+        }else {
+            just="0";
+            request.getSession().setAttribute("just",just);
+            return new ModelAndView("student/weekfileupdown");
         }
-        request.getSession().setAttribute("mytopicSelect",topicSelect);
-        request.getSession().setAttribute("weekDocuments",weekDocuments);
-        return new ModelAndView("student/weekfileupdown");
+
     }
 
     @ResponseBody
     @RequestMapping(value="/uploadWeekDocument",method=RequestMethod.POST)
     public ModelAndView uploadDocument(MultipartFile file, HttpServletRequest request, WeekDocument weekDocument,String sSno) throws IOException {
-        System.out.println(weekDocument.toString());
+        /*System.out.println(weekDocument.toString());*/
         String path = request.getSession().getServletContext().getRealPath("upload");
         System.out.println(path);
         String fileName = file.getOriginalFilename();
         weekDocument.setDocumentname(fileName);
         System.out.println(weekDocument.getDocumentname());
-        System.out.println(weekDocument.toString());
+       /* System.out.println(weekDocument.toString());*/
         File dir = new File(path,fileName);
         if(!dir.exists()){
             dir.mkdirs();
@@ -113,22 +121,29 @@ public class WeekDocumentController {
 
 
 
-    //实训文件部分---------------------------------------------------------------------------
+    //------------------------------------------------实训文件部分---------------------------
     @RequestMapping("/findTestfile")
     public ModelAndView findTestfile(HttpServletRequest request, String sSno) {
         String status="1";
+        String just="1";
         //通过sSno,status="1"查询实训课题的id来删除周报
         TopicSelect topicSelect=topicSelectService.myWeekfile(sSno,status);
-        System.out.println(topicSelect.toString());
-        int tpsId=topicSelect.getId();
-        String category="2";
-        List<WeekDocument> testfiles=weekDocumentService.findByCateory(tpsId,category);
-        for(int i=0;i<testfiles.size();i++){
+      /*  System.out.println(topicSelect.toString());*/
+        if (topicSelect!=null){
+            int tpsId=topicSelect.getId();
+            String category="2";
+            List<WeekDocument> testfiles=weekDocumentService.findByCateory(tpsId,category);
+       /* for(int i=0;i<testfiles.size();i++){
             System.out.println(testfiles.get(i).toString());
+        }*/
+            request.getSession().setAttribute("mytopicSelect",topicSelect);
+            request.getSession().setAttribute("testfiles",testfiles);
+            return new ModelAndView("student/testfile");
+        }else {
+            just="0";
+            request.getSession().setAttribute("just",just);
+            return new ModelAndView("student/testfile");
         }
-        request.getSession().setAttribute("mytopicSelect",topicSelect);
-        request.getSession().setAttribute("testfiles",testfiles);
-        return new ModelAndView("student/testfile");
     }
 
     @ResponseBody

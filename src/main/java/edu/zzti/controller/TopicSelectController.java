@@ -74,13 +74,21 @@ public class TopicSelectController {
         System.out.println(sSno);
      System.out.println("123");
      TopicSelect topicSelect=topicSelectService.myTopicSelect(sSno,status);
+     System.out.println(topicSelect);
      Grade grade=gradeService.findStudentGradeBySno(sSno,status);
-     if (topicSelect!=null){
-         System.out.println(topicSelect.toString());
-         request.getSession().setAttribute("mytopicSelect",topicSelect);
+     String just="1";
+      if (topicSelect==null){
+          just="0";
+      }
+
+         request.getSession().setAttribute("just",just);
+        request.getSession().setAttribute("mytopicSelect",topicSelect);
          request.getSession().setAttribute("grade",grade);
          return new ModelAndView("student/myworktopic");
-     }else
-         return new ModelAndView("student/notbeselected");
+
+
+
+
+
     }
 }
