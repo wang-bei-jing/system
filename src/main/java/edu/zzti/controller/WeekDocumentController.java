@@ -26,10 +26,20 @@ import java.util.List;
 public class WeekDocumentController {
     @Autowired
     TopicSelectService topicSelectService;
-
     @Autowired
     WeekDocumentService weekDocumentService;
+    //=========================================以下是薛文青部分==============================================================
 
+
+    //=========================================以上是薛文青部分==============================================================
+
+
+
+
+
+
+
+    //=========================================以下是施昊晨部分==============================================================
     //------------------------------------周报部分---------------------------------------
     @RequestMapping("/findWeekDocument")
     public ModelAndView myTopicSelect(HttpServletRequest request, String sSno) {
@@ -206,7 +216,7 @@ public class WeekDocumentController {
         System.out.println(i);
         return new ModelAndView("redirect:/findTestfile?sSno="+sSno+"");
     }
-
+//=========================================以上是施昊晨部分==============================================================
 
 
 

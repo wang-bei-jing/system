@@ -22,7 +22,19 @@ public class TopicController {
     TopicService topicService;
     @Autowired
     TopicSelectService topicSelectService;
+    //=========================================以下是薛文青部分==============================================================
 
+
+    //=========================================以上是薛文青部分==============================================================
+
+
+
+
+
+
+
+
+    //=========================================以下是施昊晨部分==============================================================
     @ResponseBody
     @RequestMapping(value = "/TopicSelectAll")
     public ModelAndView TopicSelectAll(HttpServletRequest request, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
@@ -69,6 +81,7 @@ public class TopicController {
         request.getSession().setAttribute("topicsandteacherList", topicsandteacher);
         return new ModelAndView("student/mytopic");
     }
+    //=========================================以上是施昊晨部分==============================================================
 
 
 
