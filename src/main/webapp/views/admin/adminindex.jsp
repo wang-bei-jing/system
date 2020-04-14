@@ -308,15 +308,15 @@
                         </div>
                     </a>
                     <ul class="collapse submenu list-unstyled" id="datatables" data-parent="#accordionExample">
-                        <li>
+                       <%-- <li>
                             <a href="table_dt_basic.html"> 学生成绩 模糊查询</a>
-                        </li>
+                        </li>--%>
                         <li>
                             <a href="table_dt_basic-dark.html"> 成绩分类 </a>
                         </li>
-                        <li>
+                      <%--  <li>
                             <a href="table_dt_ordering_sorting.html">饼图 </a>
-                        </li>
+                        </li>--%>
 
                     </ul>
                 </li>

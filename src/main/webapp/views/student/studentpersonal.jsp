@@ -100,13 +100,15 @@
                         <div class="form-group list-group-item">
                             <label for="inputDepartment" class="col-sm-2 control-label">专业：</label>
                             <div class="col-sm-8">
-                                <input type="text" name="department" value="${student.department}" class="form-control" id="inputDepartment">
+                                <input type="text" name="department" value="${student.department}" class="form-control" id="inputDepartment" readonly>
+                                <span style="color: red">*不允许修改</span>
                             </div>
                         </div>
                         <div class="form-group list-group-item">
                             <label for="inputClasses" class="col-sm-2 control-label">班级：</label>
                             <div class="col-sm-8">
-                                <input type="text" name="classes" value="${student.classes}" class="form-control" id="inputClasses">
+                                <input type="text" name="classes" value="${student.classes}" class="form-control" id="inputClasses" readonly>
+                                <span style="color: red">*不允许修改</span>
                             </div>
                         </div>
                         <div class="form-group list-group-item">
