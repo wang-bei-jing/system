@@ -90,6 +90,7 @@
                         <button type="submit" class="btn btn-info">查询</button>
                     </form>
                 </div>
+
                 <div class="col-md-6 col-md-offset-10">
                     <a id="seeall"  href="${request}/TopicSelectAll" methods="post" class="btn btn-primary">查看全部课程</a>
                 </div>
