@@ -32,7 +32,9 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		<!-- table指定每个表的生成策略 -->
-		<table tableName="" domainObjectName=""></table>
+		<table tableName="" domainObjectName="" enableCountByExample="false"
+			   enableUpdateByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" selectByExampleQueryId="false"/>
 <!--		<table tableName="t_topic" domainObjectName="Topic"></table>-->
 <!--		<table tableName="t_student" domainObjectName="Student"></table>-->
 <!--		<table tableName="t_topicselect" domainObjectName="TopicSelect"></table>-->
