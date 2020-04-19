@@ -50,5 +50,9 @@ public class GradeServiceImpl implements GradeService {
   public List<Grade> findStudentGradeBySno(String sno) {
     return gradeMapper.findStudentGradeBySno(sno);
   }
+
+  public List<Grade> adminGradeFindByTeacherName(String sno) {
+    return gradeMapper.adminGradeFindByTeacherName(sno);
+  }
   //shc
 }

@@ -17,6 +17,7 @@ public interface GradeMapper {
     Grade findStudentGradeBySnoAndStatus(@Param("sno") String sno,@Param("status") String status);
     List<Grade> findStudentGradeByBoundary(@Param("min") Integer min,@Param("max") Integer max);
     List<Grade> findStudentGradeBySno(String sno);
+    List<Grade> adminGradeFindByTeacherName(String sno);
     //shc
 
     int deleteByPrimaryKey(Integer gId);

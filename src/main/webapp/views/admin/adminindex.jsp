@@ -314,6 +314,9 @@
                         <li>
                             <a href="${pageContext.request.contextPath}/adminGradeSelectAll" target="myfrm"> 学生成绩查询 </a>
                         </li>
+                           <li>
+                               <a href="${pageContext.request.contextPath}/adminGradeScale" target="myfrm">成绩比例</a>
+                           </li>
                       <%--  <li>
                             <a href="table_dt_ordering_sorting.html">饼图 </a>
                         </li>--%>

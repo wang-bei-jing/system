@@ -411,6 +411,11 @@ public class AdminController {
         request.getSession().setAttribute("studentsGradesSize", studentsGradesSize);
         return new ModelAndView("admin/admingrade");
     }
+    /**
+     * @Author ：shc
+     * @Date ：2020/4/20
+     * @Description ：根据学号查学生成绩，
+     **/
     @ResponseBody
     @RequestMapping(value = "/adminGradeFindBySno")
     public ModelAndView adminGradeFindBySno(HttpServletRequest request,String sno,@RequestParam(value = "min", defaultValue = "0")Integer min,@RequestParam(value = "max", defaultValue = "101")Integer max, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
@@ -425,6 +430,36 @@ public class AdminController {
         request.getSession().setAttribute("studentsGradesSize", studentsGradesSize);
         return new ModelAndView("admin/admingrade");
     }
+    /**
+     * @Author ：shc
+     * @Date ：2020/4/20
+     * @Description ：根据老师的名字查学生成绩。
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/adminGradeFindByTeacherName")
+    public ModelAndView adminGradeFindByTeacherName(HttpServletRequest request,String tname,@RequestParam(value = "min", defaultValue = "0")Integer min,@RequestParam(value = "max", defaultValue = "101")Integer max, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+        PageHelper.startPage(pn, 5);
+        List<Grade> studentsGrades=gradeService.adminGradeFindByTeacherName(tname);
+        System.out.println(studentsGrades.size());
+        int studentsGradesSize=studentsGrades.size();
+        System.out.println(studentsGradesSize);
+        PageInfo page = new PageInfo(studentsGrades, 5);
+        request.getSession().setAttribute("studentsGrades", page);
+        request.getSession().setAttribute("admingradeteachername", tname);
+        request.getSession().setAttribute("studentsGradesSize", studentsGradesSize);
+        return new ModelAndView("admin/admingrade");
+    }
+    /**
+     * @Author ：shc
+     * @Date ：2020/4/20
+     * @Description ：成绩比例
+     **/
+    public ModelAndView adminGradeScale(HttpServletRequest request){
+      return  null;
+      //教师先发送修改成绩比例的请求，
+
+    }
+
 
 }
 

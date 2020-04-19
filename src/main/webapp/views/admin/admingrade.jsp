@@ -84,9 +84,17 @@
             <h2>学生成绩信息 <small>(Grade information  of all students )</small></h2>
             <!-- 按钮 -->
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-xs-12" >
                     <form action="${pageContext.request.contextPath}/adminGradeFindBySno" method="post" class="navbar-form navbar-left" role="search">
-                        <input  type="text" value="${admingradesno}" name="sno" class="form-control" placeholder="按学号查询">
+                        <input  style="width: 245px;height: 35px" type="text" value="${admingradesno}" name="sno" class="form-control" placeholder="按学号查询">
+                        <button type="submit" class="btn btn-info">
+                            <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;查询
+                        </button>
+                    </form>
+                </div>
+                <div class="col-xs-12" >
+                    <form action="${pageContext.request.contextPath}/adminGradeFindByTeacherName" method="post" class="navbar-form navbar-left" role="search">
+                        <input  style="width: 245px;height: 35px" type="text" value="${admingradeteachername}" name="tname" class="form-control" placeholder="根据教师姓名查询其学生们的成绩">
                         <button type="submit" class="btn btn-info">
                             <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;查询
                         </button>
@@ -130,7 +138,7 @@
                                 <th>学号</th>
                                 <th>班级</th>
                                 <th>课题名</th>
-                                <th>教师姓名</th>
+                                <th>指导教师</th>
                                 <th>平时成绩</th>
                                 <th>期中成绩</th>
                                 <th>验收成绩</th>
@@ -169,7 +177,7 @@
         </c:choose>
 
         <%--分页信息--%>
-        <c:if test="${studentsGradesSize>=2}">
+        <c:if test="${studentsGradesSize>=6}">
             <div class="row">
                 <div class="col-md-6">
                     当前是第${studentsGrades.pageNum }页,
