@@ -27,7 +27,7 @@ public class LoginController {
             Teacher teacher=teacherService.selectTeacherByTno(tno);
             if(teacher.getStatus()==0){
                 //return Msg.fail().add("登录失败","账号状态异常，请联系管理员");
-                return new ModelAndView("login");
+                return new ModelAndView("teacher/login");
             }else {
                 //out.println("<script type='text/javascript'>location='/teacher/t_index';</script>");
                 session.setAttribute("teacher", teacher);
