@@ -109,7 +109,7 @@ public class TopicSelectController {
      System.out.println("123");
      TopicSelect topicSelect=topicSelectService.myTopicSelect(sSno,status);
      System.out.println(topicSelect);
-     Grade grade=gradeService.findStudentGradeBySno(sSno,status);
+     Grade grade=gradeService.findStudentGradeBySnoAndStatus(sSno,status);
      String just="1";
       if (topicSelect==null){
           just="0";

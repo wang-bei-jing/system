@@ -26,7 +26,9 @@ public class AdminController {
     TopicService topicService;
     @Autowired
     TopicSelectService topicSelectService;
-
+    @Autowired
+    GradeService gradeService;
+    //-----------------------------------------管理员登录，修改密码--------------------------------
     @ResponseBody
     @RequestMapping("/adminLogin")
     public ModelAndView adminLogin(HttpServletRequest request, String loginname, String password){
@@ -391,6 +393,37 @@ public class AdminController {
         request.getSession().setAttribute("studentname", name);
         request.getSession().setAttribute("studentList",page);
         return new ModelAndView("admin/adminstudentnotselect");
+    }
+//=====================================成绩管理================================================
+    @ResponseBody
+    @RequestMapping(value = "/adminGradeSelectAll")
+    public ModelAndView adminGradeSelectAll(HttpServletRequest request,@RequestParam(value = "min", defaultValue = "0")Integer min,@RequestParam(value = "max", defaultValue = "101")Integer max, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+        PageHelper.startPage(pn, 5);
+        List<Grade> studentsGrades=gradeService.findStudentGradeByBoundary(min,max);
+        System.out.println(studentsGrades.size());
+        for (int i = 0; i < studentsGrades.size(); i++) {
+            System.out.println(studentsGrades.get(i).toString());
+        }
+        int studentsGradesSize=studentsGrades.size();
+        System.out.println(studentsGradesSize);
+        PageInfo page = new PageInfo(studentsGrades, 5);
+        request.getSession().setAttribute("studentsGrades", page);
+        request.getSession().setAttribute("studentsGradesSize", studentsGradesSize);
+        return new ModelAndView("admin/admingrade");
+    }
+    @ResponseBody
+    @RequestMapping(value = "/adminGradeFindBySno")
+    public ModelAndView adminGradeFindBySno(HttpServletRequest request,String sno,@RequestParam(value = "min", defaultValue = "0")Integer min,@RequestParam(value = "max", defaultValue = "101")Integer max, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+        PageHelper.startPage(pn, 5);
+        List<Grade> studentsGrades=gradeService.findStudentGradeBySno(sno);
+        System.out.println(studentsGrades.size());
+        int studentsGradesSize=studentsGrades.size();
+        System.out.println(studentsGradesSize);
+        PageInfo page = new PageInfo(studentsGrades, 5);
+        request.getSession().setAttribute("studentsGrades", page);
+        request.getSession().setAttribute("admingradesno", sno);
+        request.getSession().setAttribute("studentsGradesSize", studentsGradesSize);
+        return new ModelAndView("admin/admingrade");
     }
 
 }

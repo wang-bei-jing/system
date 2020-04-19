@@ -14,7 +14,9 @@ public interface GradeMapper {
     //xwq结束
 
     //shc
-    Grade findStudentGradeBySno(@Param("sno") String sno,@Param("status") String status);
+    Grade findStudentGradeBySnoAndStatus(@Param("sno") String sno,@Param("status") String status);
+    List<Grade> findStudentGradeByBoundary(@Param("min") Integer min,@Param("max") Integer max);
+    List<Grade> findStudentGradeBySno(String sno);
     //shc
 
     int deleteByPrimaryKey(Integer gId);

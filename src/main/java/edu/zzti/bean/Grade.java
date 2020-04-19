@@ -18,8 +18,16 @@ public class Grade {
     private TopicSelect topicSelect;
 
     private Student student;
-
     private Topic topic;
+    private Teacher teacher;
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
 
     public Integer getgId() {
         return gId;

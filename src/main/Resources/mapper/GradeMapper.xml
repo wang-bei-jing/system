@@ -185,9 +185,70 @@
   </update>
 
   <!-- shc -->
-  <select id="findStudentGradeBySno" parameterType="map" resultMap="BaseResultMap">
+  <select id="findStudentGradeBySnoAndStatus" parameterType="map" resultMap="BaseResultMap">
     SELECT * FROM t_grade tg WHERE tg.g_ts_id=
     (SELECT tps.id FROM t_topicselect tps WHERE tps.s_sno=#{sno,jdbcType=VARCHAR} and tps.status=#{status,jdbcType=VARCHAR})
+  </select>
+  <resultMap id="BaseResultMapWithAllInfo" type="edu.zzti.bean.Grade">
+    <id column="g_id" jdbcType="INTEGER" property="gId" />
+    <result column="g_ts_id" jdbcType="INTEGER" property="gTsId" />
+    <result column="g_peacetime" jdbcType="INTEGER" property="gPeacetime" />
+    <result column="g_midterm" jdbcType="INTEGER" property="gMidterm" />
+    <result column="g_presentation" jdbcType="INTEGER" property="gPresentation" />
+    <result column="g_check" jdbcType="INTEGER" property="gCheck" />
+    <result column="g_total" jdbcType="INTEGER" property="gTotal" />
+    <association property="student" javaType="edu.zzti.bean.Student">
+      <id column="sno" jdbcType="VARCHAR" property="sno" />
+      <result column="password" jdbcType="VARCHAR" property="password" />
+      <result column="tsname" jdbcType="VARCHAR" property="name" />
+      <result column="sex" jdbcType="VARCHAR" property="sex" />
+      <result column="tel" jdbcType="VARCHAR" property="tel" />
+      <result column="email" jdbcType="VARCHAR" property="email" />
+      <result column="department" jdbcType="VARCHAR" property="department" />
+      <result column="classes" jdbcType="VARCHAR" property="classes" />
+      <result column="status" jdbcType="INTEGER" property="status" />
+    </association>
+    <association property="topic" javaType="edu.zzti.bean.Topic">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="tpname" jdbcType="VARCHAR" property="name" />
+      <result column="contents" jdbcType="VARCHAR" property="contents" />
+      <result column="tno" jdbcType="INTEGER" property="tno" />
+      <result column="type" jdbcType="VARCHAR" property="type" />
+      <result column="source" jdbcType="VARCHAR" property="source" />
+      <result column="difficulty" jdbcType="VARCHAR" property="difficulty" />
+      <result column="support" jdbcType="VARCHAR" property="support" />
+      <result column="department" jdbcType="VARCHAR" property="department" />
+      <result column="status" jdbcType="INTEGER" property="status" />
+      <result column="num" jdbcType="INTEGER" property="num" />
+    </association>
+    <association property="teacher" javaType="edu.zzti.bean.Teacher">
+      <id column="tno" jdbcType="INTEGER" property="tno" />
+      <result column="password" jdbcType="VARCHAR" property="password" />
+      <result column="trname" jdbcType="VARCHAR" property="name" />
+      <result column="sex" jdbcType="VARCHAR" property="sex" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="identity" jdbcType="INTEGER" property="identity" />
+      <result column="department" jdbcType="VARCHAR" property="department" />
+      <result column="office" jdbcType="VARCHAR" property="office" />
+      <result column="tel" jdbcType="VARCHAR" property="tel" />
+      <result column="email" jdbcType="VARCHAR" property="email" />
+      <result column="status" jdbcType="INTEGER" property="status" />
+    </association>
+  </resultMap>
+  <select id="findStudentGradeByBoundary" parameterType="map" resultMap="BaseResultMapWithAllInfo">
+select ts.name tsname,ts.sno,ts.classes,tp.name tpname,tr.name trname,tg.g_peacetime,tg.g_midterm,tg.g_presentation,tg.g_check,tg.g_total
+from t_teacher tr,t_topic tp,t_student ts,t_topicselect tps ,t_grade tg
+ WHERE ts.sno=tps.s_sno and tps.t_tno=tr.tno and tps.tp_id=tp.id and tg.g_ts_id=tps.id
+ GROUP BY tg.g_total
+ having tg.g_total BETWEEN #{min,jdbcType=VARCHAR} and #{max,jdbcType=VARCHAR}
+ ORDER BY tg.g_total desc
+  </select>
+
+  <select id="findStudentGradeBySno" parameterType="java.lang.String" resultMap="BaseResultMapWithAllInfo">
+select ts.name tsname,ts.sno,ts.classes,tp.name tpname,tr.name trname,tg.g_peacetime,tg.g_midterm,tg.g_presentation,tg.g_check,tg.g_total
+from t_teacher tr,t_topic tp,t_student ts,t_topicselect tps ,t_grade tg
+ WHERE ts.sno=tps.s_sno and tps.t_tno=tr.tno and tps.tp_id=tp.id and tg.g_ts_id=tps.id and ts.sno=#{sno,jdbcType=VARCHAR}
+
   </select>
   <!-- shc -->
 </mapper>

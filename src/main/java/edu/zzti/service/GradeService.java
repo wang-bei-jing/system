@@ -19,6 +19,8 @@ public interface GradeService {
     //xwq结束
 
     //shc
-    Grade findStudentGradeBySno(String sno, String status);
+    Grade findStudentGradeBySnoAndStatus(String sno, String status);
+    List<Grade> findStudentGradeByBoundary(Integer min, Integer max);
+    List<Grade> findStudentGradeBySno(String sno);
     //shc
 }

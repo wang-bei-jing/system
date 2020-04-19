@@ -45,7 +45,7 @@
 </head>
 <body class="login_page">
 <div style="color:black">
-    <h1 class="text-center">数据库软件综合实训管理系统</h1>
+    <%--<h1 class="text-center">数据库软件综合实训管理系统</h1>--%>
 </div>
 <div class="text-center">
     <a href="${pageContext.request.contextPath}/views/teacher/login.jsp">教师登录</a>
@@ -57,14 +57,16 @@
         </c:if>
     </div>
     <div style="text-align: center">
-        <h2>登录</h2>
+        <h3>数据库软件综合实训管理系统</h3>
+        &nbsp;
     </div>
+
     <ul class="nav nav-tabs">
         <li role="presentation"  class="active"><a href="#">学生登录</a></li>
         <li role="presentation" id="Login1"><a href="#">管理员登录</a></li>
     </ul>
     <br>
-    <form action="studentLogin" method="post">
+    <form action="${pageContext.request.contextPath}/studentLogin" method="post">
         <div class="login-wrap" style="text-align: center">
             <div class="input-group">
                 <span class="input-group-addon">账号</span>
@@ -87,14 +89,15 @@
         </c:if>
     </div>
     <div style="text-align: center">
-        <h2>登录</h2>
+        <h3>数据库软件综合实训管理系统</h3>
+        &nbsp;
     </div>
     <ul class="nav nav-tabs">
         <li role="presentation" id="Login2" ><a href="#">学生登录</a></li>
         <li role="presentation" class="active"><a href="#">管理员登录</a></li>
     </ul>
     <br>
-    <form action="adminLogin" method="post">
+    <form action="${pageContext.request.contextPath}/adminLogin" method="post">
         <div class="login-wrap" style="text-align: center">
             <div class="input-group">
                 <span class="input-group-addon">账号</span>

@@ -39,8 +39,16 @@ public class GradeServiceImpl implements GradeService {
   //xwq结束
 
   //shc
-  public Grade findStudentGradeBySno(String sno, String status) {
-      return gradeMapper.findStudentGradeBySno(sno, status);
+  public Grade findStudentGradeBySnoAndStatus(String sno, String status) {
+      return gradeMapper.findStudentGradeBySnoAndStatus(sno, status);
+  }
+
+  public List<Grade> findStudentGradeByBoundary(Integer min, Integer max) {
+    return gradeMapper.findStudentGradeByBoundary(min, max);
+  }
+
+  public List<Grade> findStudentGradeBySno(String sno) {
+    return gradeMapper.findStudentGradeBySno(sno);
   }
   //shc
 }

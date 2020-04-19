@@ -7,17 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <title>数据库软件综合实训管理系统</title>
 
-    <link href="${pageContext.request.contextPath}/static/corkstatic/assets/css/loader.css" rel="stylesheet" type="text/css" />
-    <script src="${pageContext.request.contextPath}/static/corkstatic/assets/js/loader.js"></script>
+    <link href="${pageContext.request.contextPath}/static/cork/assets/css/loader.css" rel="stylesheet" type="text/css" />
+    <script src="${pageContext.request.contextPath}/static/cork/assets/js/loader.js"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/static/corkstatic/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="${pageContext.request.contextPath}/static/corkstatic/assets/css/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/static/cork/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/static/cork/assets/css/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link href="${pageContext.request.contextPath}/static/corkstatic/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/static/corkstatic/assets/css/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/static/cork/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/static/cork/assets/css/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 </head>
 <body>
@@ -32,7 +32,7 @@
         <ul class="navbar-item theme-brand flex-row  text-center ">
             <li class="nav-item theme-logo">
                 <a>
-                    <img src="${pageContext.request.contextPath}/static/corkstatic/assets/img/logo.svg" class="navbar-logo" alt="logo">
+                    <img src="${pageContext.request.contextPath}/static/cork/assets/img/logo.svg" class="navbar-logo" alt="logo">
                 </a>
             </li>
             <li class="nav-item theme-text">
@@ -312,7 +312,7 @@
                             <a href="table_dt_basic.html"> 学生成绩 模糊查询</a>
                         </li>--%>
                         <li>
-                            <a href="table_dt_basic-dark.html"> 成绩分类 </a>
+                            <a href="${pageContext.request.contextPath}/adminGradeSelectAll" target="myfrm"> 学生成绩查询 </a>
                         </li>
                       <%--  <li>
                             <a href="table_dt_ordering_sorting.html">饼图 </a>
@@ -370,22 +370,22 @@
 
 
 <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-<script src="${pageContext.request.contextPath}/static/corkstatic/assets/js/libs/jquery-3.1.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/corkstatic/bootstrap/js/popper.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/corkstatic/bootstrap/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/corkstatic/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/corkstatic/assets/js/app.js"></script>
+<script src="${pageContext.request.contextPath}/static/cork/assets/js/libs/jquery-3.1.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/cork/bootstrap/js/popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/cork/bootstrap/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/cork/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/cork/assets/js/app.js"></script>
 <script>
     $(document).ready(function() {
         App.init();
     });
 </script>
-<script src="${pageContext.request.contextPath}/static/corkstatic/assets/js/custom.js"></script>
+<script src="${pageContext.request.contextPath}/static/cork/assets/js/custom.js"></script>
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-<script src="${pageContext.request.contextPath}/static/corkstatic/plugins/apex/apexcharts.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/corkstatic/assets/js/dashboard/dash_1.js"></script>
+<script src="${pageContext.request.contextPath}/static/cork/plugins/apex/apexcharts.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/cork/assets/js/dashboard/dash_1.js"></script>
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
 </body>
