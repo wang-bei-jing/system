@@ -76,12 +76,11 @@
     tno, password, name, sex, title, identity, department, office, tel, email, status
   </sql>
 
-
-
-  <update id="updatePassword" parameterType="map" >
+  <!-- xwq开始 -->
+  <update id="updPwd" parameterType="map" >
     update t_teacher
     set password=#{newPassword,jdbcType=VARCHAR}
-    where tno=#{tno,jdbcType=INTEGER}
+    where tno = #{tno,jdbcType=INTEGER}
   </update>
 
   <select id="selectTeacherByTno" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -96,8 +95,7 @@
     from t_teacher
     where tno=#{tno,jdbcType=INTEGER} and password=#{password,jdbcType=VARCHAR}
   </select>
-
-
+  <!-- xwq结束 -->
 
   <select id="selectByExample" parameterType="edu.zzti.bean.TeacherExample" resultMap="BaseResultMap">
     select

@@ -15,16 +15,35 @@
     <result column="num" jdbcType="INTEGER" property="num" />
   </resultMap>
 
-
-
-
-
-
-
-
-
-
-
+  <!--xwq开始-->
+    <resultMap id="BaseResultMapWith" type="edu.zzti.bean.Topic">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="tpName" jdbcType="VARCHAR" property="name" />
+      <result column="contents" jdbcType="VARCHAR" property="contents" />
+      <result column="tpTno" jdbcType="INTEGER" property="tno" />
+      <result column="type" jdbcType="VARCHAR" property="type" />
+      <result column="source" jdbcType="VARCHAR" property="source" />
+      <result column="tpDifficulty" jdbcType="VARCHAR" property="difficulty" />
+      <result column="support" jdbcType="VARCHAR" property="support" />
+      <result column="tpDepartment" jdbcType="VARCHAR" property="department" />
+      <result column="tpStatus" jdbcType="INTEGER" property="status" />
+      <result column="num" jdbcType="INTEGER" property="num" />
+      <!-- 关联字段封装 -->
+      <association property="teacher" javaType="edu.zzti.bean.Teacher">
+        <id column="tTno" jdbcType="INTEGER" property="tno" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="tName" jdbcType="VARCHAR" property="name" />
+        <result column="sex" jdbcType="VARCHAR" property="sex" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="identity" jdbcType="INTEGER" property="identity" />
+        <result column="tDepartment" jdbcType="VARCHAR" property="department" />
+        <result column="office" jdbcType="VARCHAR" property="office" />
+        <result column="tel" jdbcType="VARCHAR" property="tel" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="tStatus" jdbcType="INTEGER" property="status" />
+      </association>
+    </resultMap>
+  <!--xwq结束-->
 
   <sql id="Example_Where_Clause">
     <where>
@@ -88,21 +107,50 @@
     id, name, contents, tno, type, source, difficulty, support, department, status, num
   </sql>
 
+  <!-- xwq开始 -->
+  <update id="applyTopic" parameterType="java.lang.Integer">
+    update t_topic
+    set status = 0
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 
+  <update id="reApplyTopic" parameterType="java.lang.Integer">
+    update t_topic
+    set status = 3
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="acceptTopic" parameterType="java.lang.Integer">
+    update t_topic
+    set status = 1
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="refuseTopic" parameterType="java.lang.Integer">
+    update t_topic
+    set status = 2
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 
   <select id="selectTopicByTno" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select *
     from t_topic
-    where tno=#{tno,jdbcType=INTEGER}
+    where tno = #{tno,jdbcType=INTEGER}
   </select>
 
   <select id="selectTopicById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select *
     from t_topic
-    where id=#{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
 
-
+  <select id="selectAllWithTeacher" resultMap="BaseResultMapWith">
+    select *,t_topic.name tpName,t_topic.tno tpTno,t_topic.department tpDepartment,t_topic.status tpStatus,
+    t_teacher.name tName,t_teacher.tno tTno,t_teacher.department tDepartment,t_teacher.status tStatus
+    from t_topic,t_teacher
+    where t_topic.tno = t_teacher.tno
+  </select>
+  <!-- xwq结束 -->
 
   <select id="selectByExample" parameterType="edu.zzti.bean.TopicExample" resultMap="BaseResultMap">
     select

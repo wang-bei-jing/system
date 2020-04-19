@@ -47,35 +47,38 @@
 <div style="color:black">
     <h1 class="text-center">数据库软件综合实训管理系统</h1>
 </div>
+<div class="text-center">
+    <a href="${pageContext.request.contextPath}/views/teacher/login.jsp">教师登录</a>
+</div>
 <div id="student" class="login_form">
-        <div class="form-group" style="text-align: center">
-            <c:if test="${!empty error}">
-                <span style="color: red; "><c:out value="${error}" /></span>
-            </c:if>
-        </div>
-        <div style="text-align: center">
-            <h2>登录</h2>
-        </div>
-        <ul class="nav nav-tabs">
-            <li role="presentation"  class="active"><a href="#">学生登录</a></li>
-            <li role="presentation" id="Login1"><a href="#">管理员登录</a></li>
-        </ul>
-        <br>
-        <form action="studentLogin" method="post">
-            <div class="login-wrap" style="text-align: center">
-                <div class="input-group">
-                    <span class="input-group-addon">账号</span>
-                    <input type="text" name="sno" class="form-control" placeholder="Loginname" autofocus>
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon">密码</span>
-                    <input type="password" name="password" class="form-control" placeholder="Password">
-                </div>
-                <br>
-                <button class="btn btn-primary btn-lg btn-block" type="submit">登录</button>
+    <div class="form-group" style="text-align: center">
+        <c:if test="${!empty error}">
+            <span style="color: red; "><c:out value="${error}" /></span>
+        </c:if>
+    </div>
+    <div style="text-align: center">
+        <h2>登录</h2>
+    </div>
+    <ul class="nav nav-tabs">
+        <li role="presentation"  class="active"><a href="#">学生登录</a></li>
+        <li role="presentation" id="Login1"><a href="#">管理员登录</a></li>
+    </ul>
+    <br>
+    <form action="studentLogin" method="post">
+        <div class="login-wrap" style="text-align: center">
+            <div class="input-group">
+                <span class="input-group-addon">账号</span>
+                <input type="text" name="sno" class="form-control" placeholder="Loginname" autofocus>
             </div>
-        </form>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">密码</span>
+                <input type="password" name="password" class="form-control" placeholder="Password">
+            </div>
+            <br>
+            <button class="btn btn-primary btn-lg btn-block" type="submit">登录</button>
+        </div>
+    </form>
 </div>
 <div id="manage" class="login_form"  style="display: none">
     <div class="form-group" style="text-align: center">

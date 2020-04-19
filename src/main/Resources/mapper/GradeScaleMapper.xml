@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.zzti.dao.GradeScaleMapper">
+  <resultMap id="BaseResultMap" type="edu.zzti.bean.GradeScale">
+    <id column="gs_id" jdbcType="INTEGER" property="gsId" />
+    <result column="grade_a" jdbcType="INTEGER" property="gradeA" />
+    <result column="grade_b" jdbcType="INTEGER" property="gradeB" />
+    <result column="grade_c" jdbcType="INTEGER" property="gradeC" />
+    <result column="grade_d" jdbcType="INTEGER" property="gradeD" />
+    <result column="gs_status" jdbcType="INTEGER" property="gsStatus" />
+    <result column="gs_term" jdbcType="VARCHAR" property="gsTerm" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    gs_id, grade_a, grade_b, grade_c, grade_d, gs_status, gs_term
+  </sql>
+
+  <select id="selectByGsStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from t_gradescale
+    where gs_status = #{gsStatus,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_gradescale
+    where gs_id = #{gsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_gradescale
+    where gs_id = #{gsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="edu.zzti.bean.GradeScale">
+    insert into t_gradescale (gs_id, grade_a, grade_b, 
+      grade_c, grade_d, gs_status, 
+      gs_term)
+    values (#{gsId,jdbcType=INTEGER}, #{gradeA,jdbcType=INTEGER}, #{gradeB,jdbcType=INTEGER}, 
+      #{gradeC,jdbcType=INTEGER}, #{gradeD,jdbcType=INTEGER}, #{gsStatus,jdbcType=INTEGER}, 
+      #{gsTerm,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="edu.zzti.bean.GradeScale">
+    insert into t_gradescale
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gsId != null">
+        gs_id,
+      </if>
+      <if test="gradeA != null">
+        grade_a,
+      </if>
+      <if test="gradeB != null">
+        grade_b,
+      </if>
+      <if test="gradeC != null">
+        grade_c,
+      </if>
+      <if test="gradeD != null">
+        grade_d,
+      </if>
+      <if test="gsStatus != null">
+        gs_status,
+      </if>
+      <if test="gsTerm != null">
+        gs_term,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gsId != null">
+        #{gsId,jdbcType=INTEGER},
+      </if>
+      <if test="gradeA != null">
+        #{gradeA,jdbcType=INTEGER},
+      </if>
+      <if test="gradeB != null">
+        #{gradeB,jdbcType=INTEGER},
+      </if>
+      <if test="gradeC != null">
+        #{gradeC,jdbcType=INTEGER},
+      </if>
+      <if test="gradeD != null">
+        #{gradeD,jdbcType=INTEGER},
+      </if>
+      <if test="gsStatus != null">
+        #{gsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="gsTerm != null">
+        #{gsTerm,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.zzti.bean.GradeScale">
+    update t_gradescale
+    <set>
+      <if test="gradeA != null">
+        grade_a = #{gradeA,jdbcType=INTEGER},
+      </if>
+      <if test="gradeB != null">
+        grade_b = #{gradeB,jdbcType=INTEGER},
+      </if>
+      <if test="gradeC != null">
+        grade_c = #{gradeC,jdbcType=INTEGER},
+      </if>
+      <if test="gradeD != null">
+        grade_d = #{gradeD,jdbcType=INTEGER},
+      </if>
+      <if test="gsStatus != null">
+        gs_status = #{gsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="gsTerm != null">
+        gs_term = #{gsTerm,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gs_id = #{gsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.zzti.bean.GradeScale">
+    update t_gradescale
+    set grade_a = #{gradeA,jdbcType=INTEGER},
+      grade_b = #{gradeB,jdbcType=INTEGER},
+      grade_c = #{gradeC,jdbcType=INTEGER},
+      grade_d = #{gradeD,jdbcType=INTEGER},
+      gs_status = #{gsStatus,jdbcType=INTEGER},
+      gs_term = #{gsTerm,jdbcType=VARCHAR}
+    where gs_id = #{gsId,jdbcType=INTEGER}
+  </update>
+</mapper>

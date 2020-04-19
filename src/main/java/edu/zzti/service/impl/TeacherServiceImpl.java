@@ -16,7 +16,7 @@ public class TeacherServiceImpl implements TeacherService {
         this.teacherMapper = teacherMapper;
     }
 
-
+    //xwq开始
     public Integer countTeacher(Integer tno, String password) {
         return teacherMapper.countTeacher(tno,password);
     }
@@ -25,17 +25,14 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherMapper.selectTeacherByTno(tno);
     }
 
-    public Integer updateByPrimaryKeySelective(Teacher teacher) {
+    public Integer updTeacher(Teacher teacher) {
         return teacherMapper.updateByPrimaryKeySelective(teacher);
     }
 
-    public Integer updatePassword(Integer tno, String newPassword) {
-        return teacherMapper.updatePassword(tno, newPassword);
+    public Integer updPwd(Integer tno, String newPassword) {
+        return teacherMapper.updPwd(tno, newPassword);
     }
-
-
-
-
+    //xwq结束
 
     //shc
     public List<Teacher> finAllTeacher() {

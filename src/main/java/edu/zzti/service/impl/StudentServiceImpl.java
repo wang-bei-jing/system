@@ -17,14 +17,11 @@ public class StudentServiceImpl implements StudentService {
         this.studentMapper = studentMapper;
     }
 
-    public List<Student> selectStudentByTno(Integer tno) {
-        return studentMapper.selectStudentByTno(tno);
+    //xwq开始
+    public Integer accept(String sno) {
+        return studentMapper.accept(sno);
     }
-
-
-
-
-
+    //xwq结束
 
     public Integer studentLogin(String sno, String password){
         HashMap map=new HashMap();
@@ -37,11 +34,9 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.findBySno(sno);
     }
 
-
     public void studentUpdateByAll(HashMap map) {
         studentMapper.updateByAll(map);
     }
-
 
     public void studentUpdatePassword(String sno,String newPassword){
         studentMapper.updatePassword(sno, newPassword);
@@ -71,8 +66,6 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> findAllStudentByStatus(String status) {
         return studentMapper.findAllStudentByStatus(status);
     }
-
-
 }
 
 

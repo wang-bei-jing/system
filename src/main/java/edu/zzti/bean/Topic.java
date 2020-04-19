@@ -22,6 +22,7 @@ public class Topic {
     private Integer status;
 
     private Integer num;
+
     private Teacher teacher;
 
     public Teacher getTeacher() {

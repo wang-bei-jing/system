@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>学生管理</title>
+    <title>课题管理</title>
 
     <link href="${pageContext.request.contextPath}/static/cork/assets/css/loader.css" rel="stylesheet" type="text/css" />
     <script src="${pageContext.request.contextPath}/static/cork/assets/js/loader.js"></script>
@@ -22,7 +22,7 @@
 <div id="load_screen"> <div class="loader"> <div class="loader-content"> <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 792 723" style="enable-background:new 0 0 792 723;" xml:space="preserve"> <g> <g> <path class="st0" d="M213.9,584.4c-47.4-25.5-84.7-60.8-111.8-106.1C75,433.1,61.4,382,61.4,324.9c0-57,13.6-108.1,40.7-153.3 S166.5,91,213.9,65.5s100.7-38.2,159.9-38.2c49.9,0,95,8.8,135.3,26.3s74.1,42.8,101.5,75.7l-85.5,78.9 c-38.9-44.9-87.2-67.4-144.7-67.4c-35.6,0-67.4,7.8-95.4,23.4s-49.7,37.4-65.4,65.4c-15.6,28-23.4,59.8-23.4,95.4 s7.8,67.4,23.4,95.4s37.4,49.7,65.4,65.4c28,15.6,59.7,23.4,95.4,23.4c57.6,0,105.8-22.7,144.7-68.2l85.5,78.9 c-27.4,33.4-61.4,58.9-102,76.5c-40.6,17.5-85.8,26.3-135.7,26.3C314.3,622.7,261.3,809.9,213.9,584.4z"/> </g> <circle class="st1" cx="375.4" cy="322.9" r="100"/> </g> <g> <circle class="st2" cx="275.4" cy="910" r="65"></circle> <circle class="st4" cx="475.4" cy="910" r="65"></circle> </g> </svg> </div></div></div>
 <!--  END LOADER -->
 
-<!-- BEGIN MAIN CONTAINER -->
+<!--  BEGIN CONTENT AREA  -->
 <div class="layout-px-spacing">
     <div class="row layout-top-spacing">
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
@@ -38,7 +38,6 @@
                                 <th>学生电话</th>
                                 <th>学生电子邮箱</th>
                                 <th>状态</th>
-                                <th>操作</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,7 +87,7 @@
     });
     function to_page(pn){
         $.ajax({
-            url:"${pageContext.request.contextPath}/teacher/student/"+tno,
+            url:"${pageContext.request.contextPath}/teacher/myStudent/"+tno,
             data:"pn="+pn,
             type:"GET",
             success:function(result){
@@ -110,29 +109,15 @@
             var studentTelTd = $("<td></td>").append(item.student.tel);
             var studentEmailTd = $("<td></td>").append(item.student.email);
             var statusTd = $("<td></td>");
+            if (item.status==1)
+            {
+                statusTd.append("已同意");
+            }
             var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
-                .append($("<span></span>").addClass("glyphicon glyphicon-pencil"));
-                //.append("同意");
-            //为同意按钮添加一个自定义的属性来表示当前同意的课题选择id
+                .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
+                .append("查看");
             editBtn.attr("edit-id",item.id);
-            var delBtn =  $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
-                .append($("<span></span>").addClass("glyphicon glyphicon-trash"));
-                //.append("拒绝");
-            //为删除按钮添加一个自定义的属性来表示当前拒绝的课题选择id
-            delBtn.attr("del-id",item.id);
-            var btnTd = $("<td></td>");
-            if (item.status==0)
-            {
-                statusTd.append("未处理");
-                btnTd.append(editBtn).append(delBtn);
-                editBtn.append("同意");
-                delBtn.append("拒绝");
-            }
-            if (item.status==2)
-            {
-                statusTd.append("已拒绝");
-                btnTd.append("已拒绝");
-            }
+            var btnTd = $("<td></td>").append(editBtn);
             $("<tr></tr>").append(studentNameTd)
                 .append(topicNameTd)
                 .append(studentSexTd)
@@ -140,47 +125,9 @@
                 .append(studentTelTd)
                 .append(studentEmailTd)
                 .append(statusTd)
-                .append(btnTd)
                 .appendTo("#student_table tbody");
         });
     }
-    //点击同意，同意课题选择
-    $(document).on("click",".edit_btn",function(){
-        var name = $(this).parents("tr").find("td:eq(0)").text();
-        var id = $(this).attr("edit-id");
-        alert(id);
-        if(confirm("确认同意"+name+"的选题吗？")){
-            $.ajax({
-                url:"${pageContext.request.contextPath}/teacher/agreeStudent/"+id,
-                type:"PUT",
-                success:function(result){
-                    if(result.code == 100){
-                        to_page(pageNum);
-                    }else{
-                        alert(result.msg);
-                    }
-                }
-            });
-        }
-    });
-    //点击拒绝，拒绝课题选择
-    $(document).on("click",".delete_btn",function(){
-        var name = $(this).parents("tr").find("td:eq(2)").text();
-        var topicSelectId = $(this).attr("del-id");
-        if(confirm("确认拒绝"+name+"的选题吗？")){
-            $.ajax({
-                url:"${pageContext.request.contextPath}/teacher/refuseStudent/"+topicSelectId,
-                type:"PUT",
-                success:function(result){
-                    if(result.code == 100){
-                        to_page(pageNum);
-                    }else{
-                        alert(result.extend.message);
-                    }
-                }
-            });
-        }
-    });
     //解析显示分页信息
     function build_page_info(pageInfo){
         $("#page_info_area").empty();

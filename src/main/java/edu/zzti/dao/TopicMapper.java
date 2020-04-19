@@ -7,17 +7,25 @@ import org.apache.ibatis.annotations.Param;
 
 public interface TopicMapper {
 
-    Topic selectTopicById(Integer id);
+    //xwq开始
+    Integer applyTopic(Integer id);
+
+    Integer reApplyTopic(Integer id);
+
+    Integer acceptTopic(Integer id);
+
+    Integer refuseTopic(Integer id);
 
     List<Topic> selectTopicByTno(Integer tno);
 
-
+    List<Topic> selectAllWithTeacher();
+    //xwq结束
 
     //shc
     List<Topic> selectByName(String name);
+
     List<Topic> selectAll();
     //shc
-
 
     long countByExample(TopicExample example);
 

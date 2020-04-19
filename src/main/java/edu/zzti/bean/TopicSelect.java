@@ -12,7 +12,9 @@ public class TopicSelect {
     private String status;
 
     private Student student;
+
     private Topic topic;
+
     private Teacher teacher;
 
     public Integer getId() {

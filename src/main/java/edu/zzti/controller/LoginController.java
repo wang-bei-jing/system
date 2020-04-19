@@ -37,7 +37,7 @@ public class LoginController {
             }
         }else{
             //return Msg.fail().add("登录失败","账号密码不匹配，请重新输入");
-            return new ModelAndView("login");
+            return new ModelAndView("teacher/login");
         }
     }
     //退出

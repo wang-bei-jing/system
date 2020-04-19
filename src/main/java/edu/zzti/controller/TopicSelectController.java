@@ -1,16 +1,20 @@
 package edu.zzti.controller;
 
 import edu.zzti.bean.Grade;
+import edu.zzti.bean.Msg;
 import edu.zzti.bean.TopicSelect;
 import edu.zzti.service.GradeService;
 import edu.zzti.service.TopicSelectService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 @RestController
@@ -21,7 +25,26 @@ public class TopicSelectController {
     GradeService gradeService;
     //=========================================以下是薛文青部分==============================================================
 
+    /**
+     * 查询所有学生所选课题
+     */
+    @ResponseBody
+    @RequestMapping("/topicSelect")
+    public Msg topicSelect(){
+        List<TopicSelect> topicSelectList= topicSelectService.selectAll();
+        return Msg.success().add("topicSelectList",topicSelectList);
+    }
 
+    /**
+     * 学生课题级联
+     */
+    @ResponseBody
+    @RequestMapping("/getTopic/{id}")
+    public Msg getTopic(@PathVariable("id")Integer id){
+        TopicSelect topicSelect = topicSelectService.selectBytTsId(id);
+        System.out.println("getTopic--topicSelect.toString()--"+topicSelect.toString());
+        return Msg.success().add("topicSelect",topicSelect);
+    }
     //=========================================以上是薛文青部分==============================================================
 
 

@@ -17,6 +17,7 @@ public class TopicServiceImpl implements TopicService {
         this.topicMapper = topicMapper;
     }
 
+    //xwq开始
     public Integer insertTopic(Topic topic) {
         return topicMapper.insertSelective(topic);
     }
@@ -29,18 +30,34 @@ public class TopicServiceImpl implements TopicService {
         return topicMapper.updateByPrimaryKeySelective(topic);
     }
 
+    public Integer applyTopic(Integer id) {
+        return topicMapper.applyTopic(id);
+    }
+
+    public Integer reApplyTopic(Integer id) {
+        return topicMapper.reApplyTopic(id);
+    }
+
+    public Integer acceptTopic(Integer id) {
+        return topicMapper.acceptTopic(id);
+    }
+
+    public Integer refuseTopic(Integer id) {
+        return topicMapper.refuseTopic(id);
+    }
+
     public Topic selectTopicById(Integer id) {
-        return topicMapper.selectTopicById(id);
+        return topicMapper.selectByPrimaryKey(id);
     }
 
     public List<Topic> selectTopicByTno(Integer tno) {
         return topicMapper.selectTopicByTno(tno);
     }
 
-
-
-
-
+    public List<Topic> selectAllWithTeacher() {
+        return topicMapper.selectAllWithTeacher();
+    }
+    //xwq结束
 
     public List<Topic> selectByName(String name) {
         return  topicMapper.selectByName(name);

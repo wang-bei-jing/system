@@ -78,9 +78,13 @@
     sno, password, name, sex, tel, email, department, classes, status
   </sql>
 
-
-
-
+  <!-- xwq开始 -->
+  <update id="accept" parameterType="java.lang.String">
+    update t_student
+    set status=1
+    where sno=#{sno,jdbcType=VARCHAR}
+  </update>
+  <!-- xwq结束 -->
 
   <select id="selectByExample" parameterType="edu.zzti.bean.StudentExample" resultMap="BaseResultMap">
     select

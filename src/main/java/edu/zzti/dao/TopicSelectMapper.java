@@ -7,22 +7,48 @@ import org.apache.ibatis.annotations.Param;
 
 public interface TopicSelectMapper {
 
+    //xwq开始
     int acceptStudent(Integer id);
 
-    List<TopicSelect> selectStudentByTno(Integer tno);
+    int refuseStudent(Integer id);
+
+    List<TopicSelect> selectStudent(Integer tno);
+
+    List<TopicSelect> selectMyStudent(Integer tno);
+
+    List<TopicSelect> getStudent(Integer tno);
+
+    TopicSelect selectBytTsId(Integer id);
+
+    TopicSelect selectByTpId(Integer tpId);
+
+    int countByTpId(Integer tpId);
+
+    TopicSelect selectBySno(String sno);
+
+    List<TopicSelect> selectAll();
+    //xwq结束
 
     //shc
     List<TopicSelect> findBySSno(String sSno);
+
     int findExistBySSno(String sSno);
+
     int findExistBySSnoandtpid(@Param("sSno") String sSno, @Param("tpId") int tpId);
+
     int deleteBySSnoandtpid(@Param("sSno") String sSno, @Param("tpId") int tpId);
+
     int addSelective(TopicSelect record);
+
     TopicSelect myTopicSelect(@Param("sSno") String sSno, @Param("status") String status);
 
     TopicSelect myWeekfile(@Param("sSno") String sSno, @Param("status") String status);
+
     List<TopicSelect> adminFindAllStudentAndTopicAndTeacher(String status);
+
     List<TopicSelect> adminFindAllStudentAndTopicAndTeacherByName(@Param("name") String name,@Param("status") String status);
     //shc
+
     long countByExample(TopicSelectExample example);
 
     int deleteByExample(TopicSelectExample example);

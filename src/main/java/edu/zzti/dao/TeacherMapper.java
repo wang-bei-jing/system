@@ -7,15 +7,19 @@ import org.apache.ibatis.annotations.Param;
 
 public interface TeacherMapper {
 
-    Integer updatePassword(@Param("tno") Integer tno, @Param("newPassword") String newPassword);
+    //xwq开始
+    Integer updPwd(@Param("tno") Integer tno, @Param("newPassword") String newPassword);
 
     Teacher selectTeacherByTno(Integer tno);
 
     Integer countTeacher(@Param("tno") Integer tno, @Param("password") String password);
+    //xwq结束
 
     //shc
     List<Teacher> finAllTeacher();
+
     List<Teacher> selectAllTeacherByName(String name);
+
     Integer deleteTeacherByTno(Integer tno);
     //shc
 

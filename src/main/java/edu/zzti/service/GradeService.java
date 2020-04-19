@@ -2,9 +2,21 @@ package edu.zzti.service;
 
 import edu.zzti.bean.Grade;
 
+import java.util.List;
+
 public interface GradeService {
 
+    //xwq开始
+    int add(Grade grade);
 
+    int upd(Grade grade);
+
+    Grade selectByGId(Integer gId);
+
+    Grade selectByGTsId(Integer gTsId);
+
+    List<Grade> student(Integer tno);
+    //xwq结束
 
     //shc
     Grade findStudentGradeBySno(String sno, String status);
