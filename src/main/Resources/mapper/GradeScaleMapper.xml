@@ -7,20 +7,13 @@
     <result column="grade_b" jdbcType="INTEGER" property="gradeB" />
     <result column="grade_c" jdbcType="INTEGER" property="gradeC" />
     <result column="grade_d" jdbcType="INTEGER" property="gradeD" />
+    <result column="gs_department" jdbcType="VARCHAR" property="gsDepartment" />
+    <result column="gs_time" jdbcType="TIMESTAMP" property="gsTime" />
     <result column="gs_status" jdbcType="INTEGER" property="gsStatus" />
-    <result column="gs_term" jdbcType="VARCHAR" property="gsTerm" />
   </resultMap>
   <sql id="Base_Column_List">
-    gs_id, grade_a, grade_b, grade_c, grade_d, gs_status, gs_term
+    gs_id, grade_a, grade_b, grade_c, grade_d, gs_department, gs_time, gs_status
   </sql>
-
-  <select id="selectByGsStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select *
-    from t_gradescale
-    where gs_status = #{gsStatus,jdbcType=INTEGER}
-  </select>
-
-
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -33,11 +26,11 @@
   </delete>
   <insert id="insert" parameterType="edu.zzti.bean.GradeScale">
     insert into t_gradescale (gs_id, grade_a, grade_b, 
-      grade_c, grade_d, gs_status, 
-      gs_term)
+      grade_c, grade_d, gs_department, 
+      gs_time, gs_status)
     values (#{gsId,jdbcType=INTEGER}, #{gradeA,jdbcType=INTEGER}, #{gradeB,jdbcType=INTEGER}, 
-      #{gradeC,jdbcType=INTEGER}, #{gradeD,jdbcType=INTEGER}, #{gsStatus,jdbcType=INTEGER}, 
-      #{gsTerm,jdbcType=VARCHAR})
+      #{gradeC,jdbcType=INTEGER}, #{gradeD,jdbcType=INTEGER}, #{gsDepartment,jdbcType=VARCHAR}, 
+      #{gsTime,jdbcType=TIMESTAMP}, #{gsStatus,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="edu.zzti.bean.GradeScale">
     insert into t_gradescale
@@ -57,11 +50,14 @@
       <if test="gradeD != null">
         grade_d,
       </if>
+      <if test="gsDepartment != null">
+        gs_department,
+      </if>
+      <if test="gsTime != null">
+        gs_time,
+      </if>
       <if test="gsStatus != null">
         gs_status,
-      </if>
-      <if test="gsTerm != null">
-        gs_term,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -80,11 +76,14 @@
       <if test="gradeD != null">
         #{gradeD,jdbcType=INTEGER},
       </if>
+      <if test="gsDepartment != null">
+        #{gsDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="gsTime != null">
+        #{gsTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="gsStatus != null">
         #{gsStatus,jdbcType=INTEGER},
-      </if>
-      <if test="gsTerm != null">
-        #{gsTerm,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -103,11 +102,14 @@
       <if test="gradeD != null">
         grade_d = #{gradeD,jdbcType=INTEGER},
       </if>
+      <if test="gsDepartment != null">
+        gs_department = #{gsDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="gsTime != null">
+        gs_time = #{gsTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="gsStatus != null">
         gs_status = #{gsStatus,jdbcType=INTEGER},
-      </if>
-      <if test="gsTerm != null">
-        gs_term = #{gsTerm,jdbcType=VARCHAR},
       </if>
     </set>
     where gs_id = #{gsId,jdbcType=INTEGER}
@@ -118,8 +120,9 @@
       grade_b = #{gradeB,jdbcType=INTEGER},
       grade_c = #{gradeC,jdbcType=INTEGER},
       grade_d = #{gradeD,jdbcType=INTEGER},
-      gs_status = #{gsStatus,jdbcType=INTEGER},
-      gs_term = #{gsTerm,jdbcType=VARCHAR}
+      gs_department = #{gsDepartment,jdbcType=VARCHAR},
+      gs_time = #{gsTime,jdbcType=TIMESTAMP},
+      gs_status = #{gsStatus,jdbcType=INTEGER}
     where gs_id = #{gsId,jdbcType=INTEGER}
   </update>
 </mapper>

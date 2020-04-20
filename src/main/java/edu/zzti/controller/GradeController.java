@@ -4,17 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import edu.zzti.bean.Grade;
 import edu.zzti.bean.GradeRecord;
-import edu.zzti.bean.GradeScale;
 import edu.zzti.bean.Msg;
 import edu.zzti.service.GradeRecordService;
 import edu.zzti.service.GradeScaleService;
 import edu.zzti.service.GradeService;
 import edu.zzti.service.TopicSelectService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 

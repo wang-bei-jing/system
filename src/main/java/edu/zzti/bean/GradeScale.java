@@ -1,5 +1,7 @@
 package edu.zzti.bean;
 
+import java.util.Date;
+
 public class GradeScale {
     private Integer gsId;
 
@@ -11,9 +13,11 @@ public class GradeScale {
 
     private Integer gradeD;
 
-    private Integer gsStatus;
+    private String gsDepartment;
 
-    private String gsTerm;
+    private Date gsTime;
+
+    private Integer gsStatus;
 
     public Integer getGsId() {
         return gsId;
@@ -55,19 +59,27 @@ public class GradeScale {
         this.gradeD = gradeD;
     }
 
+    public String getGsDepartment() {
+        return gsDepartment;
+    }
+
+    public void setGsDepartment(String gsDepartment) {
+        this.gsDepartment = gsDepartment == null ? null : gsDepartment.trim();
+    }
+
+    public Date getGsTime() {
+        return gsTime;
+    }
+
+    public void setGsTime(Date gsTime) {
+        this.gsTime = gsTime;
+    }
+
     public Integer getGsStatus() {
         return gsStatus;
     }
 
     public void setGsStatus(Integer gsStatus) {
         this.gsStatus = gsStatus;
-    }
-
-    public String getGsTerm() {
-        return gsTerm;
-    }
-
-    public void setGsTerm(String gsTerm) {
-        this.gsTerm = gsTerm == null ? null : gsTerm.trim();
     }
 }
