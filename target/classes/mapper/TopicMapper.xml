@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.zzti.dao.TopicMapper">
+  <resultMap id="BaseResultMap" type="edu.zzti.bean.Topic">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="contents" jdbcType="VARCHAR" property="contents" />
+    <result column="tno" jdbcType="INTEGER" property="tno" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="difficulty" jdbcType="VARCHAR" property="difficulty" />
+    <result column="support" jdbcType="VARCHAR" property="support" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+  </resultMap>
+
+  <!--xwq开始-->
+    <resultMap id="BaseResultMapWith" type="edu.zzti.bean.Topic">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="tpName" jdbcType="VARCHAR" property="name" />
+      <result column="contents" jdbcType="VARCHAR" property="contents" />
+      <result column="tpTno" jdbcType="INTEGER" property="tno" />
+      <result column="type" jdbcType="VARCHAR" property="type" />
+      <result column="source" jdbcType="VARCHAR" property="source" />
+      <result column="tpDifficulty" jdbcType="VARCHAR" property="difficulty" />
+      <result column="support" jdbcType="VARCHAR" property="support" />
+      <result column="tpDepartment" jdbcType="VARCHAR" property="department" />
+      <result column="tpStatus" jdbcType="INTEGER" property="status" />
+      <result column="num" jdbcType="INTEGER" property="num" />
+      <!-- 关联字段封装 -->
+      <association property="teacher" javaType="edu.zzti.bean.Teacher">
+        <id column="tTno" jdbcType="INTEGER" property="tno" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="tName" jdbcType="VARCHAR" property="name" />
+        <result column="sex" jdbcType="VARCHAR" property="sex" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="identity" jdbcType="INTEGER" property="identity" />
+        <result column="tDepartment" jdbcType="VARCHAR" property="department" />
+        <result column="office" jdbcType="VARCHAR" property="office" />
+        <result column="tel" jdbcType="VARCHAR" property="tel" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="tStatus" jdbcType="INTEGER" property="status" />
+      </association>
+    </resultMap>
+  <!--xwq结束-->
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, contents, tno, type, source, difficulty, support, department, status, num
+  </sql>
+
+  <!-- xwq开始 -->
+  <update id="applyTopic" parameterType="java.lang.Integer">
+    update t_topic
+    set status = 0
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="reApplyTopic" parameterType="java.lang.Integer">
+    update t_topic
+    set status = 3
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="acceptTopic" parameterType="java.lang.Integer">
+    update t_topic
+    set status = 1
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="refuseTopic" parameterType="java.lang.Integer">
+    update t_topic
+    set status = 2
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectTopicByTno" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from t_topic
+    where tno = #{tno,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectTopicById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from t_topic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAllWithTeacher" resultMap="BaseResultMapWith">
+    select *,t_topic.name tpName,t_topic.tno tpTno,t_topic.department tpDepartment,t_topic.status tpStatus,
+    t_teacher.name tName,t_teacher.tno tTno,t_teacher.department tDepartment,t_teacher.status tStatus
+    from t_topic,t_teacher
+    where t_topic.tno = t_teacher.tno
+  </select>
+  <!-- xwq结束 -->
+
+  <select id="selectByExample" parameterType="edu.zzti.bean.TopicExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_topic
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_topic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_topic
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="edu.zzti.bean.TopicExample">
+    delete from t_topic
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="edu.zzti.bean.Topic">
+    insert into t_topic (id, name, contents, 
+      tno, type, source, 
+      difficulty, support, department, 
+      status, num)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{contents,jdbcType=VARCHAR}, 
+      #{tno,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
+      #{difficulty,jdbcType=VARCHAR}, #{support,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{num,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="edu.zzti.bean.Topic">
+    insert into t_topic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="contents != null">
+        contents,
+      </if>
+      <if test="tno != null">
+        tno,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="difficulty != null">
+        difficulty,
+      </if>
+      <if test="support != null">
+        support,
+      </if>
+      <if test="department != null">
+        department,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contents != null">
+        #{contents,jdbcType=VARCHAR},
+      </if>
+      <if test="tno != null">
+        #{tno,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="difficulty != null">
+        #{difficulty,jdbcType=VARCHAR},
+      </if>
+      <if test="support != null">
+        #{support,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="edu.zzti.bean.TopicExample" resultType="java.lang.Long">
+    select count(*) from t_topic
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_topic
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contents != null">
+        contents = #{record.contents,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tno != null">
+        tno = #{record.tno,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null">
+        source = #{record.source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.difficulty != null">
+        difficulty = #{record.difficulty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.support != null">
+        support = #{record.support,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null">
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.num != null">
+        num = #{record.num,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_topic
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      contents = #{record.contents,jdbcType=VARCHAR},
+      tno = #{record.tno,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=VARCHAR},
+      source = #{record.source,jdbcType=VARCHAR},
+      difficulty = #{record.difficulty,jdbcType=VARCHAR},
+      support = #{record.support,jdbcType=VARCHAR},
+      department = #{record.department,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      num = #{record.num,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.zzti.bean.Topic">
+    update t_topic
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contents != null">
+        contents = #{contents,jdbcType=VARCHAR},
+      </if>
+      <if test="tno != null">
+        tno = #{tno,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="difficulty != null">
+        difficulty = #{difficulty,jdbcType=VARCHAR},
+      </if>
+      <if test="support != null">
+        support = #{support,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.zzti.bean.Topic">
+    update t_topic
+    set name = #{name,jdbcType=VARCHAR},
+      contents = #{contents,jdbcType=VARCHAR},
+      tno = #{tno,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      difficulty = #{difficulty,jdbcType=VARCHAR},
+      support = #{support,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      num = #{num,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <resultMap id="BaseResultMapWithTeacher" type="edu.zzti.bean.Topic">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="contents" jdbcType="VARCHAR" property="contents" />
+    <result column="tno" jdbcType="INTEGER" property="tno" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="difficulty" jdbcType="VARCHAR" property="difficulty" />
+    <result column="support" jdbcType="VARCHAR" property="support" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <association property="teacher" javaType="edu.zzti.bean.Teacher">
+      <id column="tno" jdbcType="INTEGER" property="tno" />
+      <result column="password" jdbcType="VARCHAR" property="password" />
+      <result column="tname" jdbcType="VARCHAR" property="name" />
+      <result column="sex" jdbcType="VARCHAR" property="sex" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="identity" jdbcType="INTEGER" property="identity" />
+      <result column="department" jdbcType="VARCHAR" property="department" />
+      <result column="office" jdbcType="VARCHAR" property="office" />
+      <result column="tel" jdbcType="VARCHAR" property="tel" />
+      <result column="email" jdbcType="VARCHAR" property="email" />
+      <result column="status" jdbcType="INTEGER" property="status" />
+    </association>
+  </resultMap>
+  <sql id="BaseWithTeacher_Column_List">
+    tp.id, tp.name, tp.contents, tp.tno, tp.type, tp.source, tp.difficulty, tp.support,
+    tp.department, tp.status, tp.num,
+    tr.tno,
+    tr.password,
+    tr.name tname,
+    tr.sex,
+    tr.title,
+    tr.department,
+    tr.tel,
+    tr.office,
+    tr.email,
+    tr.status
+  </sql>
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMapWithTeacher">
+    select
+    <include refid="BaseWithTeacher_Column_List" />
+    from t_topic tp left join t_teacher tr on tp.tno=tr.tno
+    where tp.name  like concat('%',#{name},'%')
+  </select>
+
+  <select id="selectAll"  resultMap="BaseResultMapWithTeacher">
+    select
+    <include refid="BaseWithTeacher_Column_List" />
+    from t_topic tp left join t_teacher tr on tp.tno=tr.tno
+  </select>
+
+
+
+</mapper>
