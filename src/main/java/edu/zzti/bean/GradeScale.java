@@ -82,4 +82,18 @@ public class GradeScale {
     public void setGsStatus(Integer gsStatus) {
         this.gsStatus = gsStatus;
     }
+
+    @Override
+    public String toString() {
+        return "GradeScale{" +
+                "gsId=" + gsId +
+                ", gradeA=" + gradeA +
+                ", gradeB=" + gradeB +
+                ", gradeC=" + gradeC +
+                ", gradeD=" + gradeD +
+                ", gsDepartment='" + gsDepartment + '\'' +
+                ", gsTime=" + gsTime +
+                ", gsStatus=" + gsStatus +
+                '}';
+    }
 }

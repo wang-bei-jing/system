@@ -2,6 +2,8 @@ package edu.zzti.service;
 
 import edu.zzti.bean.GradeScale;
 
+import java.util.List;
+
 public interface GradeScaleService {
 
     //xwq开始
@@ -13,6 +15,11 @@ public interface GradeScaleService {
 
     GradeScale selectByGsStatus(Integer gsStatus);
     //xwq结束
+
+    //shc
+    List<GradeScale> findNewApplyGradeScale();
+    int updateGradeScaleByIdAndGsStatus(Integer gsId,Integer gsStatus);
+    //shc
 }
 
 

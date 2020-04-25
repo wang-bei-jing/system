@@ -30,6 +30,7 @@ public interface StudentMapper {
     Integer studentDel(String sno);
 
     List<Student> findAllStudentByStatus(String status);
+    int batchInsert(List<Student> studentList);
     //shc
 
     long countByExample(StudentExample example);

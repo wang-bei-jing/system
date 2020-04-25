@@ -55,6 +55,10 @@ public class TeacherServiceImpl implements TeacherService {
     public int updateTeacher(Teacher teacher) {
         return teacherMapper.updateByPrimaryKeySelective(teacher);
     }
+
+    public int batchInsertTeacher(List<Teacher> teacherList) {
+        return teacherMapper.batchInsertTeacher(teacherList);
+    }
 }
 
 

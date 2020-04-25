@@ -62,7 +62,10 @@
         $(document).ready(function(){
             $("tbody>tr:odd").css("background-color","#e4e4e4");
             $("tbody>tr:even").css("background-color","white");
-        })
+        });
+        function loadFile(file){
+            $("#filename").html(file.name);
+        };
     </script>
 
     <style>
@@ -128,12 +131,31 @@
             <h2>全部教师 <small>(Information  of all teachers)</small></h2>
             <!-- 按钮 -->
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <form action="${pageContext.request.contextPath}/teacherSelectByName" method="post" class="navbar-form navbar-left" role="search">
                         <input  type="text" name="name" value="${teachername}" class="form-control" autocomplete="on" placeholder="按教师姓名查询">
                         <button type="submit" class="btn btn-info">查询</button>
                     </form>
                 </div>
+
+                <div class="form-group col-md-6">
+                    <span  class=" btn btn-primary" style="background: white;color: #0f6674">批量导入教师 :</span>
+                </div>
+                <div>
+                    <form action="${pageContext.request.contextPath}/importTeachers" method="post" class="form-horizontal" enctype="multipart/form-data">
+                        <div class="col-md-7"></div>
+                        <div class="col-md-1" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
+                            <button id="" class="btn btn-success fileinput-button" width="120px" type="button">选择excel</button>
+                            <input type="file" id="myfile" name="file" onchange="loadFile(this.files[0])" width="120px" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
+                        </div>
+                        <div class="col-md-3">
+                            <span id="filename" style="vertical-align: middle"></span>
+                            &nbsp;
+                            <button type="submit" class="btn btn-primary" >导入数据</button>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="col-md-4 col-md-offset-10">
                     <a id="seeall"  href="${request}/teacherSelectAll" methods="post" class="btn btn-primary">查看所有教师</a>
                     <button class="btn btn-success" id="add_modal" >添加教师</button>

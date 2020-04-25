@@ -342,5 +342,16 @@
   <select id="deleteTeacherByTno" parameterType="java.lang.Integer">
     delete  from t_teacher where  tno=#{tno,jdbcType=INTEGER}
   </select>
-
+  <insert id="batchInsertTeacher" parameterType="list">
+    insert into t_teacher (tno, name, department,identity)
+    values
+    <foreach collection="list" item="obj" index="index" separator="," >
+      (
+      #{obj.tno,jdbcType=INTEGER},
+      #{obj.name,jdbcType=VARCHAR},
+      #{obj.department,jdbcType=VARCHAR},
+      #{obj.identity,jdbcType=INTEGER}
+      )
+    </foreach>
+  </insert>
 </mapper>

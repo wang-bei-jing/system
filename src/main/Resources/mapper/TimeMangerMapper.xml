@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.zzti.dao.TimeMangerMapper">
+  <resultMap id="BaseResultMap" type="edu.zzti.bean.TimeManger">
+    <id column="ti_id" jdbcType="INTEGER" property="tiId" />
+    <result column="ti_category" jdbcType="INTEGER" property="tiCategory" />
+    <result column="ti_begin" jdbcType="TIMESTAMP" property="tiBegin" />
+    <result column="ti_end" jdbcType="TIMESTAMP" property="tiEnd" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ti_id, ti_category, ti_begin, ti_end
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_timemanger
+    where ti_id = #{tiId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_timemanger
+    where ti_id = #{tiId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="edu.zzti.bean.TimeManger">
+    insert into t_timemanger (ti_id, ti_category, ti_begin, 
+      ti_end)
+    values (#{tiId,jdbcType=INTEGER}, #{tiCategory,jdbcType=INTEGER}, #{tiBegin,jdbcType=TIMESTAMP}, 
+      #{tiEnd,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="edu.zzti.bean.TimeManger">
+    insert into t_timemanger
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tiId != null">
+        ti_id,
+      </if>
+      <if test="tiCategory != null">
+        ti_category,
+      </if>
+      <if test="tiBegin != null">
+        ti_begin,
+      </if>
+      <if test="tiEnd != null">
+        ti_end,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tiId != null">
+        #{tiId,jdbcType=INTEGER},
+      </if>
+      <if test="tiCategory != null">
+        #{tiCategory,jdbcType=INTEGER},
+      </if>
+      <if test="tiBegin != null">
+        #{tiBegin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tiEnd != null">
+        #{tiEnd,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.zzti.bean.TimeManger">
+    update t_timemanger
+    <set>
+      <if test="tiCategory != null">
+        ti_category = #{tiCategory,jdbcType=INTEGER},
+      </if>
+      <if test="tiBegin != null">
+        ti_begin = #{tiBegin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tiEnd != null">
+        ti_end = #{tiEnd,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ti_id = #{tiId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.zzti.bean.TimeManger">
+    update t_timemanger
+    set ti_category = #{tiCategory,jdbcType=INTEGER},
+      ti_begin = #{tiBegin,jdbcType=TIMESTAMP},
+      ti_end = #{tiEnd,jdbcType=TIMESTAMP}
+    where ti_id = #{tiId,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="findTimeMangerByCategory" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from  t_timemanger where ti_category=#{category,jdbcType=INTEGER}
+  </select>
+</mapper>

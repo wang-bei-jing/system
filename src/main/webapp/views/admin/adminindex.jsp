@@ -294,6 +294,9 @@
                         <li>
                             <a href="${pageContext.request.contextPath}/findAllStudentNotSelect" target="myfrm"> 未选题学生 </a>
                         </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/adminTopicSelectTime" target="myfrm"> 学生选题时间管理 </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="menu">

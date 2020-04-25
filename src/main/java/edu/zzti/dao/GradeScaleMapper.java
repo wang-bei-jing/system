@@ -1,14 +1,19 @@
 package edu.zzti.dao;
 
 import edu.zzti.bean.GradeScale;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface GradeScaleMapper {
 
+    GradeScale selectByGsStatus(Integer gsStatus);
 
     //shc
-    GradeScale findNewApplyGradeScale(Integer gsStatus);
+    List<GradeScale> findNewApplyGradeScale();
+    int updateGradeScaleByIdAndGsStatus(@Param("gsId") Integer gsId, @Param("gsStatus") Integer gsStatus);
     //shc
-    GradeScale selectByGsStatus(Integer gsStatus);
+
 
     int deleteByPrimaryKey(Integer gsId);
 

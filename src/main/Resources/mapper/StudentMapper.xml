@@ -323,9 +323,11 @@
   <select id="findAllStudent" resultMap="BaseResultMap">
     select * from t_student
   </select>
+
   <select id="findAllStudentByName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select * from t_student where name like concat('%',#{name},'%')
   </select>
+
   <delete id="studentDel" parameterType="java.lang.String" >
     delete from  t_student where  sno=#{sno,jdbcType=VARCHAR}
   </delete>
@@ -334,4 +336,16 @@
     select * from t_student where status=#{status,jdbcType=VARCHAR}
   </select>
 
+  <insert id="batchInsert" parameterType="list">
+    insert into t_student (sno, name, department, classes)
+    values
+    <foreach collection="list" item="obj" index="index" separator="," >
+     (
+      #{obj.sno,jdbcType=VARCHAR},
+      #{obj.name,jdbcType=VARCHAR},
+      #{obj.department,jdbcType=VARCHAR},
+      #{obj.classes,jdbcType=VARCHAR}
+      )
+    </foreach>
+  </insert>
 </mapper>

@@ -1,5 +1,6 @@
 package edu.zzti.dao;
 
+import edu.zzti.bean.Student;
 import edu.zzti.bean.Teacher;
 import edu.zzti.bean.TeacherExample;
 import java.util.List;
@@ -21,6 +22,7 @@ public interface TeacherMapper {
     List<Teacher> selectAllTeacherByName(String name);
 
     Integer deleteTeacherByTno(Integer tno);
+    int batchInsertTeacher(List<Teacher> teacherList);
     //shc
 
     long countByExample(TeacherExample example);

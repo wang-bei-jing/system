@@ -126,8 +126,13 @@
     where gs_id = #{gsId,jdbcType=INTEGER}
   </update>
 
-  <select id="findNewApplyGradeScale" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-
+  <select id="findNewApplyGradeScale"  resultMap="BaseResultMap">
+  select * from t_gradescale
   </select>
 
+  <update id="updateGradeScaleByIdAndGsStatus" parameterType="map"  >
+    update t_gradescale
+    set gs_status=#{gsStatus,jdbcType=INTEGER}
+    where  gs_id = #{gsId,jdbcType=INTEGER}
+  </update>
 </mapper>

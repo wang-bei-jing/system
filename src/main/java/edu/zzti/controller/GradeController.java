@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import edu.zzti.bean.Grade;
 import edu.zzti.bean.GradeRecord;
+import edu.zzti.bean.GradeScale;
 import edu.zzti.bean.Msg;
 import edu.zzti.service.GradeRecordService;
 import edu.zzti.service.GradeScaleService;

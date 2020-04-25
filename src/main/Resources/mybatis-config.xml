@@ -7,7 +7,8 @@
 		<!-- 设置命名规范，骆驼命名法 -->
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
-	
+
+	<!-- bean别名，Student=edu,zzti.Student -->
 	<typeAliases>
 		<package name="edu.zzti.bean"/>
 	</typeAliases>

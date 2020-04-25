@@ -23,7 +23,8 @@
 		<!-- 设置默认编码 -->
 		<property name="defaultEncoding" value="utf-8"></property>
 		<!-- 上传文件最大大小5M-->
-		<property name="maxUploadSize" value="5242440"></property>
+		<property name="maxUploadSize" value="10485770"></property>
+		<property name="maxInMemorySize" value="10485760"></property>
 	</bean>
 
 

@@ -31,6 +31,7 @@ public interface StudentService {
     int studentUpdSelective(Student record);
 
     List<Student> findAllStudentByStatus(String status);
+    int batchInsert(List<Student> studentList);
 
 }
 

@@ -1,7 +1,11 @@
 package edu.zzti.service.impl;
 
+import edu.zzti.bean.GradeScale;
+import edu.zzti.dao.GradeScaleMapper;
 import edu.zzti.service.GradeScaleService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GradeScaleServiceImpl implements GradeScaleService {
@@ -30,7 +34,18 @@ public class GradeScaleServiceImpl implements GradeScaleService {
     public GradeScale selectByGsStatus(Integer gsStatus) {
         return gradeScaleMapper.selectByGsStatus(gsStatus);
     }
+
     //xwq结束
+
+    //shc
+    public List<GradeScale> findNewApplyGradeScale() {
+        return gradeScaleMapper.findNewApplyGradeScale();
+    }
+
+    public int updateGradeScaleByIdAndGsStatus(Integer gsId, Integer gsStatus) {
+        System.out.println("jinlaile");
+        return gradeScaleMapper.updateGradeScaleByIdAndGsStatus(gsId, gsStatus);
+    }
 }
 
 

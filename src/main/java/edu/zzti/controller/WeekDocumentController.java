@@ -47,17 +47,18 @@ public class WeekDocumentController {
         String just="1";
         //通过sSno,status="1"查询实训课题的id来删除周报
         TopicSelect topicSelect=topicSelectService.myWeekfile(sSno,status);
-      /*  System.out.println(topicSelect.toString());*/
+        System.out.println(topicSelect.toString());
         if (topicSelect!=null){
             String category="1";
             int tpsId=topicSelect.getId();
             System.out.println(tpsId);
             List<WeekDocument> weekDocuments=weekDocumentService.findByCateory(tpsId,category);
-       /* for(int i=0;i<weekDocuments.size();i++){
+        for(int i=0;i<weekDocuments.size();i++){
             System.out.println(weekDocuments.get(i).toString());
-        }*/
+        }
             request.getSession().setAttribute("mytopicSelect",topicSelect);
             request.getSession().setAttribute("weekDocuments",weekDocuments);
+            request.getSession().setAttribute("just",just);
             return new ModelAndView("student/weekfileupdown");
         }else {
             just="0";
@@ -126,6 +127,9 @@ public class WeekDocumentController {
         i=weekDocumentService.deleteByPrimaryKey(dId);
         System.out.println(i);
         return new ModelAndView("redirect:/findWeekDocument?sSno="+sSno+"");
+
+
+
     }
 
 

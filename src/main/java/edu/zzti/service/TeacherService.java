@@ -26,6 +26,7 @@ public interface TeacherService {
     int addteacher(Teacher teacher);
 
     int updateTeacher(Teacher teacher);
+    int batchInsertTeacher(List<Teacher> teacherList);
 }
 
 

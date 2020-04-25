@@ -4,6 +4,7 @@ package edu.zzti.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import edu.zzti.bean.*;
+import edu.zzti.dao.TimeMangerMapper;
 import edu.zzti.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,10 @@ public class AdminController {
     TopicSelectService topicSelectService;
     @Autowired
     GradeService gradeService;
+    @Autowired
+    GradeScaleService gradeScaleService;
+    @Autowired
+    TimeMangerService timeMangerService;
     //-----------------------------------------管理员登录，修改密码--------------------------------
     @ResponseBody
     @RequestMapping("/adminLogin")
@@ -394,6 +399,22 @@ public class AdminController {
         request.getSession().setAttribute("studentList",page);
         return new ModelAndView("admin/adminstudentnotselect");
     }
+    /**
+     * @Author ：shc
+     * @Param ：
+     * @Return ：
+     * @Date ：2020/4/25
+     * @Description ：学生选题时间的管理
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/adminTopicSelectTime")
+    public ModelAndView adminTopicSelectTime(HttpServletRequest request){
+        Integer categoty=2;
+        TimeManger tpsTimeManger=timeMangerService.findTimeMangerByCategory(categoty);
+        request.getSession().setAttribute("tpsTimeManger",tpsTimeManger);
+
+        return new ModelAndView("admin/admintopicselecttime");
+    }
 //=====================================成绩管理================================================
     @ResponseBody
     @RequestMapping(value = "/adminGradeSelectAll")
@@ -454,12 +475,33 @@ public class AdminController {
      * @Date ：2020/4/20
      * @Description ：成绩比例
      **/
+    @ResponseBody
+    @RequestMapping(value = "/adminGradeScale")
     public ModelAndView adminGradeScale(HttpServletRequest request){
-      return  null;
-      //教师先发送修改成绩比例的请求，
+
+       List<GradeScale> gradeScaleApplys=gradeScaleService.findNewApplyGradeScale();
+        System.out.println(gradeScaleApplys.size());
+        for (int i=0;i<gradeScaleApplys.size();i++){
+            System.out.println(gradeScaleApplys.get(i).toString());
+        }
+       request.getSession().setAttribute("gradeScaleApplys",gradeScaleApplys);
+      return  new ModelAndView("admin/admingradescaleapply");
 
     }
+    @ResponseBody
+    @RequestMapping(value = "/adminGradeScaleChange")
+    public Integer adminGradeScaleChange(@RequestParam("gsId") Integer gsId,@RequestParam("gsStatus")Integer gsStatus ){
+        System.out.println("gsId="+gsId);
+        System.out.println("gsStatus="+gsStatus);
+        int i=gradeScaleService.updateGradeScaleByIdAndGsStatus(gsId,gsStatus);
+        System.out.println(i);
 
+        return i;
+
+
+
+
+    }
 
 }
 

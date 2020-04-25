@@ -103,19 +103,18 @@
     <div class="container page-header" style="border: 1px solid #DBDBDB;border-radius: 15px;width: auto;background: white;box-shadow: 2px 2px 2px #888888;">
         <c:choose>
             <c:when test="${student.status=='1'}">
-        <div class="modal-header">
-            <h1>我的周报</h1>
-            <div class="modal-header">
-                <!-- 按钮 -->
-                <div class="row">
-                    <div class="col-md-4 col-md-offset-8">
-                        <%--   <a href="../selectUserProject.do?userId=${user.userid}" class="btn btn-primary">查看我的项目</a>--%>
-                        <button class="btn btn-success" id="add_modal" >新增周报</button>
+                <div class="modal-header">
+                    <h1>我的周报</h1>
+                    <div class="modal-header">
+                        <!-- 按钮 -->
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-8">
+                                <%--   <a href="../selectUserProject.do?userId=${user.userid}" class="btn btn-primary">查看我的项目</a>--%>
+                                <button class="btn btn-success" id="add_modal" >新增周报</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
                 <!-- 显示表格数据 -->
                 <div class="row" id="table_page" >
                     <div class="col-md-12">
@@ -155,7 +154,6 @@
                                     </c:forEach>
                                     </tbody>
                                 </table>
-
                             </c:when>
                             <c:otherwise>
                                 <span><strong>您还没有上传周报!</strong></span>
@@ -186,31 +184,6 @@
                                 <label for="input7" class="col-sm-2 control-label">周次</label>
                                 <div class="col-sm-10">
                                     <select id="input7" class="form-control" name="week">
-                                        <%-- <c:choose>
-                                       <c:when test="${weekDocument.week!=null}">
-                                           <c:if test="${weekDocument.week!=第一周}">
-                                               <option>第一周</option>
-                                           </c:if>
-                                           <c:if test="${weekDocument.week!=第二周}">
-                                               <option>第二周</option>
-                                           </c:if>
-                                           <c:if test="${weekDocument.week!=第三周}">
-                                               <option>第三周</option>
-                                           </c:if>
-                                           <c:if test="${weekDocument.week!=第四周}">
-                                               <option>第四周</option>
-                                           </c:if>
-                                           <c:if test="${weekDocument.week!=第五周}">
-                                               <option>第五周</option>
-                                           </c:if>
-                                           <c:if test="${weekDocument.week!=第六周}">
-                                               <option>第六周</option>
-                                           </c:if>
-                                           <c:if test="${weekDocument.week!=第七周}">
-                                               <option>第七周</option>
-                                           </c:if>
-                                       </c:when>
-                                       <c:otherwise>--%>
                                         <option>第一周</option>
                                         <option>第二周</option>
                                         <option>第三周</option>
@@ -218,8 +191,6 @@
                                         <option>第五周</option>
                                         <option>第六周</option>
                                         <option>第七周</option>
-                                        <%--  </c:otherwise>
-                                              </c:choose>--%>
                                     </select>
                                 </div>
                             </div>
