@@ -1,5 +1,6 @@
 package edu.zzti.bean;
 
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -9,9 +10,11 @@ public class TimeManger {
     private Integer tiId;
 
     private Integer tiCategory;
-  /*  @JsonFormat(timezone="GMT+8",pattern = "yyyy-MM-dd hh:mm:ss")*/
+    @JsonFormat(timezone="GMT+8",pattern = "yyyy-MM-dd hh:mm")
+    @DateTimeFormat(pattern ="yyyy-MM-dd hh:mm:ss" )
     private Date tiBegin;
-  /*  @JsonFormat(timezone="GMT+8",pattern = "yyyy-MM-dd hh:mm:ss")*/
+    @JsonFormat(timezone="GMT+8",pattern = "yyyy-MM-dd hh:mm")
+    @DateTimeFormat(pattern ="yyyy-MM-dd hh:mm:ss" )
     private Date tiEnd;
 
     public Integer getTiId() {
@@ -44,5 +47,15 @@ public class TimeManger {
 
     public void setTiEnd(Date tiEnd) {
         this.tiEnd = tiEnd;
+    }
+
+    @Override
+    public String toString() {
+        return "TimeManger{" +
+                "tiId=" + tiId +
+                ", tiCategory=" + tiCategory +
+                ", tiBegin=" + tiBegin +
+                ", tiEnd=" + tiEnd +
+                '}';
     }
 }

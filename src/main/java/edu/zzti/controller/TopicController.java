@@ -3,8 +3,10 @@ package edu.zzti.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import edu.zzti.bean.TimeManger;
 import edu.zzti.bean.Topic;
 import edu.zzti.bean.TopicSelect;
+import edu.zzti.service.TimeMangerService;
 import edu.zzti.service.TopicSelectService;
 import edu.zzti.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class TopicController {
     TopicService topicService;
     @Autowired
     TopicSelectService topicSelectService;
+    @Autowired
+    TimeMangerService timeMangerService;
     //=========================================以下是薛文青部分==============================================================
 
 

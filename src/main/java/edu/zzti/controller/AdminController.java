@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -406,14 +409,53 @@ public class AdminController {
      * @Date ：2020/4/25
      * @Description ：学生选题时间的管理
      **/
-    @ResponseBody
     @RequestMapping(value = "/adminTopicSelectTime")
     public ModelAndView adminTopicSelectTime(HttpServletRequest request){
         Integer categoty=2;
         TimeManger tpsTimeManger=timeMangerService.findTimeMangerByCategory(categoty);
+        System.out.println(tpsTimeManger);
         request.getSession().setAttribute("tpsTimeManger",tpsTimeManger);
-
         return new ModelAndView("admin/admintopicselecttime");
+    }
+    @ResponseBody
+    @RequestMapping(value = "/timeMangerAdd")
+    public ModelAndView timeMangerAdd(int tiCategory,String tiBegin,String tiEnd) throws ParseException {
+        String tiBeginstr=tiBegin.replace("T"," ");
+        String tiEndstr=tiEnd.replace("T"," ");
+        System.out.println(tiBeginstr);
+        Date begintime=new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(tiBeginstr);
+        Date endtime=new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(tiEndstr);
+        TimeManger timeManger=new TimeManger();
+        timeManger.setTiCategory(tiCategory);
+        timeManger.setTiBegin(begintime);
+        timeManger.setTiEnd(endtime);
+        int i=timeMangerService.insertSelective(timeManger);
+        System.out.println(i);
+        return new ModelAndView("redirect:/adminTopicSelectTime");
+    }
+    @ResponseBody
+    @RequestMapping(value = "/timeMangerUpd")
+    public ModelAndView timeMangerUpd(int tiId,int tiCategory,String tiBegin,String tiEnd) throws ParseException {
+        String tiBeginstr=tiBegin.replace("T"," ");
+        String tiEndstr=tiEnd.replace("T"," ");
+        System.out.println(tiBeginstr);
+        Date begintime=new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(tiBeginstr);
+        Date endtime=new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(tiEndstr);
+        TimeManger timeManger=new TimeManger();
+        timeManger.setTiId(tiId);
+        timeManger.setTiCategory(tiCategory);
+        timeManger.setTiBegin(begintime);
+        timeManger.setTiEnd(endtime);
+        int i=timeMangerService.updateByPrimaryKeySelective(timeManger);
+        System.out.println(i);
+        return new ModelAndView("redirect:/adminTopicSelectTime");
+    }
+    @ResponseBody
+    @RequestMapping(value = "/timeMangerDel")
+    public ModelAndView timeMangerDel(int tiId)  {
+        int i=timeMangerService.deleteByPrimaryKey(tiId);
+        System.out.println(i);
+        return new ModelAndView("redirect:/adminTopicSelectTime");
     }
 //=====================================成绩管理================================================
     @ResponseBody

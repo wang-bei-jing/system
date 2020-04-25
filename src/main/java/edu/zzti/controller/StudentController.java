@@ -2,7 +2,9 @@
 package edu.zzti.controller;
 
 import edu.zzti.bean.Student;
+import edu.zzti.bean.TimeManger;
 import edu.zzti.service.StudentService;
+import edu.zzti.service.TimeMangerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +16,8 @@ import java.util.HashMap;
 public class StudentController {
     @Autowired
     StudentService studentService;
-
+    @Autowired
+    TimeMangerService timeMangerService;
     @ResponseBody
     @RequestMapping("/studentLogin")
     public ModelAndView studentLogin(HttpServletRequest request, String sno, String password){
@@ -23,13 +26,17 @@ public class StudentController {
         if(studentService.studentLogin(sno,password)>0){
             //通过登录名sno查对象
             Student student=studentService.studentFindBySno(sno);
-            /*System.out.println(student.toString());*/
+            //显示选题时间和做判断
+            Integer categoty=2;
+            TimeManger tpsTimeManger=timeMangerService.findTimeMangerByCategory(categoty);
+            request.getSession().setAttribute("tpsTimeManger",tpsTimeManger);
 
             request.getSession().setAttribute("student", student);
             return new ModelAndView("student/index");
 
         }else{
             return new ModelAndView("login","error","账号或者密码错误");
+
         }
     }
     @ResponseBody

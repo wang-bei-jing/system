@@ -37,6 +37,7 @@
                     $("#department").val(onestudent.department);
                     $("#classes").val(onestudent.classes);
                     $("#password").val(onestudent.password);
+
                     $("#Update").modal({
                         backdrop: "static",
                     });

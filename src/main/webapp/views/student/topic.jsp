@@ -1,5 +1,31 @@
+<%@ page import="java.util.Date" %>
+<%@ page import="edu.zzti.bean.TimeManger" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%
+    java.util.Date date = new java.util.Date();
+    java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm");
+    String currenttimestr = dateFormat.format(date);
+    System.out.println(currenttimestr);
+    java.util.Date currenttime = dateFormat.parse(currenttimestr);
+    System.out.println(currenttime);
+
+    Object obj=request.getSession().getAttribute("tpsTimeManger");
+    System.out.println(obj);
+    TimeManger timeManger=(TimeManger)obj;
+    System.out.println(timeManger.toString());
+    Date begintime=timeManger.getTiBegin();
+    Date endtime=timeManger.getTiEnd();
+   /*  String btimestr = dateFormat.format(btime);
+    String etimestr = dateFormat.format(etime);
+    java.util.Date begintime = dateFormat.parse(btimestr);
+    java.util.Date endtime = dateFormat.parse(etimestr);*/
+    System.out.println(begintime);
+    System.out.println(endtime);
+    if(currenttime.after(begintime)&&currenttime.before(endtime)){
+%>
+
 <html>
 <head>
     <title>全部课题页面</title>
@@ -14,18 +40,18 @@
 
     <script type="text/javascript">
 
-      /*  $(function () {
-            document.getElementById("seeall").trigger().click();
-        })*/
+        /*  $(function () {
+              document.getElementById("seeall").trigger().click();
+          })*/
         /*
                 $(function(){
                     $('#seeall').trigger("click");
                 })*/
-     /* setTimeout(function() {
-               var e = document.createEvent("MouseEvents");
-               e.initEvent("click", true, true);
-               document.getElementById("seeall").dispatchEvent(e);
-       }, 50);*/
+        /* setTimeout(function() {
+                  var e = document.createEvent("MouseEvents");
+                  e.initEvent("click", true, true);
+                  document.getElementById("seeall").dispatchEvent(e);
+          }, 50);*/
     </script>
     <script type="text/javascript">
         function signup(num,tno,id){
@@ -39,19 +65,19 @@
                 data:{"sSno":ssno,"tpId":id},
                 dataType:"json",
                 success:function(exist){
-                   /* alert("exist进来了"+exist);*/
+                    /* alert("exist进来了"+exist);*/
                     if (sstatus==0){
                         if (num>0){
-                           /* alert("num进来了");*/
+                            /* alert("num进来了");*/
                             if (exist<3){
-                            /*    alert("要提交了");*/
+                                /*    alert("要提交了");*/
                                 $.ajax({
                                     type:"post",
                                     url:"/system/TopicSelectExistBySSnoandtpid",
                                     data:{"sSno":ssno,"tpId":id},
                                     dataType:"json",
                                     success:function(data){
-                                      /*  alert("我回来啦");*/
+                                        /*  alert("我回来啦");*/
                                         if(data == "0"){
                                             /*alert("我回来啦2");*/
                                             $.ajax({
@@ -60,7 +86,7 @@
                                                 data:{"sSno":ssno,"tTno":tno,"tpId":id},
                                                 dateType:"json",
                                                 success:function (data) {
-                                                   /* alert("我you回来啦");*/
+                                                    /* alert("我you回来啦");*/
                                                     if(data=="1"){
                                                         alert("报名成功，等待老师确认！")
                                                         $.ajax({
@@ -131,7 +157,7 @@
         }
     </style>
 
-   <style>
+    <style>
         .page-header{
             float: left;
             z-index: 0;
@@ -269,3 +295,190 @@
 
 </body>
 </html>
+
+
+<%
+    }else {
+%>
+
+<html>
+<head>
+    <title>全部课题页面</title>
+    <link href="${pageContext.request.contextPath}/static/mainstatic/css/index.css" rel="stylesheet" type="text/css" />
+    <script src="${pageContext.request.contextPath}/static/mainstatic/js/index.js"></script>
+    <%--引入jquery--%>
+    <script src="${pageContext.request.contextPath}/static/mainstatic/bootstrap/jquery/jquery-1.12.4.min.js"></script>
+    <!-- 引入 Bootstrap样式-->
+    <link href="${pageContext.request.contextPath}/static/mainstatic/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="${pageContext.request.contextPath}/static/mainstatic/bootstrap/js/bootstrap.min.js"></script>
+    <c:set var="request" value="${pageContext.request.contextPath}"></c:set>
+
+    <script type="text/javascript">
+
+        /*  $(function () {
+              document.getElementById("seeall").trigger().click();
+          })*/
+        /*
+                $(function(){
+                    $('#seeall').trigger("click");
+                })*/
+        /* setTimeout(function() {
+                  var e = document.createEvent("MouseEvents");
+                  e.initEvent("click", true, true);
+                  document.getElementById("seeall").dispatchEvent(e);
+          }, 50);*/
+    </script>
+    <script type="text/javascript">
+        function signup(num,tno,id){
+
+            var sstatus=${student.status};
+            var ssno=${student.sno};
+
+            $.ajax({
+                type:"post",
+                url:"/system/TopicSelectExistBySSno",
+                data:{"sSno":ssno,"tpId":id},
+                dataType:"json",
+                success:function(exist){
+                    /* alert("exist进来了"+exist);*/
+                    if (sstatus==0){
+                        if (num>0){
+                            /* alert("num进来了");*/
+                            if (exist<3){
+                                /*    alert("要提交了");*/
+                                $.ajax({
+                                    type:"post",
+                                    url:"/system/TopicSelectExistBySSnoandtpid",
+                                    data:{"sSno":ssno,"tpId":id},
+                                    dataType:"json",
+                                    success:function(data){
+                                        /*  alert("我回来啦");*/
+                                        if(data == "0"){
+                                            /*alert("我回来啦2");*/
+                                            $.ajax({
+                                                type:"post",
+                                                url:"/system/TopicSelectAdd",
+                                                data:{"sSno":ssno,"tTno":tno,"tpId":id},
+                                                dateType:"json",
+                                                success:function (data) {
+                                                    /* alert("我you回来啦");*/
+                                                    if(data=="1"){
+                                                        alert("报名成功，等待老师确认！")
+                                                        $.ajax({
+                                                            type:"post",
+                                                            url:"/system/TopicSelectExist",
+                                                            data:{"sSno":ssno,"tpId":id},
+                                                            dataType:"json"
+                                                        });
+                                                    }
+                                                }
+                                            });
+
+                                        }else {
+                                            alert("您已报名该课题！")
+                                        }
+                                    }
+                                });
+                            } else {alert("您已报名3个课题！达到上限！");}
+
+                        }else {
+                            alert("该课题人数已满！请选择其他课题");
+                        }
+                    } else {
+                        alert("已被老师确认，无法报名!");
+                    };
+
+
+
+                }
+            });
+
+
+
+        }
+
+
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("tbody>tr:odd").css("background-color","#e4e4e4");
+            $("tbody>tr:even").css("background-color","white");
+        })
+    </script>
+
+    <style>
+        table{
+            border-collapse: collapse;
+            border-spacing: 0;
+            border: 1px solid #404060;
+            width: 500px;
+            font-size: 10px;
+            font-family: "微软雅黑";
+
+
+        }
+        th {
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #404060;
+            padding: 10px;
+            background-color: rgba(0, 56, 78, 0.74);
+            font: bold 15px "微软雅黑";
+            color: #fff;
+        }
+        td{
+            border: 1px solid #404060;
+            padding: 10px;
+        }
+    </style>
+
+    <style>
+        .page-header{
+            float: left;
+            z-index: 0;
+            height: 100%;
+            width: 100%;
+            border: 1px solid #DBDBDB;
+            margin: 4.5% 2% 0% 1%;
+            padding: 0% 0% 0% 0%;
+        }
+        .header{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 3;
+            color: white;
+            font-size: 18px;
+            height: 7%;
+            background:#204d74;
+        }
+    </style>
+</head>
+<body>
+
+<header >
+    <div class="header" style="text-align: center">
+        <row>
+            <h4>全部课题</h4>
+        </row>
+    </div>
+</header>
+<div id="twomain_page" class="page-header">
+    <!-- 搭建显示页面 -->
+    <div class="container" style="width: 100%">
+        <div class="modal-header">
+            <h4 style="color: red">未在有效选课时间内！</h4>
+            <!-- 按钮 -->
+        </div>
+        <br>
+
+    </div>
+</div>
+
+</body>
+</html>
+
+<%
+    }
+%>

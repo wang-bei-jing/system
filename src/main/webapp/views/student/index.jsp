@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -40,7 +41,7 @@
             </li>
         </ul>
 
-       <%-- <ul class="navbar-item flex-row ml-md-0 ml-auto">
+      <%-- <ul class="navbar-item flex-row ml-md-0 ml-auto">
             <li class="nav-item align-self-center search-animated">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search toggle-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 <form class="form-inline search-full form-inline search" role="search">
@@ -51,21 +52,15 @@
             </li>
         </ul>--%>
 
-       <%-- <ul class="navbar-item flex-row ml-md-auto">
+        <ul class="navbar-item flex-row ml-md-auto">
 
             <li class="nav-item dropdown language-dropdown">
-                <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="language-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="${pageContext.request.contextPath}/cork/assets/img/ca.png" class="flag-width" alt="flag">
-                </a>
-                <div class="dropdown-menu position-absolute" aria-labelledby="language-dropdown">
-                    <a class="dropdown-item d-flex" href="javascript:void(0);"><img src="${pageContext.request.contextPath}/corkstatic/assets/img/de.png" class="flag-width" alt="flag"> <span class="align-self-center">&nbsp;German</span></a>
-                    <a class="dropdown-item d-flex" href="javascript:void(0);"><img src="${pageContext.request.contextPath}/corkstatic/assets/img/jp.png" class="flag-width" alt="flag"> <span class="align-self-center">&nbsp;Japanese</span></a>
-                    <a class="dropdown-item d-flex" href="javascript:void(0);"><img src="${pageContext.request.contextPath}/corkstatic/assets/img/fr.png" class="flag-width" alt="flag"> <span class="align-self-center">&nbsp;French</span></a>
-                    <a class="dropdown-item d-flex" href="javascript:void(0);"><img src="${pageContext.request.contextPath}/corkstatic/assets/img/ca.png" class="flag-width" alt="flag"> <span class="align-self-center">&nbsp;English</span></a>
-                </div>
+               <div>
+                   <span style="color: #ff6412">选题时间为:<fmt:formatDate value="${tpsTimeManger.tiBegin}" pattern="yyyy-MM-dd HH:mm" />~~<fmt:formatDate value="${tpsTimeManger.tiEnd}" pattern="yyyy-MM-dd HH:mm" /></span>
+               </div>
             </li>
 
-            <li class="nav-item dropdown message-dropdown">
+          <%--  <li class="nav-item dropdown message-dropdown">
                 <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="messageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 </a>
@@ -183,9 +178,9 @@
                         </div>
                     </div>
                 </div>
-            </li>
+            </li>--%>
 
-        </ul>--%>
+        </ul>
     </header>
 </div>
 <!--  END NAVBAR  -->

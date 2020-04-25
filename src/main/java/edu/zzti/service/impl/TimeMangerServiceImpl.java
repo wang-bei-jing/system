@@ -15,4 +15,16 @@ public class TimeMangerServiceImpl implements TimeMangerService {
     public TimeManger findTimeMangerByCategory(Integer category) {
         return timeMangerMapper.findTimeMangerByCategory(category);
     }
+
+    public int insertSelective(TimeManger record) {
+        return timeMangerMapper.insertSelective(record);
+    }
+
+    public int updateByPrimaryKeySelective(TimeManger record) {
+        return timeMangerMapper.updateByPrimaryKeySelective(record);
+    }
+
+    public int deleteByPrimaryKey(Integer tiId) {
+        return timeMangerMapper.deleteByPrimaryKey(tiId);
+    }
 }

@@ -1,19 +1,11 @@
+<%@ page import="edu.zzti.bean.TimeManger" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%
-    java.util.Date date = new java.util.Date();
-    java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-    String currentdata = dateFormat.format(date);
-    java.util.Date currenttime = dateFormat.parse(currentdata);
-    java.util.Date time = dateFormat.parse("2021-01-19 23:59:59");
-
-
-    if(currenttime.before(time)){
-%>
 <html>
 <head>
-    <title>全部教师</title>
     <link href="${pageContext.request.contextPath}/static/mainstatic/css/index.css" rel="stylesheet" type="text/css" />
     <script src="${pageContext.request.contextPath}/static/mainstatic/js/index.js"></script>
     <%--引入jquery--%>
@@ -36,28 +28,17 @@
             })
         });
         /*弹出修改模块框*/
-        function edit(sno){
-            $.ajax({
-                type:"post",
-                url:"/system/studentSelectBySno",
-                data:{"sno":sno,},
-                dataType:"json",
-                success:function (onestudent) {
-                    $("#sno").val(onestudent.sno);
-                    $("#name").val(onestudent.name);
-                    $("#department").val(onestudent.department);
-                    $("#classes").val(onestudent.classes);
-                    $("#password").val(onestudent.password);
-                    $("#Update").modal({
-                        backdrop: "static",
-                    });
-                }
-            });
-        }
+        $(document).ready(function() {
+            $("#edit_btn", this).click(function () {
+                $("#Update").modal({
+
+                    backdrop: "static",
+                });
+            })
+        });
         /*删除确认*/
         $(document).on("click",".delete_btn",function(){
-            var teaname = $(this).parents("tr").find("td:eq(2)").text();
-            if(confirm("确认删除【"+teaname+"】吗?")){
+            if(confirm("确认删除此项吗?")){
                 return true;
             }else{
                 return false;
@@ -151,11 +132,11 @@
     <!-- 搭建显示页面 -->
     <div class="container" style="width: 100%">
         <div class="modal-header">
-            <h2>全部学生 <small>(Information  of all students)</small></h2>
+            <h2>学生选题时间管理</h2>
             <!-- 按钮 -->
             <div class="row">
                 <div class="col-md-4 col-md-offset-10">
-                    <button class="btn btn-success" id="add_modal" >添加时间限制</button>
+                    <button class="btn btn-success" id="add_modal" >添加时间范围</button>
                 </div>
             </div>
         </div>
@@ -175,16 +156,16 @@
                             </thead>
                             <tbody>
                             <tr class="mytr">
-                                <td><fmt:formatDate value="${tpsTimeManger.tiBegin}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-                                <td><fmt:formatDate value="${tpsTimeManger.tiEnd}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-                                    <%--<td>${timeManger.tiBegin}</td>
-                                    <td>${timeManger.tiEnd}</td>--%>
+                                <td><fmt:formatDate value="${tpsTimeManger.tiBegin}" pattern="yyyy-MM-dd HH:mm" /></td>
+                                <td><fmt:formatDate value="${tpsTimeManger.tiEnd}" pattern="yyyy-MM-dd HH:mm" /></td>
+                                <%--<td>${tpsTimeManger.tiBegin}</td>
+                                <td>${tpsTimeManger.tiEnd}</td>--%>
                                 <td>
                                         <%--  <a  href="javascript:void(0)" onclick="signup('${list.num}','${list.tno}','${list.id}')">报名</a>--%>
-                                    <button class="btn btn-primary btn-sm edit_btn" id="edit_btn" onclick="edit('${list.tno}')" >
+                                    <button class="btn btn-primary btn-sm edit_btn" id="edit_btn" onclick="edit('${tpsTimeManger.tiId}')" >
                                         <span class="glyphicon glyphicon-pencil"></span>编辑
                                     </button>
-                                    <a id="delete_btn" href="${pageContext.request.contextPath}/teacherDel?tno=${list.tno}" class="btn btn-danger btn-sm delete_btn">
+                                    <a id="delete_btn" href="${pageContext.request.contextPath}/timeMangerDel?tiId=${tpsTimeManger.tiId}" class="btn btn-danger btn-sm delete_btn">
                                         <span class="glyphicon glyphicon-trash"></span>删除
                                     </a>
                                 </td>
@@ -208,22 +189,22 @@
                         <h4 class="modal-title" >添加时间限制</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="${pageContext.request.contextPath}/studentAdd" method="post" class="form-horizontal">
+                        <form action="${pageContext.request.contextPath}/timeMangerAdd" method="post" class="form-horizontal">
+                            <input type="text" name="tiCategory" value="2" style="display: none">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">学号</label>
+                                <label class="col-sm-2 control-label">开始时间</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="sno" class="form-control" placeholder="学号">
-                                    <!--一个较长的帮助文本块，超过一行，需要扩展到下一行 -->
-                                    <span class="help-block"></span>
+                                    <input type="datetime-local" min="1970-01-01 00:00" max="2099-12-31 00:00" value="2020-06-01T08:00" name="tiBegin">
+
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">姓名</label>
+                                <label class="col-sm-2 control-label">结束时间</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="name" class="form-control" placeholder="姓名">
-                                    <span class="help-block"></span>
+                                    <input type="datetime-local" min="1970-01-01 00:00" max="2099-12-31 00:00 " value="2020-06-03T00:00" name="tiEnd">
                                 </div>
                             </div>
+
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -240,56 +221,51 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" >修改教师信息</h4>
+                        <h4 class="modal-title" >修改时间信息</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="${pageContext.request.contextPath}/studentUpd" method="post" class="form-horizontal">
+                        <form action="${pageContext.request.contextPath}/timeMangerUpd" method="post" class="form-horizontal">
+                            <input type="text" name="tiId" value="${tpsTimeManger.tiId}" style="display: none"/>
+                            <input type="text" name="tiCategory" value="2" style="display: none">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">开始时间</label>
+                                <div class="col-sm-10">
+                                    <%
+                                        Object obj=request.getSession().getAttribute("tpsTimeManger");
+                                        if (obj!=null){
+                                            TimeManger timeManger=(TimeManger)obj;
+                                            Date begintime=timeManger.getTiBegin();
+                                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                                            String begintimestr=dateFormat.format(begintime);
+                                            begintimestr=begintimestr.replace(" ","T");
+                                            request.getSession().setAttribute("begintimestr",begintimestr);
+                                        }
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">学号</label>
-                                <div class="col-sm-10">
-                                    <input type="text" id="sno" name="sno" class="form-control" placeholder="学号">
-                                    <!--一个较长的帮助文本块，超过一行，需要扩展到下一行 -->
-                                    <span class="help-block"></span>
+                                    %>
+                                    <input type="datetime-local" min="1970-01-01" max="2099-12-31" value="${begintimestr}" name="tiBegin">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">姓名</label>
+                                <label class="col-sm-2 control-label">结束时间</label>
                                 <div class="col-sm-10">
-                                    <input type="text" id="name" name="name" class="form-control" placeholder="姓名">
-                                    <span class="help-block"></span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">专业</label>
-                                <div class="col-sm-10">
-                                    <label>
-                                        <select  id="department" name="department" class="form-control">
-                                            <option value="计算机科学与技术">计算机科学与技术</option>
-                                            <option value="软件工程">软件工程</option>
-                                            <option value="网络工程">网络工程</option>
-                                        </select>
-                                    </label>
-                                </div>
-                            </div>
+                                    <%
+                                        Object obj2=request.getSession().getAttribute("tpsTimeManger");
+                                        if (obj!=null){
+                                            TimeManger timeManger2=(TimeManger)obj;
+                                            Date endtime=timeManger2.getTiEnd();
+                                            SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                                            String endtimestr=dateFormat2.format(endtime);
+                                            endtimestr=endtimestr.replace(" ","T");
+                                            request.getSession().setAttribute("endtimestr",endtimestr);
+                                        }
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">班级</label>
-                                <div class="col-sm-10">
-                                    <input id="classes" type="text" name="classes" class="form-control" placeholder="班级">
-                                    <span class="help-block"></span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">密码</label>
-                                <div class="col-sm-10">
-                                    <input id="password" type="text" name="password" class="form-control"  placeholder="密码">
-                                    <span class="help-block"></span>
+                                    %>
+                                    <input type="datetime-local" min="1970-01-01" max="2099-12-31" value="${endtimestr}" name="tiEnd">
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="submit" class="btn btn-primary" >保存更改</button>
+                                <button type="submit" class="btn btn-primary" >保存</button>
                             </div>
                         </form>
                     </div>
@@ -303,7 +279,3 @@
 
 </body>
 </html>
-<%
-    }
-%>
-
