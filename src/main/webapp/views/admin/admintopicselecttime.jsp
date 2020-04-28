@@ -258,7 +258,7 @@
                                             endtimestr=endtimestr.replace(" ","T");
                                             request.getSession().setAttribute("endtimestr",endtimestr);
                                         }
-
+                                      
                                     %>
                                     <input type="datetime-local" min="1970-01-01" max="2099-12-31" value="${endtimestr}" name="tiEnd">
                                 </div>
