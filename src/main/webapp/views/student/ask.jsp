@@ -145,37 +145,40 @@
         <div class="row" id="table_page">
             <div class="col-md-12" >
                 <c:choose>
-                    <c:when test="${tpsTimeManger!=null}">
+                    <c:when test="${studentCommentList[0]!=null}">
+                        <c:forEach items="${studentCommentList}" var="list">
                         <table class="table table-condensed table-striped  table-hover" style="text-align: center" >
                             <thead style="color: red">
                             <tr>
-                                <th>起始时间</th>
-                                <th>结束时间</th>
+                                <th>提问内容</th>
+                                <th>提问时间</th>
+                                <th>教师答复</th>
+                                <th>答复时间</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr class="mytr">
-                                <td><fmt:formatDate value="${tpsTimeManger.tiBegin}" pattern="yyyy-MM-dd HH:mm" /></td>
-                                <td><fmt:formatDate value="${tpsTimeManger.tiEnd}" pattern="yyyy-MM-dd HH:mm" /></td>
+                                <td>${list.scContent}</td>
+                                <td><fmt:formatDate value="${list.scTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                                <td>${list.teacherComment.tcContent}</td>
+                                <td><fmt:formatDate value="${list.teacherComment.tcTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                                 <%--<td>${tpsTimeManger.tiBegin}</td>
                                 <td>${tpsTimeManger.tiEnd}</td>--%>
                                 <td>
                                         <%--  <a  href="javascript:void(0)" onclick="signup('${list.num}','${list.tno}','${list.id}')">报名</a>--%>
                                     <button class="btn btn-primary btn-sm edit_btn" id="edit_btn" onclick="edit('${tpsTimeManger.tiId}')" >
-                                        <span class="glyphicon glyphicon-pencil"></span>编辑
+                                        查看详情
                                     </button>
-                                    <a id="delete_btn" href="${pageContext.request.contextPath}/timeMangerDel?tiId=${tpsTimeManger.tiId}" class="btn btn-danger btn-sm delete_btn">
-                                        <span class="glyphicon glyphicon-trash"></span>删除
-                                    </a>
+
                                 </td>
                             </tr>
                             </tbody>
                         </table>
-
+                        </c:forEach>
                     </c:when>
                     <c:otherwise>
-                        <span><strong>暂无选题时间管理信息</strong></span>
+                        <span><strong>您未向老师提问</strong></span>
                     </c:otherwise>
                 </c:choose>
             </div>

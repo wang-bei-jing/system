@@ -280,7 +280,23 @@
                         </li>
                     </ul>
                 </li>
+                <li class="menu">
+                    <a href="#asks" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                            <span>提问管理</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                    </a>
+                    <ul class="collapse submenu list-unstyled" id="asks" data-parent="#accordionExample">
+                        <li>
+                            <a href="${pageContext.request.contextPath}/findAllCommentsBySnoAndStatus?sno=${student.sno}" target="myfrm"> 提问与答复 </a>
+                        </li>
 
+                    </ul>
+                </li>
                 <li class="menu">
                     <a href="${pageContext.request.contextPath}/views/student/studentpersonal.jsp" target="myfrm" aria-expanded="false" class="dropdown-toggle">
                         <div class="">

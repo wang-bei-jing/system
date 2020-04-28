@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.zzti.dao.StudentCommentMapper">
+  <resultMap id="BaseResultMap" type="edu.zzti.bean.StudentComment">
+    <id column="sc_id" jdbcType="INTEGER" property="scId" />
+    <result column="sc_tps_id" jdbcType="INTEGER" property="scTpsId" />
+    <result column="sc_content" jdbcType="VARCHAR" property="scContent" />
+    <result column="sc_time" jdbcType="TIMESTAMP" property="scTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sc_id, sc_tps_id, sc_content, sc_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_studentcomment
+    where sc_id = #{scId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_studentcomment
+    where sc_id = #{scId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="edu.zzti.bean.StudentComment">
+    insert into t_studentcomment (sc_id, sc_tps_id, sc_content, 
+      sc_time)
+    values (#{scId,jdbcType=INTEGER}, #{scTpsId,jdbcType=INTEGER}, #{scContent,jdbcType=VARCHAR}, 
+      #{scTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="edu.zzti.bean.StudentComment">
+    insert into t_studentcomment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="scId != null">
+        sc_id,
+      </if>
+      <if test="scTpsId != null">
+        sc_tps_id,
+      </if>
+      <if test="scContent != null">
+        sc_content,
+      </if>
+      <if test="scTime != null">
+        sc_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="scId != null">
+        #{scId,jdbcType=INTEGER},
+      </if>
+      <if test="scTpsId != null">
+        #{scTpsId,jdbcType=INTEGER},
+      </if>
+      <if test="scContent != null">
+        #{scContent,jdbcType=VARCHAR},
+      </if>
+      <if test="scTime != null">
+        #{scTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.zzti.bean.StudentComment">
+    update t_studentcomment
+    <set>
+      <if test="scTpsId != null">
+        sc_tps_id = #{scTpsId,jdbcType=INTEGER},
+      </if>
+      <if test="scContent != null">
+        sc_content = #{scContent,jdbcType=VARCHAR},
+      </if>
+      <if test="scTime != null">
+        sc_time = #{scTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sc_id = #{scId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.zzti.bean.StudentComment">
+    update t_studentcomment
+    set sc_tps_id = #{scTpsId,jdbcType=INTEGER},
+      sc_content = #{scContent,jdbcType=VARCHAR},
+      sc_time = #{scTime,jdbcType=TIMESTAMP}
+    where sc_id = #{scId,jdbcType=INTEGER}
+  </update>
+
+
+  <resultMap id="BaseResultMapWithTeacherComment" type="edu.zzti.bean.StudentComment">
+    <id column="sc_id" jdbcType="INTEGER" property="scId" />
+    <result column="sc_tps_id" jdbcType="INTEGER" property="scTpsId" />
+    <result column="sc_content" jdbcType="VARCHAR" property="scContent" />
+    <result column="sc_time" jdbcType="TIMESTAMP" property="scTime" />
+    <association property="teacherComment" javaType="edu.zzti.bean.TeacherComment">
+      <id column="tc_id" jdbcType="INTEGER" property="tcId" />
+      <result column="tc_tps_id" jdbcType="INTEGER" property="tcTpsId" />
+      <result column="tc_sc_id" jdbcType="INTEGER" property="tcScId" />
+      <result column="tc_content" jdbcType="VARCHAR" property="tcContent" />
+      <result column="tc_time" jdbcType="TIMESTAMP" property="tcTime" />
+    </association>
+  </resultMap>
+
+  <select id="findAllCommentsBySnoAndStatus" parameterType="java.lang.String" resultMap="BaseResultMapWithTeacherComment">
+
+    select *
+    from t_studentcomment sc left join t_teachercomment tc on sc.sc_id=tc.tc_sc_id
+    where sc.sc_tps_id=
+    (select tps.id from t_topicselect tps where s_sno=#{sno,jdbcType=VARCHAR} and status='1')
+		AND tc.tc_tps_id=(select tps.id from t_topicselect tps where s_sno=#{sno,jdbcType=VARCHAR} and status='1')
+
+  </select>
+</mapper>

@@ -537,13 +537,10 @@ public class AdminController {
         System.out.println("gsStatus="+gsStatus);
         int i=gradeScaleService.updateGradeScaleByIdAndGsStatus(gsId,gsStatus);
         System.out.println(i);
-
         return i;
 
-
-
-
     }
+
 
 }
 

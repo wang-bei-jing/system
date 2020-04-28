@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.zzti.dao.TeacherCommentMapper">
+  <resultMap id="BaseResultMap" type="edu.zzti.bean.TeacherComment">
+    <id column="tc_id" jdbcType="INTEGER" property="tcId" />
+    <result column="tc_tps_id" jdbcType="INTEGER" property="tcTpsId" />
+    <result column="tc_sc_id" jdbcType="INTEGER" property="tcScId" />
+    <result column="tc_content" jdbcType="VARCHAR" property="tcContent" />
+    <result column="tc_time" jdbcType="TIMESTAMP" property="tcTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tc_id, tc_tps_id, tc_sc_id, tc_content, tc_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_teachercomment
+    where tc_id = #{tcId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_teachercomment
+    where tc_id = #{tcId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="edu.zzti.bean.TeacherComment">
+    insert into t_teachercomment (tc_id, tc_tps_id, tc_sc_id, 
+      tc_content, tc_time)
+    values (#{tcId,jdbcType=INTEGER}, #{tcTpsId,jdbcType=INTEGER}, #{tcScId,jdbcType=INTEGER}, 
+      #{tcContent,jdbcType=VARCHAR}, #{tcTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="edu.zzti.bean.TeacherComment">
+    insert into t_teachercomment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tcId != null">
+        tc_id,
+      </if>
+      <if test="tcTpsId != null">
+        tc_tps_id,
+      </if>
+      <if test="tcScId != null">
+        tc_sc_id,
+      </if>
+      <if test="tcContent != null">
+        tc_content,
+      </if>
+      <if test="tcTime != null">
+        tc_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tcId != null">
+        #{tcId,jdbcType=INTEGER},
+      </if>
+      <if test="tcTpsId != null">
+        #{tcTpsId,jdbcType=INTEGER},
+      </if>
+      <if test="tcScId != null">
+        #{tcScId,jdbcType=INTEGER},
+      </if>
+      <if test="tcContent != null">
+        #{tcContent,jdbcType=VARCHAR},
+      </if>
+      <if test="tcTime != null">
+        #{tcTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.zzti.bean.TeacherComment">
+    update t_teachercomment
+    <set>
+      <if test="tcTpsId != null">
+        tc_tps_id = #{tcTpsId,jdbcType=INTEGER},
+      </if>
+      <if test="tcScId != null">
+        tc_sc_id = #{tcScId,jdbcType=INTEGER},
+      </if>
+      <if test="tcContent != null">
+        tc_content = #{tcContent,jdbcType=VARCHAR},
+      </if>
+      <if test="tcTime != null">
+        tc_time = #{tcTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where tc_id = #{tcId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.zzti.bean.TeacherComment">
+    update t_teachercomment
+    set tc_tps_id = #{tcTpsId,jdbcType=INTEGER},
+      tc_sc_id = #{tcScId,jdbcType=INTEGER},
+      tc_content = #{tcContent,jdbcType=VARCHAR},
+      tc_time = #{tcTime,jdbcType=TIMESTAMP}
+    where tc_id = #{tcId,jdbcType=INTEGER}
+  </update>
+</mapper>

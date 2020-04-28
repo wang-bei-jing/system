@@ -2,15 +2,19 @@
 package edu.zzti.controller;
 
 import edu.zzti.bean.Student;
+import edu.zzti.bean.StudentComment;
 import edu.zzti.bean.TimeManger;
+import edu.zzti.service.StudentCommentService;
 import edu.zzti.service.StudentService;
 import edu.zzti.service.TimeMangerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class StudentController {
@@ -18,6 +22,8 @@ public class StudentController {
     StudentService studentService;
     @Autowired
     TimeMangerService timeMangerService;
+    @Autowired
+    StudentCommentService studentCommentService;
     @ResponseBody
     @RequestMapping("/studentLogin")
     public ModelAndView studentLogin(HttpServletRequest request, String sno, String password){
@@ -80,6 +86,14 @@ public class StudentController {
         }
     }
 
+//=====================================提问================================================
+    @ResponseBody
+    @RequestMapping(value = "/findAllCommentsBySnoAndStatus")
+    public ModelAndView findAllCommentsBySnoAndStatus(HttpServletRequest request, String sno, Model model){
+        List<StudentComment> studentCommentList=studentCommentService.findAllCommentsBySnoAndStatus(sno);
+        model.addAttribute("studentCommentList",studentCommentList);
+        return new ModelAndView("student/ask");
+    }
 
 
 

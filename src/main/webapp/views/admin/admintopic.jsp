@@ -121,7 +121,6 @@
                     <tbody>
                     <c:forEach items="${topicList.list}" var="list">
                         <tr class="mytr">
-
                             <td>${list.name}</td>
                             <td>${list.contents}</td>
                             <td>${list.teacher.name}</td>
