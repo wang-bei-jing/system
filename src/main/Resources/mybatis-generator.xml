@@ -32,7 +32,7 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		<!-- table指定每个表的生成策略 -->
-		<table tableName="t_timemanger" domainObjectName="TimeManger" enableCountByExample="false"
+		<table tableName="t_comment" domainObjectName="Comment" enableCountByExample="false"
 			   enableUpdateByExample="false" enableDeleteByExample="false"
 			   enableSelectByExample="false" selectByExampleQueryId="false"/>
 <!--		<table tableName="t_topic" domainObjectName="Topic"></table>-->

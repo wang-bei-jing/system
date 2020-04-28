@@ -3,6 +3,7 @@ package edu.zzti.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import edu.zzti.bean.TimeManger;
 import edu.zzti.bean.Topic;
 import edu.zzti.bean.TopicSelect;
 import edu.zzti.service.TimeMangerService;
@@ -10,9 +11,7 @@ import edu.zzti.service.TopicSelectService;
 import edu.zzti.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;

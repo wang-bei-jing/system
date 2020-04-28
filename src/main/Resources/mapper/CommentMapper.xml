@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.zzti.dao.CommentMapper">
+  <resultMap id="BaseResultMap" type="edu.zzti.bean.Comment">
+    <id column="c_id" jdbcType="INTEGER" property="cId" />
+    <result column="c_tps_id" jdbcType="INTEGER" property="cTpsId" />
+    <result column="c_category" jdbcType="INTEGER" property="cCategory" />
+    <result column="stucontent" jdbcType="VARCHAR" property="stucontent" />
+    <result column="teacontent" jdbcType="VARCHAR" property="teacontent" />
+    <result column="c_time" jdbcType="TIMESTAMP" property="cTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    c_id, c_tps_id, c_category, stucontent, teacontent, c_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_comment
+    where c_id = #{cId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_comment
+    where c_id = #{cId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="edu.zzti.bean.Comment">
+    insert into t_comment (c_id, c_tps_id, c_category, 
+      stucontent, teacontent, c_time
+      )
+    values (#{cId,jdbcType=INTEGER}, #{cTpsId,jdbcType=INTEGER}, #{cCategory,jdbcType=INTEGER}, 
+      #{stucontent,jdbcType=VARCHAR}, #{teacontent,jdbcType=VARCHAR}, #{cTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="edu.zzti.bean.Comment">
+    insert into t_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        c_id,
+      </if>
+      <if test="cTpsId != null">
+        c_tps_id,
+      </if>
+      <if test="cCategory != null">
+        c_category,
+      </if>
+      <if test="stucontent != null">
+        stucontent,
+      </if>
+      <if test="teacontent != null">
+        teacontent,
+      </if>
+      <if test="cTime != null">
+        c_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="cTpsId != null">
+        #{cTpsId,jdbcType=INTEGER},
+      </if>
+      <if test="cCategory != null">
+        #{cCategory,jdbcType=INTEGER},
+      </if>
+      <if test="stucontent != null">
+        #{stucontent,jdbcType=VARCHAR},
+      </if>
+      <if test="teacontent != null">
+        #{teacontent,jdbcType=VARCHAR},
+      </if>
+      <if test="cTime != null">
+        #{cTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.zzti.bean.Comment">
+    update t_comment
+    <set>
+      <if test="cTpsId != null">
+        c_tps_id = #{cTpsId,jdbcType=INTEGER},
+      </if>
+      <if test="cCategory != null">
+        c_category = #{cCategory,jdbcType=INTEGER},
+      </if>
+      <if test="stucontent != null">
+        stucontent = #{stucontent,jdbcType=VARCHAR},
+      </if>
+      <if test="teacontent != null">
+        teacontent = #{teacontent,jdbcType=VARCHAR},
+      </if>
+      <if test="cTime != null">
+        c_time = #{cTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.zzti.bean.Comment">
+    update t_comment
+    set c_tps_id = #{cTpsId,jdbcType=INTEGER},
+      c_category = #{cCategory,jdbcType=INTEGER},
+      stucontent = #{stucontent,jdbcType=VARCHAR},
+      teacontent = #{teacontent,jdbcType=VARCHAR},
+      c_time = #{cTime,jdbcType=TIMESTAMP}
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+</mapper>
