@@ -7,8 +7,6 @@ public class Comment {
 
     private Integer cTpsId;
 
-    private Integer cCategory;
-
     private String stucontent;
 
     private String teacontent;
@@ -29,14 +27,6 @@ public class Comment {
 
     public void setcTpsId(Integer cTpsId) {
         this.cTpsId = cTpsId;
-    }
-
-    public Integer getcCategory() {
-        return cCategory;
-    }
-
-    public void setcCategory(Integer cCategory) {
-        this.cCategory = cCategory;
     }
 
     public String getStucontent() {
