@@ -30,20 +30,23 @@
         /*弹出修改模块框*/
         $(document).ready(function() {
             $("#edit_btn", this).click(function () {
+                $("#sno").val(onestudent.sno);
+                $("#name").val(onestudent.name);
+                $("#department").val(onestudent.department);
+                $("#classes").val(onestudent.classes);
                 $("#Update").modal({
-
                     backdrop: "static",
                 });
             })
         });
-        /*删除确认*/
+       /* /!*删除确认*!/
         $(document).on("click",".delete_btn",function(){
             if(confirm("确认删除此项吗?")){
                 return true;
             }else{
                 return false;
             }
-        });
+        });*/
         /* /!*导入*!/
          function dataimport(){
              var file=document.getElementById("myfile").files[0];
@@ -91,6 +94,8 @@
             color: #fff;
         }
         td{
+            text-align: center;
+            vertical-align: middle;
             border: 1px solid #404060;
             padding: 10px;
         }
@@ -129,155 +134,161 @@
     </div>
 </header>
 <div id="main_page" class="page-header">
-    <!-- 搭建显示页面 -->
-    <div class="container" style="width: 100%">
-        <div class="modal-header">
-            <h2>学生选题时间管理</h2>
-            <!-- 按钮 -->
-            <div class="row">
-                <div class="col-md-4 col-md-offset-10">
-                    <button class="btn btn-success" id="add_modal" >添加时间范围</button>
-                </div>
-            </div>
-        </div>
-        <br>
-        <!-- 显示表格数据 -->
-        <div class="row" id="table_page">
-            <div class="col-md-12" >
-                <c:choose>
-                    <c:when test="${studentCommentList[0]!=null}">
-                        <c:forEach items="${studentCommentList}" var="list">
-                        <table class="table table-condensed table-striped  table-hover" style="text-align: center" >
-                            <thead style="color: red">
-                            <tr>
-                                <th>提问内容</th>
-                                <th>提问时间</th>
-                                <th>教师答复</th>
-                                <th>答复时间</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="mytr">
-                                <td>${list.scContent}</td>
-                                <td><fmt:formatDate value="${list.scTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-                                <td>${list.teacherComment.tcContent}</td>
-                                <td><fmt:formatDate value="${list.teacherComment.tcTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-                                <%--<td>${tpsTimeManger.tiBegin}</td>
-                                <td>${tpsTimeManger.tiEnd}</td>--%>
-                                <td>
-                                        <%--  <a  href="javascript:void(0)" onclick="signup('${list.num}','${list.tno}','${list.id}')">报名</a>--%>
-                                    <button class="btn btn-primary btn-sm edit_btn" id="edit_btn" onclick="edit('${tpsTimeManger.tiId}')" >
-                                        查看详情
-                                    </button>
+   <c:choose>
+       <c:when test="${student.status==1}">
+           <!-- 搭建显示页面 -->
+           <div class="container" style="width: 100%">
+               <div class="modal-header">
+                   <h2>学生选题时间管理</h2>
+                   <!-- 按钮 -->
+                   <div class="row">
+                       <div class="col-md-4 col-md-offset-10">
+                           <button class="btn btn-success" id="add_modal" >提问</button>
+                       </div>
+                   </div>
+               </div>
+               <br>
+               <!-- 显示表格数据 -->
+               <div class="row" id="table_page">
+                   <div class="col-md-12" >
+                       <c:choose>
+                           <c:when test="${studentCommentList[0]!=null}">
 
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <span><strong>您未向老师提问</strong></span>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-        </div>
-        <!-- 添加模态框 -->
-        <div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" >添加时间限制</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form action="${pageContext.request.contextPath}/timeMangerAdd" method="post" class="form-horizontal">
-                            <input type="text" name="tiCategory" value="2" style="display: none">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">开始时间</label>
-                                <div class="col-sm-10">
-                                    <input type="datetime-local" min="1970-01-01 00:00" max="2099-12-31 00:00" value="2020-06-01T08:00" name="tiBegin">
+                                   <table class="table table-condensed table-striped  table-hover"  >
+                                       <thead style="color: red">
+                                       <tr>
+                                           <th>提问内容</th>
+                                           <th>提问时间</th>
+                                           <th>教师答复</th>
+                                           <th>答复时间</th>
 
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">结束时间</label>
-                                <div class="col-sm-10">
-                                    <input type="datetime-local" min="1970-01-01 00:00" max="2099-12-31 00:00 " value="2020-06-03T00:00" name="tiEnd">
-                                </div>
-                            </div>
+                                       </tr>
+                                       </thead>
+                                       <tbody>
+                                       <c:forEach items="${studentCommentList}" var="list">
+                                       <tr class="mytr">
+                                           <td>${list.scContent}</td>
+                                           <td><fmt:formatDate value="${list.scTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 
+                                               <c:choose>
+                                                   <c:when test="${list.teacherComment.tcContent==null}">
+                                                         <td style="color: red"> 教师暂未回复 </td>
+                                                   </c:when>
+                                                   <c:otherwise>
+                                                       <td>${list.teacherComment.tcContent}</td>
+                                                   </c:otherwise>
+                                               </c:choose>
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="submit" class="btn btn-primary" >保存</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- 修改模态框 -->
-        <div class="modal fade" id="Update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" >修改时间信息</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form action="${pageContext.request.contextPath}/timeMangerUpd" method="post" class="form-horizontal">
-                            <input type="text" name="tiId" value="${tpsTimeManger.tiId}" style="display: none"/>
-                            <input type="text" name="tiCategory" value="2" style="display: none">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">开始时间</label>
-                                <div class="col-sm-10">
-                                    <%
-                                        Object obj=request.getSession().getAttribute("tpsTimeManger");
-                                        if (obj!=null){
-                                            TimeManger timeManger=(TimeManger)obj;
-                                            Date begintime=timeManger.getTiBegin();
-                                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-                                            String begintimestr=dateFormat.format(begintime);
-                                            begintimestr=begintimestr.replace(" ","T");
-                                            request.getSession().setAttribute("begintimestr",begintimestr);
-                                        }
+                                           <td><fmt:formatDate value="${list.teacherComment.tcTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                                               <%--<td>${tpsTimeManger.tiBegin}</td>
+                                               <td>${tpsTimeManger.tiEnd}</td>--%>
+                                       </tr>
+                                       </c:forEach>
+                                       </tbody>
+                                   </table>
 
-                                    %>
-                                    <input type="datetime-local" min="1970-01-01" max="2099-12-31" value="${begintimestr}" name="tiBegin">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">结束时间</label>
-                                <div class="col-sm-10">
-                                    <%
-                                        Object obj2=request.getSession().getAttribute("tpsTimeManger");
-                                        if (obj!=null){
-                                            TimeManger timeManger2=(TimeManger)obj;
-                                            Date endtime=timeManger2.getTiEnd();
-                                            SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-                                            String endtimestr=dateFormat2.format(endtime);
-                                            endtimestr=endtimestr.replace(" ","T");
-                                            request.getSession().setAttribute("endtimestr",endtimestr);
-                                        }
-                                      
-                                    %>
-                                    <input type="datetime-local" min="1970-01-01" max="2099-12-31" value="${endtimestr}" name="tiEnd">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="submit" class="btn btn-primary" >保存</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+                           </c:when>
+                           <c:otherwise>
+                               <span><strong>您未向老师提问</strong></span>
+                           </c:otherwise>
+                       </c:choose>
+                   </div>
+               </div>
+               <!-- 添加模态框 -->
+               <div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                   <div class="modal-dialog" role="document">
+                       <div class="modal-content">
+                           <div class="modal-header">
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                               <h4 class="modal-title" >提问</h4>
+                           </div>
+                           <div class="modal-body">
+                               <form action="${pageContext.request.contextPath}/addComment" method="post" class="form-horizontal">
+                                   <input type="text" name="scTpsId" value="${stutpsId}" style="display: none">
+                                   <input type="text" name="sno" value="${student.sno}" style="display: none">
+                                   <div class="form-group">
+                                       <label class="col-sm-2 control-label">提问内容</label>
+                                       <div class="col-sm-10">
+                                           <textarea cols="62px" rows="5px" name="scContent"></textarea>
+                                       </div>
+                                   </div>
 
 
-    </div>
+                                   <div class="modal-footer">
+                                       <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                       <button type="submit" class="btn btn-primary" >保存</button>
+                                   </div>
+                               </form>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <!-- 修改模态框 -->
+               <div class="modal fade" id="Update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                   <div class="modal-dialog" role="document">
+                       <div class="modal-content">
+                           <div class="modal-header">
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                               <h4 class="modal-title" >修改时间信息</h4>
+                           </div>
+                           <div class="modal-body">
+                               <form action="${pageContext.request.contextPath}/timeMangerUpd" method="post" class="form-horizontal">
+                                   <input type="text" name="tiId" value="${tpsTimeManger.tiId}" style="display: none"/>
+                                   <input type="text" name="tiCategory" value="2" style="display: none">
+                                   <div class="form-group">
+                                       <label class="col-sm-2 control-label">开始时间</label>
+                                       <div class="col-sm-10">
+                                           <%
+                                               Object obj=request.getSession().getAttribute("tpsTimeManger");
+                                               if (obj!=null){
+                                                   TimeManger timeManger=(TimeManger)obj;
+                                                   Date begintime=timeManger.getTiBegin();
+                                                   SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                                                   String begintimestr=dateFormat.format(begintime);
+                                                   begintimestr=begintimestr.replace(" ","T");
+                                                   request.getSession().setAttribute("begintimestr",begintimestr);
+                                               }
+
+                                           %>
+                                           <input type="datetime-local" min="1970-01-01" max="2099-12-31" value="${begintimestr}" name="tiBegin">
+                                       </div>
+                                   </div>
+                                   <div class="form-group">
+                                       <label class="col-sm-2 control-label">结束时间</label>
+                                       <div class="col-sm-10">
+                                           <%
+                                               Object obj2=request.getSession().getAttribute("tpsTimeManger");
+                                               if (obj!=null){
+                                                   TimeManger timeManger2=(TimeManger)obj;
+                                                   Date endtime=timeManger2.getTiEnd();
+                                                   SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                                                   String endtimestr=dateFormat2.format(endtime);
+                                                   endtimestr=endtimestr.replace(" ","T");
+                                                   request.getSession().setAttribute("endtimestr",endtimestr);
+                                               }
+
+                                           %>
+                                           <input type="datetime-local" min="1970-01-01" max="2099-12-31" value="${endtimestr}" name="tiEnd">
+                                       </div>
+                                   </div>
+                                   <div class="modal-footer">
+                                       <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                       <button type="submit" class="btn btn-primary" >保存</button>
+                                   </div>
+                               </form>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+
+           </div>
+       </c:when>
+       <c:otherwise>
+           <span style="color: red"><strong>您还未被老师确认，无法向老师提问！</strong></span>
+       </c:otherwise>
+   </c:choose>
+
 </div>
 
 </body>

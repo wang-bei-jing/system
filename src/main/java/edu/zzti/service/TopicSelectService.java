@@ -41,7 +41,7 @@ public interface TopicSelectService {
 
     TopicSelect myTopicSelect(String sSno,String status);
 
-    TopicSelect myWeekfile(String sSno,String status);
+    Integer findTpsId(String sSno,String status);
 
     List<TopicSelect> adminFindAllStudentAndTopicAndTeacher(String status);
 

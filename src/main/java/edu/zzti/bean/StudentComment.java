@@ -49,6 +49,17 @@ public class StudentComment {
         return scTime;
     }
 
+    @Override
+    public String toString() {
+        return "StudentComment{" +
+                "scId=" + scId +
+                ", scTpsId=" + scTpsId +
+                ", scContent='" + scContent + '\'' +
+                ", scTime=" + scTime +
+                ", teacherComment=" + teacherComment +
+                '}';
+    }
+
     public void setScTime(Date scTime) {
         this.scTime = scTime;
     }

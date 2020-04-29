@@ -104,6 +104,8 @@
             color: #fff;
         }
         td{
+            text-align: center;
+            vertical-align: middle;
             border: 1px solid #404060;
             padding: 10px;
         }

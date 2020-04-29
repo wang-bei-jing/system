@@ -52,4 +52,15 @@ public class TeacherComment {
     public void setTcTime(Date tcTime) {
         this.tcTime = tcTime;
     }
+
+    @Override
+    public String toString() {
+        return "TeacherComment{" +
+                "tcId=" + tcId +
+                ", tcTpsId=" + tcTpsId +
+                ", tcScId=" + tcScId +
+                ", tcContent='" + tcContent + '\'' +
+                ", tcTime=" + tcTime +
+                '}';
+    }
 }

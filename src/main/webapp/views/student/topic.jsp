@@ -211,7 +211,7 @@
         <!-- 显示表格数据 -->
         <div class="row" id="table_page">
             <div class="col-md-12">
-                <table class="table table-hover" >
+                <table class="table table-hover" style="text-align: center">
                     <thead style="color: red">
                     <tr>
                         <th>操作</th>

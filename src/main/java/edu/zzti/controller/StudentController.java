@@ -4,9 +4,11 @@ package edu.zzti.controller;
 import edu.zzti.bean.Student;
 import edu.zzti.bean.StudentComment;
 import edu.zzti.bean.TimeManger;
+import edu.zzti.bean.TopicSelect;
 import edu.zzti.service.StudentCommentService;
 import edu.zzti.service.StudentService;
 import edu.zzti.service.TimeMangerService;
+import edu.zzti.service.TopicSelectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,8 @@ public class StudentController {
     TimeMangerService timeMangerService;
     @Autowired
     StudentCommentService studentCommentService;
+    @Autowired
+    TopicSelectService topicSelectService;
     @ResponseBody
     @RequestMapping("/studentLogin")
     public ModelAndView studentLogin(HttpServletRequest request, String sno, String password){
@@ -90,9 +94,25 @@ public class StudentController {
     @ResponseBody
     @RequestMapping(value = "/findAllCommentsBySnoAndStatus")
     public ModelAndView findAllCommentsBySnoAndStatus(HttpServletRequest request, String sno, Model model){
+        //查询出tpsId 以便add的时候存入数据库
+        String status="1";
+        //通过sSno,status="1"查询实训课题的tpsId来删除周报
+        Integer tpsId=topicSelectService.findTpsId(sno,status);
         List<StudentComment> studentCommentList=studentCommentService.findAllCommentsBySnoAndStatus(sno);
+        for (int i=0;i<studentCommentList.size();i++){
+            System.out.println(studentCommentList.get(i).toString());
+        }
+
         model.addAttribute("studentCommentList",studentCommentList);
+        model.addAttribute("stutpsId",tpsId);
         return new ModelAndView("student/ask");
+    }
+    @ResponseBody
+    @RequestMapping(value = "/addComment")
+    public ModelAndView addComment(StudentComment studentComment,String sno){
+        int i=studentCommentService.insertSelective(studentComment);
+        System.out.println(i);
+        return new ModelAndView("redirect:/findAllCommentsBySnoAndStatus?sno="+sno);
     }
 
 

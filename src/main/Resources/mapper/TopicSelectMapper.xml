@@ -510,13 +510,13 @@ FROM t_topic tp left JOIN t_teacher tr on tp.tno=tr.tno
 WHERE tp.id = (select tp_id from t_topicselect where s_sno=#{sSno,jdbcType=VARCHAR} and status=#{status,jdbcType=VARCHAR})
   </select>
 
-  <select id="myWeekfile" parameterType="map"  resultMap="BaseResultMap">
+  <select id="findTpsId" parameterType="map"  resultType="java.lang.Integer">
 select id from t_topicselect where s_sno=#{sSno,jdbcType=VARCHAR} and status=#{status,jdbcType=VARCHAR}
   </select>
 
 
   <select id="adminFindAllStudentAndTopicAndTeacher" parameterType="java.lang.String" resultMap="BaseResultMapWithStudentTopicAndTeacher">
-select ts.name tsname,tp.name tpname,tr.name trname from t_teacher tr,t_topic tp,t_student ts,t_topicselect tps
+select ts.department,ts.classes,ts.tel,ts.name tsname,tp.name tpname,tr.name trname from t_teacher tr,t_topic tp,t_student ts,t_topicselect tps
  WHERE ts.sno=tps.s_sno and tps.t_tno=tr.tno and tps.tp_id=tp.id and tps.status=#{status,jdbcType=VARCHAR}
   </select>
 

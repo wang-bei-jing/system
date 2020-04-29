@@ -42,7 +42,8 @@ public interface TopicSelectMapper {
 
     TopicSelect myTopicSelect(@Param("sSno") String sSno, @Param("status") String status);
 
-    TopicSelect myWeekfile(@Param("sSno") String sSno, @Param("status") String status);
+    Integer findTpsId(@Param("sSno") String sSno, @Param("status") String status);
+
 
     List<TopicSelect> adminFindAllStudentAndTopicAndTeacher(String status);
 

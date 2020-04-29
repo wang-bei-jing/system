@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -119,15 +120,18 @@
                 <div class="row" id="table_page" >
                     <div class="col-md-12">
                         <c:choose>
-                            <c:when test="${just=='1'}">
-                                <table class="table table-hover" >
+                            <c:when test="${weekDocuments[0]!=null}">
+                                <table class="table table-hover" style="text-align: center">
                                     <thead style="color: red">
                                     <tr>
                                         <th>周次</th>
                                         <th>文件名</th>
                                         <th>备注</th>
+                                        <th>上传时间</th>
                                         <th>教师批注</th>
+
                                         <th>操作</th>
+
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -136,6 +140,7 @@
                                             <td>${weekDocument.week}</td>
                                             <td>${weekDocument.documentname}</td>
                                             <td>${weekDocument.remark}</td>
+                                            <td><fmt:formatDate value="${weekDocument.wkTime}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                                             <td>${weekDocument.annotation}</td>
                                             <td>
                                                 <a href="${pageContext.request.contextPath}/downWeekDocument?documentname=${weekDocument.documentname}" >
@@ -177,7 +182,7 @@
                     </div>
                     <div class="modal-body">
                         <form  action="${pageContext.request.contextPath}/uploadWeekDocument" method="post" class="form-horizontal" enctype="multipart/form-data">
-                            <input type="text" name="tpsId" value="${mytopicSelect.id}" style="display: none">
+                            <input type="text" name="tpsId" value="${wdaddtpsId}" style="display: none">
                             <input type="text" name="sSno" value="${student.sno}" style="display: none">
                             <input type="text" name="category" value="1" style="display: none">
                             <div class="form-group">

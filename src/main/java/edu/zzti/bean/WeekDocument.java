@@ -1,5 +1,7 @@
 package edu.zzti.bean;
 
+import java.util.Date;
+
 public class WeekDocument {
     private Integer dId;
 
@@ -14,6 +16,8 @@ public class WeekDocument {
     private String remark;
 
     private String annotation;
+
+    private Date wkTime;
 
     public Integer getdId() {
         return dId;
@@ -71,16 +75,11 @@ public class WeekDocument {
         this.annotation = annotation == null ? null : annotation.trim();
     }
 
-    @Override
-    public String toString() {
-        return "WeekDocument{" +
-                "dId=" + dId +
-                ", tpsId=" + tpsId +
-                ", category='" + category + '\'' +
-                ", week='" + week + '\'' +
-                ", documentname='" + documentname + '\'' +
-                ", remark='" + remark + '\'' +
-                ", annotation='" + annotation + '\'' +
-                '}';
+    public Date getWkTime() {
+        return wkTime;
+    }
+
+    public void setWkTime(Date wkTime) {
+        this.wkTime = wkTime;
     }
 }

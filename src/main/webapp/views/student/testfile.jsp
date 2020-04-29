@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -120,11 +121,12 @@
                     <div class="col-md-12">
                         <c:choose>
                             <c:when test="${testfiles[0]!=null}">
-                                <table class="table table-hover" >
+                                <table class="table table-hover" style="text-align: center">
                                     <thead style="color: red">
                                     <tr>
                                         <th>文件</th>
                                         <th>备注</th>
+                                        <th>上传时间</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
@@ -133,6 +135,7 @@
                                         <tr class="mytr">
                                             <td>${testfile.documentname}</td>
                                             <td>${testfile.remark}</td>
+                                            <td><fmt:formatDate value="${testfile.wkTime}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                                             <td>
                                                 <a href="${pageContext.request.contextPath}/downTestfile?documentname=${testfile.documentname}" >
                                                     <button class="btn btn-primary btn-sm edit_btn" id="down_btn" >
@@ -175,7 +178,7 @@
                     </div>
                     <div class="modal-body">
                         <form  action="${pageContext.request.contextPath}/uploadTestfile" method="post" class="form-horizontal" enctype="multipart/form-data">
-                            <input type="text" name="tpsId" value="${mytopicSelect.id}" style="display: none">
+                            <input type="text" name="tpsId" value="${tfaddtpsId}" style="display: none">
                             <input type="text" name="sSno" value="${student.sno}" style="display: none">
                             <input type="text" name="category" value="2" style="display: none">
                             <div class="form-group">

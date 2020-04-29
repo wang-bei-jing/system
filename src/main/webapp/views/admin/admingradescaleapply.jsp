@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>修改成绩比例页面</title>
@@ -86,6 +87,8 @@
             color: #fff;
         }
         td{
+            text-align: center;
+            vertical-align: middle;
             border: 1px solid #404060;
             padding: 10px;
         }
@@ -153,7 +156,8 @@
                             <td>${list.gradeB}</td>
                             <td>${list.gradeC}</td>
                             <td>${list.gradeD}</td>
-                            <td>${list.gsTime}</td>
+                            <td><fmt:formatDate value="${list.gsTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+
                             <td>
                                 <c:choose>
                                     <c:when test="${list.gsStatus==1}">

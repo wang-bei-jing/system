@@ -1,7 +1,6 @@
 
 package edu.zzti.controller;
 
-import edu.zzti.bean.TopicSelect;
 import edu.zzti.bean.WeekDocument;
 import edu.zzti.service.TopicSelectService;
 import edu.zzti.service.WeekDocumentService;
@@ -42,29 +41,20 @@ public class WeekDocumentController {
     //=========================================以下是施昊晨部分==============================================================
     //------------------------------------周报部分---------------------------------------
     @RequestMapping("/findWeekDocument")
-    public ModelAndView myTopicSelect(HttpServletRequest request, String sSno) {
+    public ModelAndView findWeekDocument(HttpServletRequest request, String sSno) {
         String status="1";
-        String just="1";
-        //通过sSno,status="1"查询实训课题的id来删除周报
-        TopicSelect topicSelect=topicSelectService.myWeekfile(sSno,status);
-        System.out.println(topicSelect.toString());
-        if (topicSelect!=null){
+        //通过sSno,status="1"查询实训课题的tpsId来删除周报
+        Integer tpsId=topicSelectService.findTpsId(sSno,status);
+        System.out.println(tpsId);
             String category="1";
-            int tpsId=topicSelect.getId();
-            System.out.println(tpsId);
+
             List<WeekDocument> weekDocuments=weekDocumentService.findByCateory(tpsId,category);
-        for(int i=0;i<weekDocuments.size();i++){
-            System.out.println(weekDocuments.get(i).toString());
-        }
-            request.getSession().setAttribute("mytopicSelect",topicSelect);
+            for(int i=0;i<weekDocuments.size();i++){
+                System.out.println(weekDocuments.get(i).toString());
+            }
+            request.getSession().setAttribute("wdaddtpsId",tpsId);
             request.getSession().setAttribute("weekDocuments",weekDocuments);
-            request.getSession().setAttribute("just",just);
             return new ModelAndView("student/weekfileupdown");
-        }else {
-            just="0";
-            request.getSession().setAttribute("just",just);
-            return new ModelAndView("student/weekfileupdown");
-        }
 
     }
 
@@ -128,9 +118,9 @@ public class WeekDocumentController {
         System.out.println(i);
         return new ModelAndView("redirect:/findWeekDocument?sSno="+sSno+"");
 
-
-
     }
+
+
 
 
 
@@ -139,25 +129,17 @@ public class WeekDocumentController {
     @RequestMapping("/findTestfile")
     public ModelAndView findTestfile(HttpServletRequest request, String sSno) {
         String status="1";
-        String just="1";
         //通过sSno,status="1"查询实训课题的id来删除周报
-        TopicSelect topicSelect=topicSelectService.myWeekfile(sSno,status);
-      /*  System.out.println(topicSelect.toString());*/
-        if (topicSelect!=null){
-            int tpsId=topicSelect.getId();
+        Integer tpsId=topicSelectService.findTpsId(sSno,status);
+
             String category="2";
             List<WeekDocument> testfiles=weekDocumentService.findByCateory(tpsId,category);
        /* for(int i=0;i<testfiles.size();i++){
             System.out.println(testfiles.get(i).toString());
         }*/
-            request.getSession().setAttribute("mytopicSelect",topicSelect);
+            request.getSession().setAttribute("tfaddtpsId",tpsId);
             request.getSession().setAttribute("testfiles",testfiles);
             return new ModelAndView("student/testfile");
-        }else {
-            just="0";
-            request.getSession().setAttribute("just",just);
-            return new ModelAndView("student/testfile");
-        }
     }
 
     @ResponseBody

@@ -145,7 +145,7 @@
             <div class="col-md-12">
                 <c:choose>
                     <c:when test="${topicsandteacherList!=null}">
-                    <table class="table table-hover" >
+                    <table class="table table-hover" style="text-align: center">
                         <thead style="color: red">
                         <tr>
                             <th>操作</th>
