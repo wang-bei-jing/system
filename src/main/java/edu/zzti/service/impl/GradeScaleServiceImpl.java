@@ -12,7 +12,6 @@ public class GradeScaleServiceImpl implements GradeScaleService {
 
     private GradeScaleMapper gradeScaleMapper;
 
-
     public GradeScaleServiceImpl(GradeScaleMapper gradeScaleMapper) {
         this.gradeScaleMapper = gradeScaleMapper;
     }
@@ -31,10 +30,17 @@ public class GradeScaleServiceImpl implements GradeScaleService {
         return gradeScaleMapper.updateByPrimaryKeySelective(gradeScale);
     }
 
-    public GradeScale selectByGsStatus(Integer gsStatus) {
-        return gradeScaleMapper.selectByGsStatus(gsStatus);
+    public GradeScale selectById(Integer gsId) {
+        return gradeScaleMapper.selectByPrimaryKey(gsId);
     }
 
+    public List<GradeScale> select(String gsDepartment) {
+        return gradeScaleMapper.select(gsDepartment);
+    }
+
+    public GradeScale selectBy(String gsDepartment,Integer gsStatus) {
+        return gradeScaleMapper.selectBy(gsDepartment,gsStatus);
+    }
     //xwq结束
 
     //shc

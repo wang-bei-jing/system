@@ -13,7 +13,11 @@ public interface GradeScaleService {
 
     int upd(GradeScale gradeScale);
 
-    GradeScale selectByGsStatus(Integer gsStatus);
+    GradeScale selectById(Integer gsId);
+
+    List<GradeScale> select(String gsDepartment);
+
+    GradeScale selectBy(String gsDepartment,Integer gsStatus);
     //xwq结束
 
     //shc

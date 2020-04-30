@@ -14,6 +14,23 @@
   <sql id="Base_Column_List">
     gs_id, grade_a, grade_b, grade_c, grade_d, gs_department, gs_time, gs_status
   </sql>
+
+  <!-- xwq开始 -->
+  <select id="select" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_gradescale
+    where gs_department = #{gsDepartment,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBy" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_gradescale
+    where gs_department = #{gsDepartment,jdbcType=VARCHAR}
+    and gs_status = #{gsStatus,jdbcType=INTEGER}
+  </select>
+  <!-- xwq结束 -->
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

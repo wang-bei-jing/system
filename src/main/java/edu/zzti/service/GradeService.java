@@ -9,6 +9,8 @@ public interface GradeService {
     //xwq开始
     int add(Grade grade);
 
+    int del(Integer gId);
+
     int upd(Grade grade);
 
     Grade selectByGId(Integer gId);

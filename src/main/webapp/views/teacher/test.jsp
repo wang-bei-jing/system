@@ -6,62 +6,87 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>DataTables HTML5 Export | CORK - Multipurpose Bootstrap Dashboard Template </title>
 
-    <link href="${pageContext.request.contextPath}/static/cork/assets/css/loader.css" rel="stylesheet" type="text/css" />
-    <script src="${pageContext.request.contextPath}/static/cork/assets/js/loader.js"></script>
-
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/static/cork/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/static/cork/assets/css/plugins.css" rel="stylesheet" type="text/css" />
-    <title>我的学生总成绩</title>
+    <!-- END GLOBAL MANDATORY STYLES -->
+
+    <!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/cork/plugins/table/datatable/datatables.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/cork/plugins/table/datatable/custom_dt_html5.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/cork/plugins/table/datatable/dt-global_style.css">
+    <!-- END PAGE LEVEL CUSTOM STYLES -->
 </head>
 <body>
 
-<!-- BEGIN LOADER -->
-<div id="load_screen"> <div class="loader"> <div class="loader-content"> <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 792 723" style="enable-background:new 0 0 792 723;" xml:space="preserve"> <g> <g> <path class="st0" d="M213.9,584.4c-47.4-25.5-84.7-60.8-111.8-106.1C75,433.1,61.4,382,61.4,324.9c0-57,13.6-108.1,40.7-153.3 S166.5,91,213.9,65.5s100.7-38.2,159.9-38.2c49.9,0,95,8.8,135.3,26.3s74.1,42.8,101.5,75.7l-85.5,78.9 c-38.9-44.9-87.2-67.4-144.7-67.4c-35.6,0-67.4,7.8-95.4,23.4s-49.7,37.4-65.4,65.4c-15.6,28-23.4,59.8-23.4,95.4 s7.8,67.4,23.4,95.4s37.4,49.7,65.4,65.4c28,15.6,59.7,23.4,95.4,23.4c57.6,0,105.8-22.7,144.7-68.2l85.5,78.9 c-27.4,33.4-61.4,58.9-102,76.5c-40.6,17.5-85.8,26.3-135.7,26.3C314.3,622.7,261.3,809.9,213.9,584.4z"/> </g> <circle class="st1" cx="375.4" cy="322.9" r="100"/> </g> <g> <circle class="st2" cx="275.4" cy="910" r="65"></circle> <circle class="st4" cx="475.4" cy="910" r="65"></circle> </g> </svg> </div></div></div>
-<!--  END LOADER -->
+<!--  BEGIN NAVBAR  -->
+<div class="sub-header-container">
+    <header class="header navbar navbar-expand-sm">
+        <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
 
-<div class="layout-px-spacing">
-    <div class="row layout-top-spacing">
-        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
-            <div class="widget-content widget-content-area br-6">
-                <div class="modal-header">
-                    <h1>我的学生成绩</h1>
-                    <div class="row">
-                        <div>
-                            <button id="grade_btn" class="btn btn-s btn-primary">刷新</button>
-                            <button id="all_btn" class="btn btn-s btn-primary">计算总成绩</button>
+        <ul class="navbar-nav flex-row">
+            <li>
+                <div class="page-header">
+
+                    <nav class="breadcrumb-one" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0);">DataTables</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><span>HTML5 Export</span></li>
+                        </ol>
+                    </nav>
+
+                </div>
+            </li>
+        </ul>
+    </header>
+</div>
+<!--  END NAVBAR  -->
+
+<!--  BEGIN MAIN CONTAINER  -->
+<div class="main-container" id="container">
+
+    <div class="overlay"></div>
+    <div class="search-overlay"></div>
+
+    <!--  BEGIN CONTENT AREA  -->
+    <div id="content" class="main-content">
+        <div class="layout-px-spacing">
+
+            <div class="row layout-top-spacing">
+
+                <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                    <div class="widget-content widget-content-area br-6">
+                        <div class="table-responsive mb-4 mt-4">
+                            <table id="grade_table" class="table table-hover non-hover" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>学生姓名</th>
+                                    <th>课题名</th>
+                                    <th>平时成绩</th>
+                                    <th>期中答辩成绩</th>
+                                    <th>验收成绩</th>
+                                    <th>报告成绩</th>
+                                    <th>总成绩</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-                <div class="table-responsive mb-4 mt-4">
-                    <table class="table table-hover" id="peaceTime_table" >
-                        <thead>
-                        <tr>
-                            <th>学生姓名</th>
-                            <th>课题名</th>
-                            <th>平时成绩</th>
-                            <th>期中答辩成绩</th>
-                            <th>验收成绩</th>
-                            <th>报告成绩</th>
-                            <th>总成绩</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- 显示分页信息 -->
-                <div class="row">
-                    <!--分页文字信息  -->
-                    <div class="col-md-6" id="page_info_area"></div>
-                    <!-- 分页条信息 -->
-                    <div class="paginating-container pagination-solid" id="page_nav_area"></div>
-                </div>
+
             </div>
+
         </div>
     </div>
+    <!--  END CONTENT AREA  -->
 </div>
+<!-- END MAIN CONTAINER -->
+
 
 <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
 <script src="${pageContext.request.contextPath}/static/cork/assets/js/libs/jquery-3.1.1.min.js"></script>
@@ -70,17 +95,21 @@
 <script src="${pageContext.request.contextPath}/static/cork/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/cork/assets/js/app.js"></script>
 
+<script>
+    $(document).ready(function() {
+        App.init();
+    });
+</script>
 <script src="${pageContext.request.contextPath}/static/cork/assets/js/custom.js"></script>
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 
-<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<!-- BEGIN PAGE LEVEL CUSTOM SCRIPTS -->
 <script src="${pageContext.request.contextPath}/static/cork/plugins/table/datatable/datatables.js"></script>
-<!-- BEGIN THEME GLOBAL STYLE -->
-<script src="${pageContext.request.contextPath}/static/cork/assets/js/scrollspyNav.js"></script>
-<script src="${pageContext.request.contextPath}/static/cork/plugins/sweetalerts/sweetalert2.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/cork/plugins/sweetalerts/custom-sweetalert.js"></script>
-<!-- END PAGE LEVEL SCRIPTS -->
-
+<!-- NOTE TO Use Copy CSV Excel PDF Print Options You Must Include These Files  -->
+<script src="${pageContext.request.contextPath}/static/cork/plugins/table/datatable/button-ext/dataTables.buttons.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/cork/plugins/table/datatable/button-ext/jszip.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/cork/plugins/table/datatable/button-ext/buttons.html5.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/cork/plugins/table/datatable/button-ext/buttons.print.min.js"></script>
 <script type="text/javascript">
     var pageNum,total;
     var tno = ${teacher.tno};
@@ -90,7 +119,7 @@
             data:"pn="+pn,
             type:"GET",
             success:function(result){
-                build_peaceTime_table(result.extend.pageInfo.list);
+                build_grade_table(result.extend.pageInfo.list);
                 build_page_info(result.extend.pageInfo);
                 build_page_nav(result.extend.pageInfo);
             }
@@ -102,20 +131,10 @@
     $("#grade_btn").click(function () {
         to_page(1);
     });
-    $("#all_btn").click(function () {
-        $.ajax({
-            url:"${pageContext.request.contextPath}/grade/all/"+tno,
-            type:"GET",
-            success:function(){
-                alert("计算结束");
-                to_page(1);
-            }
-        });
-    });
     //解析显示数据
-    function build_peaceTime_table(gradeList){
+    function build_grade_table(gradeList){
         $("#peaceTime_add_btn").attr("add-id",tno);
-        $("#peaceTime_table tbody").empty();
+        $("#grade_table tbody").empty();
         for(var i=0;i<gradeList.length;i++){
             var gradeIdTd = $("<td></td>").append(gradeList[i].gId);
             var gradeSNameTd = $("<td></td>").append(gradeList[i].student.name);
@@ -143,7 +162,7 @@
                 .append(checkGradeTd)
                 .append(presentationGradeTd)
                 .append(TotalGradeTd)
-                .appendTo("#peaceTime_table tbody");
+                .appendTo("#grade_table tbody");
         }
     }
     //解析显示分页信息
@@ -207,6 +226,30 @@
         navEle.appendTo("#page_nav_area");
     }
 </script>
+<script>
+    $('#grade_table').DataTable( {
+        dom: '<"row"<"col-md-12"<"row"<"col-md-6"B><"col-md-6"f> > ><"col-md-12"rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>> >',
+        buttons: {
+            buttons: [
+                { extend: 'copy', className: 'btn' },
+                { extend: 'csv', className: 'btn' },
+                { extend: 'excel', className: 'btn' },
+                { extend: 'print', className: 'btn' }
+            ]
+        },
+        "oLanguage": {
+            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+            "sInfo": "Showing page _PAGE_ of _PAGES_",
+            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+            "sSearchPlaceholder": "Search...",
+            "sLengthMenu": "Results :  _MENU_",
+        },
+        "stripeClasses": [],
+        "lengthMenu": [7, 10, 20, 50],
+        "pageLength": 7
+    } );
+</script>
+<!-- END PAGE LEVEL CUSTOM SCRIPTS -->
 </body>
 </html>
 

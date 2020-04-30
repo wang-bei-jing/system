@@ -2,7 +2,13 @@ package edu.zzti.dao;
 
 import edu.zzti.bean.TimeManger;
 
+import java.util.List;
+
 public interface TimeMangerMapper {
+
+    //xwq
+    List<TimeManger> findByCategory(Integer category);
+    //xwq
 
     //shc
     TimeManger findTimeMangerByCategory(Integer category);

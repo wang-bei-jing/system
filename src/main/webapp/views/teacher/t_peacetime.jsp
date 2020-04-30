@@ -26,7 +26,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">修改平时成绩记录</h4>
+                <h4 class="modal-title">修改成绩</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
@@ -53,16 +53,16 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">成绩类型</label>
+                        <label class="col-sm-2 control-label">平时成绩</label>
                         <div class="col-sm-10">
-                            <select name="grType" id="grType_update_input" class="form-control">
-                            </select>
+                            <input type="number" name="gPeacetime" class="form-control" id="gPeacetime_update_input">
+                            <span class="help-block"></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">得分</label>
+                        <label class="col-sm-2 control-label">报告成绩</label>
                         <div class="col-sm-10">
-                            <input type="number" name="grGrade" class="form-control" id="grade_update_input">
+                            <input type="number" name="gPresentation" class="form-control" id="gPresentation_update_input">
                             <span class="help-block"></span>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">学生姓名</label>
                         <div class="col-sm-10">
-                            <select id="student" name="grTsId" class="form-control" onchange="getTopic()">
+                            <select id="student" name="gTsId" class="form-control" onchange="getTopic()">
                             </select>
                             <span class="help-block"></span>
                         </div>
@@ -104,19 +104,16 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">成绩类型</label>
+                        <label class="col-sm-2 control-label">平时成绩</label>
                         <div class="col-sm-10">
-                            <select id="grType_add_input" name="grType" class="form-control">
-                                <option value="1">平时成绩</option>
-                                <option value="4">报告成绩</option>
-                            </select>
+                            <input type="number" name="gPeacetime" class="form-control" id="gPeacetime_add_input">
                             <span class="help-block"></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">成绩</label>
+                        <label class="col-sm-2 control-label">报告成绩</label>
                         <div class="col-sm-10">
-                            <input type="number" name="grGrade" class="form-control" id="grGrade_add_input">
+                            <input type="number" name="gPresentation" class="form-control" id="gPresentation_add_input">
                             <span class="help-block"></span>
                         </div>
                     </div>
@@ -151,8 +148,8 @@
                             <th>id</th>
                             <th>学生姓名</th>
                             <th>课题名</th>
-                            <th>成绩类型</th>
-                            <th>成绩</th>
+                            <th>平时成绩</th>
+                            <th>报告成绩</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -201,48 +198,51 @@
     });
     function to_page(pn){
         $.ajax({
-            url:"${pageContext.request.contextPath}/gradeRecord/select/"+tno,
-            data:"pn="+pn+"&grType="+1+"&grType1="+4,
+            url:"${pageContext.request.contextPath}/grade/student/"+tno,
+            data:"pn="+pn,
             type:"GET",
             success:function(result){
                 build_peaceTime_table(result.extend.pageInfo.list);
                 build_page_info(result.extend.pageInfo);
                 build_page_nav(result.extend.pageInfo);
+                calculate();
+            }
+        });
+    }
+    function calculate(){
+        $.ajax({
+            url:"${pageContext.request.contextPath}/grade/all/"+tno,
+            type:"GET",
+            success:function(result){
             }
         });
     }
     //解析显示数据
-    function build_peaceTime_table(peaceTimes){
+    function build_peaceTime_table(grades){
         $("#peaceTime_add_btn").attr("add-id",tno);
         $("#peaceTime_table tbody").empty();
-        for(var i=0;i<peaceTimes.length;i++){
-            var peaceTimeIdTd = $("<td></td>").append(peaceTimes[i].grId);
-            var peaceTimeSNameTd = $("<td></td>").append(peaceTimes[i].student.name);
-            var peaceTimeTpNameTd = $("<td></td>").append(peaceTimes[i].topic.name);
-            var peaceTimeTypeTd = $("<td></td>");
-            if(peaceTimes[i].grType == 1){
-                peaceTimeTypeTd.append("平时成绩")
-            }
-            if(peaceTimes[i].grType == 4){
-                peaceTimeTypeTd.append("报告成绩")
-            }
-            var peaceTimeGradeTd = $("<td></td>").append(peaceTimes[i].grGrade);
+        for(var i=0;i<grades.length;i++){
+            var gradeIdTd = $("<td></td>").append(grades[i].gId);
+            var gradeSNameTd = $("<td></td>").append(grades[i].student.name);
+            var gradeTpNameTd = $("<td></td>").append(grades[i].topic.name);
+            var gradePeacetimeTd = $("<td></td>").append(grades[i].gPeacetime);
+            var gradePresentationTd = $("<td></td>").append(grades[i].gPresentation);
             var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
                 .append("编辑");
             //为编辑按钮添加一个自定义的属性，来表示当前记录id
-            editBtn.attr("edit-id",peaceTimes[i].grId);
+            editBtn.attr("edit-id",grades[i].gId);
             var delBtn =  $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash"))
                 .append("删除");
             //为删除按钮添加一个自定义的属性来表示当前删除的记录id
-            delBtn.attr("del-id",peaceTimes[i].grId);
+            delBtn.attr("del-id",grades[i].gId);
             var btnTd = $("<td></td>").append(editBtn).append(delBtn);
-            $("<tr></tr>").append(peaceTimeIdTd)
-                .append(peaceTimeSNameTd)
-                .append(peaceTimeTpNameTd)
-                .append(peaceTimeTypeTd)
-                .append(peaceTimeGradeTd)
+            $("<tr></tr>").append(gradeIdTd)
+                .append(gradeSNameTd)
+                .append(gradeTpNameTd)
+                .append(gradePeacetimeTd)
+                .append(gradePresentationTd)
                 .append(btnTd)
                 .appendTo("#peaceTime_table tbody");
         }
@@ -263,7 +263,7 @@
         //构建元素
         var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href","#"));
         var prePageLi = $("<li></li>").append($("<a></a>").append("上一页"));
-        if(pageInfo.hasPreviousPage == false){
+        if(pageInfo.hasPreviousPage === false){
             firstPageLi.addClass("disabled");
             prePageLi.addClass("disabled");
         }else{
@@ -357,41 +357,35 @@
         $(ele).find("*").removeClass("has-error has-success");
         $(ele).find(".help-block").text("");
     }
-    //点击保存，添加课题。
+    //点击添加
     $("#peaceTime_save_btn").click(function(){
         $.ajax({
-            url:"${pageContext.request.contextPath}/gradeRecord/add/"+$("#peaceTime_add_btn").attr("add-id"),
+            url:"${pageContext.request.contextPath}/grade/add",
             type:"POST",
             data:$("#peaceTimeAddModal form").serialize(),
             success:function(result){
-                if(result.code === 100){
-                    $("#peaceTimeAddModal").modal('hide');
-                    to_page(total);
-                }else{
-                    alert("添加失败！");
+                alert(result.msg);
+                if(result.code === 200){
+                    alert(result.extend.message);
                 }
+                $("#peaceTimeAddModal").modal('hide');
+                to_page(total);
             }
         });
     });
-    //获得课题信息
-    function getPeaceTime(grId){
+    //获得详细信息
+    function getPeaceTime(gId){
         $.ajax({
-            url:"${pageContext.request.contextPath}/gradeRecord/detail/"+grId,
+            url:"${pageContext.request.contextPath}/grade/detail/"+gId,
             type:"GET",
             success:function(result){
-                var gradeRecord = result.extend.gradeRecord;
-                $("#id_update_input").val(gradeRecord.grId);
-                $("#sName_update_input").val(gradeRecord.student.name);
-                $("#tpName_update_input").val(gradeRecord.topic.name);
-                if(gradeRecord.grType === 1){
-                    var optionEle = $("<option></option>").append("平时成绩").attr("value",gradeRecord.grType);
-                    optionEle.appendTo("#peaceTimeUpdateModal #grType_update_input");
-                }
-                if(gradeRecord.grType === 4){
-                    var optionEle1 = $("<option></option>").append("报告成绩").attr("value",gradeRecord.grType);
-                    optionEle1.appendTo("#peaceTimeUpdateModal #grType_update_input");
-                }
-                $("#grade_update_input").val(gradeRecord.grGrade);
+                var grade = result.extend.grade;
+                $("#id_update_input").val(grade.gId);
+                alert(grade.gId);
+                $("#sName_update_input").val(grade.student.name);
+                $("#tpName_update_input").val(grade.topic.name);
+                $("#gPeacetime_update_input").val(grade.gPeacetime);
+                $("#gPresentation_update_input").val(grade.gPresentation);
             }
         });
     }
@@ -406,7 +400,7 @@
     //点击更新，更新记录信息
     $("#peaceTime_update_btn").click(function(){
         $.ajax({
-            url:"${pageContext.request.contextPath}/gradeRecord/upd/"+$(this).attr("upd-id"),
+            url:"${pageContext.request.contextPath}/grade/upd/"+$("#peaceTime_update_btn").attr("upd-id"),
             type:"PUT",
             data:$("#peaceTimeUpdateModal form").serialize(),
             success:function(result){
@@ -422,7 +416,7 @@
         var id = $(this).attr("del-id");
         if(confirm("确认删除【"+name+"】吗？")){
             $.ajax({
-                url:"${pageContext.request.contextPath}/gradeRecord/del/"+id,
+                url:"${pageContext.request.contextPath}/grade/del/"+id,
                 type:"DELETE",
                 success:function(result){
                     alert(result.msg);

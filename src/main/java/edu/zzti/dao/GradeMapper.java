@@ -8,6 +8,8 @@ import java.util.List;
 public interface GradeMapper {
 
     //xwq开始
+    Grade selectByGId(Integer gId);
+
     Grade selectByGTsId(Integer gTsId);
 
     List<Grade> student(Integer tno);

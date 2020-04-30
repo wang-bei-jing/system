@@ -121,6 +121,9 @@
                         </a>
                         <ul class="collapse submenu list-unstyled" id="topic1" data-parent="#accordionExample">
                             <li>
+                                <a href="${pageContext.request.contextPath}/views/teacher/t_time.jsp" target="mainFrame">课题申报时间</a>
+                            </li>
+                            <li>
                                 <a href="${pageContext.request.contextPath}/views/teacher/t_topic.jsp" target="mainFrame">我的课题</a>
                             </li>
                             <li>
@@ -169,6 +172,11 @@
                             <li>
                                 <a href="#score" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">成绩管理<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg> </a>
                                 <ul class="collapse list-unstyled sub-submenu" id="score" data-parent="#student">
+                                    <c:if test="${teacher.identity==1}">
+                                        <li>
+                                            <a href="${pageContext.request.contextPath}/views/teacher/t_gradeScale.jsp" target="mainFrame">成绩比例</a>
+                                        </li>
+                                    </c:if>
                                     <li>
                                         <a href="${pageContext.request.contextPath}/views/teacher/t_peacetime.jsp" target="mainFrame">平时和报告成绩</a>
                                     </li>

@@ -21,12 +21,16 @@ public class GradeServiceImpl implements GradeService {
     return gradeMapper.insertSelective(grade);
   }
 
+  public int del(Integer gId) {
+    return gradeMapper.deleteByPrimaryKey(gId);
+  }
+
   public int upd(Grade grade) {
     return gradeMapper.updateByPrimaryKeySelective(grade);
   }
 
   public Grade selectByGId(Integer gId) {
-    return gradeMapper.selectByPrimaryKey(gId);
+    return gradeMapper.selectByGId(gId);
   }
 
   public Grade selectByGTsId(Integer gTsId) {

@@ -208,6 +208,19 @@
                 build_peaceTime_table(result.extend.pageInfo.list);
                 build_page_info(result.extend.pageInfo);
                 build_page_nav(result.extend.pageInfo);
+                var grades = result.extend.pageInfo.list;
+                for(var i=0;i<grades.length;i++){
+                    calculate(grades[i].grTsId);
+                }
+            }
+        });
+    }
+    function calculate(gTsId){
+        $.ajax({
+            url:"${pageContext.request.contextPath}/grade/check/"+gTsId,
+            type:"GET",
+            success:function(result){
+                alert("验收成绩计算完毕");
             }
         });
     }
@@ -361,6 +374,7 @@
                 if(result.code == 100){
                     $("#peaceTimeAddModal").modal('hide');
                     to_page(total);
+
                 }else{
                     alert("添加失败！");
                 }

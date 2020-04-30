@@ -7,7 +7,13 @@ import java.util.List;
 
 public interface GradeScaleMapper {
 
-    GradeScale selectByGsStatus(Integer gsStatus);
+    //xwq开始
+
+    List<GradeScale> select(String gsDepartment);
+
+    GradeScale selectBy(@Param("gsDepartment") String gsDepartment, @Param("gsStatus") Integer gsStatus);
+
+    //xwq结束
 
     //shc
     List<GradeScale> findNewApplyGradeScale();

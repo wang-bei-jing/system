@@ -10,6 +10,15 @@
   <sql id="Base_Column_List">
     ti_id, ti_category, ti_begin, ti_end
   </sql>
+
+  <!-- xwq -->
+    <select id="findByCategory" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      select *
+      from  t_timemanger
+      where ti_category=#{category,jdbcType=INTEGER}
+    </select>
+  <!-- xwq -->
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

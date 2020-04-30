@@ -21,12 +21,12 @@
     <div id="load_screen"> <div class="loader"> <div class="loader-content"> <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 792 723" style="enable-background:new 0 0 792 723;" xml:space="preserve"> <g> <g> <path class="st0" d="M213.9,584.4c-47.4-25.5-84.7-60.8-111.8-106.1C75,433.1,61.4,382,61.4,324.9c0-57,13.6-108.1,40.7-153.3 S166.5,91,213.9,65.5s100.7-38.2,159.9-38.2c49.9,0,95,8.8,135.3,26.3s74.1,42.8,101.5,75.7l-85.5,78.9 c-38.9-44.9-87.2-67.4-144.7-67.4c-35.6,0-67.4,7.8-95.4,23.4s-49.7,37.4-65.4,65.4c-15.6,28-23.4,59.8-23.4,95.4 s7.8,67.4,23.4,95.4s37.4,49.7,65.4,65.4c28,15.6,59.7,23.4,95.4,23.4c57.6,0,105.8-22.7,144.7-68.2l85.5,78.9 c-27.4,33.4-61.4,58.9-102,76.5c-40.6,17.5-85.8,26.3-135.7,26.3C314.3,622.7,261.3,809.9,213.9,584.4z"/> </g> <circle class="st1" cx="375.4" cy="322.9" r="100"/> </g> <g> <circle class="st2" cx="275.4" cy="910" r="65"></circle> <circle class="st4" cx="475.4" cy="910" r="65"></circle> </g> </svg> </div></div></div>
     <!--  END LOADER -->
 
-    <!-- 课题修改弹框 -->
+    <!-- 修改弹框 -->
     <div class="modal fade" id="empUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">修改课题</h4>
+                    <h4 class="modal-title">修改成绩比例</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
@@ -37,170 +37,102 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">名称</label>
+                            <label class="col-sm-2 control-label">平时成绩比例</label>
                             <div class="col-sm-10">
-                                <input type="text" name="name" class="form-control" id="name_update_input">
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">简介</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="contents" class="form-control" id="contents_update_input">
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">类型</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="type" class="form-control" id="type_update_input">
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">来源</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="source" class="form-control" id="source_update_input">
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">难易程度</label>
-                            <div class="col-sm-10">
-                                <select id="difficulty_update_input" name="difficulty" class="form-control">
-                                    <option value="易">易</option>
-                                    <option value="中">中</option>
-                                    <option value="难">难</option>
+                                <select id="gradeA_update_input" name="gradeA" class="form-control">
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">是否需要支持</label>
+                            <label class="col-sm-2 control-label">期中成绩比例</label>
                             <div class="col-sm-10">
-                                <select id="support_update_input" name="support" class="form-control">
-                                    <option value="是">是</option>
-                                    <option value="否">否</option>
+                                <select id="gradeB_update_input" name="gradeB" class="form-control">
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">审核教研室</label>
+                            <label class="col-sm-2 control-label">验收成绩比例</label>
                             <div class="col-sm-10">
-                                <select id="department_update_input" name="department" class="form-control">
-                                    <option value="计算机科学与技术">计算机科学与技术</option>
-                                    <option value="软件工程">软件工程</option>
-                                    <option value="网络工程">网络工程</option>
+                                <select id="gradeC_update_input" name="gradeC" class="form-control">
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">选题人数</label>
+                            <label class="col-sm-2 control-label">报告成绩比例</label>
                             <div class="col-sm-10">
-                                <select id="num_update_input" name="num" class="form-control">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
+                                <select id="gradeD_update_input" name="gradeD" class="form-control">
+                                </select>
+                                <span class="help-block" style="color: red"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">适用专业</label>
+                            <div class="col-sm-10">
+                                <select id="gsDepartment_update_input" name="gsDepartment" class="form-control">
                                 </select>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" id="emp_update_btn">更新</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="emp_update_btn">重新申请</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 课题添加弹框 -->
+    <!-- 添加弹框 -->
     <div class="modal fade" id="empAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">申报课题</h4>
+                    <h4 class="modal-title" id="myModalLabel">申请新的成绩比例</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">课题名称</label>
+                            <label class="col-sm-2 control-label">平时成绩比例</label>
                             <div class="col-sm-10">
-                                <input type="text" name="name" class="form-control" id="name_add_input">
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">简介</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="contents" class="form-control" id="contents_add_input">
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">类型</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="type" class="form-control" id="type_add_input">
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">来源</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="source" class="form-control" id="source_add_input">
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">难易程度</label>
-                            <div class="col-sm-10">
-                                <select id="difficulty_add_input" name="difficulty" class="form-control">
-                                    <option value="易">易</option>
-                                    <option value="中">中</option>
-                                    <option value="难">难</option>
+                                <select id="gradeA_add_input" name="gradeA" class="form-control">
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">是否需要扶持</label>
+                            <label class="col-sm-2 control-label">期中成绩比例</label>
                             <div class="col-sm-10">
-                                <select id="support_add_input" name="support" class="form-control">
-                                    <option value="是">是</option>
-                                    <option value="否">否</option>
+                                <select id="gradeB_add_input" name="gradeB" class="form-control">
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">审题教研室</label>
+                            <label class="col-sm-2 control-label">验收成绩比例</label>
                             <div class="col-sm-10">
-                                <select id="department_add_input" name="department" class="form-control">
-                                    <option value="计算机科学与技术">计算机科学与技术</option>
-                                    <option value="网络工程">网络工程</option>
-                                    <option value="软件工程">软件工程</option>
+                                <select id="gradeC_add_input" name="gradeC" class="form-control">
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">选题人数</label>
+                            <label class="col-sm-2 control-label">报告成绩比例</label>
                             <div class="col-sm-10">
-                                <select id="num_add_input" name="num" class="form-control">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
+                                <select id="gradeD_add_input" name="gradeD" class="form-control">
+                                </select>
+                                <span class="help-block" style="color: red"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">适用专业</label>
+                            <div class="col-sm-10">
+                                <select id="gsDepartment_add_input" name="gsDepartment" class="form-control">
                                 </select>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" id="emp_save_btn">保存</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="emp_save_btn">申请</button>
                 </div>
             </div>
         </div>
@@ -211,11 +143,11 @@
             <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                 <div class="widget-content widget-content-area br-6">
                     <div class="modal-header">
-                        <h1>我的课题</h1>
+                        <h1>成绩比例</h1>
                         <div class="row">
                             <div>
                                 <button id="topic_btn" class="btn btn-s btn-primary">刷新</button>
-                                <button id="topic_add_btn" class="btn btn-s btn-primary">新增</button>
+                                <button id="topic_add_btn" class="btn btn-s btn-primary">添加</button>
                             </div>
                         </div>
                     </div>
@@ -228,6 +160,8 @@
                                 <th>期中验收</th>
                                 <th>验收</th>
                                 <th>报告</th>
+                                <th>专业</th>
+                                <th>申请时间</th>
                                 <th>状态</th>
                                 <th>操作</th>
                             </tr>
@@ -268,16 +202,30 @@
 
 <script type="text/javascript">
     var pageNum,total;
-    var tno = ${teacher.tno};
-    $(function(){
-        to_page(1);
-    });
-    $("#topic_btn").click(function () {
-        to_page(1);
-    });
+    var department = '${teacher.department}';
+    function timeStamp2String (time){
+        var datetime = new Date();
+        datetime.setTime(time);
+        var year = datetime.getFullYear();
+        var month = datetime.getMonth() + 1;
+        var date = datetime.getDate();
+        var hour = datetime.getHours();
+        if(hour<=9){
+            hour="0"+hour;
+        }
+        var minute = datetime.getMinutes();
+        if(minute<=9){
+            minute="0"+minute;
+        }
+        var second = datetime.getSeconds();
+        if(second<=9){
+            second="0"+second;
+        }
+        return year + "-" + month + "-" + date+" "+hour+":"+minute+":"+second;
+    }
     function to_page(pn){
         $.ajax({
-            url:"${pageContext.request.contextPath}/teacher/topic/"+tno,
+            url:"${pageContext.request.contextPath}/gradeScale/select/"+department,
             data:"pn="+pn,
             type:"GET",
             success:function(result){
@@ -287,80 +235,111 @@
             }
         });
     }
+    $(function(){
+        to_page(1);
+    });
+    $(function(){
+        var optionEle1 = $("<option></option>").append("---请选择百分比---");
+        var optionEle2 = $("<option></option>").append("---请选择百分比---");
+        var optionEle3 = $("<option></option>").append("---请选择百分比---");
+        var optionEle4 = $("<option></option>").append("---请选择百分比---");
+        optionEle1.appendTo("#empAddModal #gradeA_add_input");
+        optionEle2.appendTo("#empAddModal #gradeB_add_input");
+        optionEle3.appendTo("#empAddModal #gradeC_add_input");
+        optionEle4.appendTo("#empAddModal #gradeD_add_input");
+        for(var i = 0; i<=100; i=i+5){
+            var optionEle5 = $("<option></option>").append(i+"%").attr("value",i);
+            var optionEle6 = $("<option></option>").append(i+"%").attr("value",i);
+            var optionEle7 = $("<option></option>").append(i+"%").attr("value",i);
+            var optionEle8 = $("<option></option>").append(i+"%").attr("value",i);
+            optionEle5.appendTo("#empAddModal #gradeA_add_input");
+            optionEle6.appendTo("#empAddModal #gradeB_add_input");
+            optionEle7.appendTo("#empAddModal #gradeC_add_input");
+            optionEle8.appendTo("#empAddModal #gradeD_add_input");
+        }
+        for(var i = 0; i<=100; i=i+5) {
+            var optionEle9 = $("<option></option>").append(i + "%").attr("value", i);
+            var optionEle10 = $("<option></option>").append(i + "%").attr("value", i);
+            var optionEle11 = $("<option></option>").append(i + "%").attr("value", i);
+            var optionEle12 = $("<option></option>").append(i + "%").attr("value", i);
+            optionEle9.appendTo("#empUpdateModal #gradeA_update_input");
+            optionEle10.appendTo("#empUpdateModal #gradeB_update_input");
+            optionEle11.appendTo("#empUpdateModal #gradeC_update_input");
+            optionEle12.appendTo("#empUpdateModal #gradeD_update_input");
+        }
+        var optionEle13 = $("<option></option>").append(department).attr("value", department);
+        optionEle13.appendTo("#empAddModal #gsDepartment_add_input");
+        var optionEle14 = $("<option></option>").append(department).attr("value", department);
+        optionEle14.appendTo("#empUpdateModal #gsDepartment_update_input");
+    });
+    //刷新
+    $("#topic_btn").click(function () {
+        to_page(1);
+    });
     //解析显示数据
-    function build_topic_table(topics){
-        $("#topic_add_btn").attr("add-id",tno);
+    function build_topic_table(gradeScales){
+        $("#topic_add_btn").attr("add-id",department);
         $("#topic_table tbody").empty();
-        for(var i=0;i<topics.length;i++){
-            var topicIdTd = $("<td></td>").append(topics[i].id);
-            var topicNameTd = $("<td></td>").append(topics[i].name);
-            var topicDepartmentTd = $("<td></td>").append(topics[i].department);
+        for(var i=0;i<gradeScales.length;i++){
+            var gradeScaleIdTd = $("<td></td>").append(gradeScales[i].gsId);
+            var gradeScaleATd = $("<td></td>").append(gradeScales[i].gradeA);
+            var gradeScaleBTd = $("<td></td>").append(gradeScales[i].gradeB);
+            var gradeScaleCTd = $("<td></td>").append(gradeScales[i].gradeC);
+            var gradeScaleDTd = $("<td></td>").append(gradeScales[i].gradeD);
+            var gradeScaleDepartmentTd = $("<td></td>").append(gradeScales[i].gsDepartment);
+            var time = timeStamp2String(gradeScales[i].gsTime);
+            var gradeScaleTimeTd = $("<td></td>").append(time);
             var statusTd = $("<td></td>");
-            var viewBtn = $("<button></button>").addClass("btn btn-primary btn-sm view_btn")
-                .append($("<span></span>").addClass("glyphicon"))
-                .append("详情");
-            //为详情按钮添加一个自定义的属性，来表示当前课题id
-            viewBtn.attr("view-id",topics[i].id);
             var applyBtn = $("<button></button>").addClass("btn btn-primary btn-sm apply_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
                 .append("申请");
             //为申请按钮添加一个自定义的属性，来表示当前课题id
-            applyBtn.attr("apply-id",topics[i].id);
+            applyBtn.attr("apply-id",gradeScales[i].gsId);
             var reApplyBtn = $("<button></button>").addClass("btn btn-primary btn-sm reApply_Btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
                 .append("重新申请");
             //为重新申请按钮添加一个自定义的属性，来表示当前课题id
-            reApplyBtn.attr("reApply-id",topics[i].id);
+            reApplyBtn.attr("reApply-id",gradeScales[i].gsId);
             var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
                .append("编辑");
             //为编辑按钮添加一个自定义的属性，来表示当前课题id
-            editBtn.attr("edit-id",topics[i].id);
+            editBtn.attr("edit-id",gradeScales[i].gsId);
             var delBtn =  $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash"))
             .append("删除");
             //为删除按钮添加一个自定义的属性来表示当前删除的课题id
-            delBtn.attr("del-id",topics[i].id);
-            var viewBtnTd = $("<td></td>").append(viewBtn);
+            delBtn.attr("del-id",gradeScales[i].gsId);
             var btnTd = $("<td></td>");
-            var btn1Td = $("<td></td>");
-            if (topics[i].status==0)
+            if (gradeScales[i].gsStatus === 0)
             {
                 statusTd.append("未处理");
-                btnTd.append("已申请");
-                btn1Td.append("已申请");
+                btnTd.append(editBtn).append(delBtn);
             }
-            if (topics[i].status==1)
+            if (gradeScales[i].gsStatus === 1)
             {
                 statusTd.append("已同意");
-                btnTd.append("已同意");
-                btn1Td.append("已同意");
+                btnTd.append(editBtn).append(delBtn);
             }
-            if (topics[i].status==2)
+            if (gradeScales[i].gsStatus === 2)
             {
                 statusTd.append("已拒绝");
-                btnTd.append(reApplyBtn);
-                btn1Td.append(editBtn).append(delBtn);
+                btnTd.append(editBtn).append(delBtn);
             }
-            if (topics[i].status==3)
+            if (gradeScales[i].gsStatus === 3)
             {
                 statusTd.append("已重新申请");
-                btnTd.append(reApplyBtn);
-                btn1Td.append(editBtn).append(delBtn);
+                btnTd.append(editBtn).append(delBtn);
             }
-            if (topics[i].status==4)
-            {
-                statusTd.append("未申请");
-                btnTd.append(applyBtn);
-                btn1Td.append(editBtn).append(delBtn);
-            }
-            $("<tr></tr>").append(topicIdTd)
-                .append(topicNameTd)
-                .append(topicDepartmentTd)
+            $("<tr></tr>").append(gradeScaleIdTd)
+                .append(gradeScaleATd)
+                .append(gradeScaleBTd)
+                .append(gradeScaleCTd)
+                .append(gradeScaleDTd)
+                .append(gradeScaleDepartmentTd)
+                .append(gradeScaleTimeTd)
                 .append(statusTd)
-                .append(viewBtnTd)
                 .append(btnTd)
-                .append(btn1Td)
                 .appendTo("#topic_table tbody");
         }
     }
@@ -440,38 +419,58 @@
         $(ele).find("*").removeClass("has-error has-success");
         $(ele).find(".help-block").text("");
     }
-    //点击保存，添加课题。
+    //显示校验结果的提示信息
+    function show_validate_msg(ele,status,msg){
+        //清除当前元素的校验状态
+        $(ele).parent().removeClass("has-success has-error");
+        $(ele).next("span").text("");
+        if("success"==status){
+            $(ele).parent().addClass("has-success");
+            $(ele).next("span").text(msg);
+        }else if("error" == status){
+            $(ele).parent().addClass("has-error");
+            $(ele).next("span").text(msg);
+        }
+    }
+    //点击添加
     $("#emp_save_btn").click(function(){
-        $.ajax({
-            url:"${pageContext.request.contextPath}/teacher/addTopic/"+$("#topic_add_btn").attr("add-id"),
-            type:"POST",
-            data:$("#empAddModal form").serialize(),
-            success:function(result){
-                if(result.code == 100){
-                    $("#empAddModal").modal('hide');
-                    to_page(total);
-                }else{
-                    alert("添加失败！");
+        var gradeA = parseInt($("#gradeA_add_input").val());
+        var gradeB = parseInt($("#gradeB_add_input").val());
+        var gradeC = parseInt($("#gradeC_add_input").val());
+        var gradeD = parseInt($("#gradeD_add_input").val());
+        var sum = gradeA + gradeB +gradeC + gradeD;
+        alert(sum);
+        if(sum === 100){
+            $.ajax({
+                url:"${pageContext.request.contextPath}/gradeScale/add/"+department,
+                type:"POST",
+                data:$("#empAddModal form").serialize(),
+                success:function(result){
+                    if(result.code == 100){
+                        $("#empAddModal").modal('hide');
+                        to_page(total);
+                    }else{
+                        alert("添加失败！");
                     }
                 }
-        });
+            });
+        } else {
+            show_validate_msg("#gradeD_add_input", "error", "错误，四部分成绩比例和应为100%!请重更新输入");
+        }
     });
-    //获得课题信息
-    function getEmp(topicId){
+    //获得详细信息
+    function getEmp(gsId){
         $.ajax({
-            url:"${pageContext.request.contextPath}/teacher/topicDetails/"+topicId,
+            url:"${pageContext.request.contextPath}/gradeScale/detail/"+gsId,
             type:"GET",
             success:function(result){
-                var topic = result.extend.topic;
-                $("#id_update").val(topic.id);
-                $("#name_update_input").val(topic.name);
-                $("#contents_update_input").val(topic.contents);
-                $("#type_update_input").val(topic.type);
-                $("#source_update_input").val(topic.source);
-                $("#difficulty_update_input").val(topic.difficulty);
-                $("#support_update_input").val(topic.support);
-                $("#department_update_input").val(topic.department);
-                $("#num_update_input").val(topic.num);
+                var gradeScale = result.extend.gradeScale;
+                $("#id_update").val(gradeScale.gsId);
+                $("#gradeA_update_input").val(gradeScale.gradeA);
+                $("#gradeB_update_input").val(gradeScale.gradeB);
+                $("#gradeC_update_input").val(gradeScale.gradeC);
+                $("#gradeD_update_input").val(gradeScale.gradeD);
+                $("#gsDepartment_update_input").val(gradeScale.gsDepartment);
             }
         });
     }
@@ -483,10 +482,17 @@
             backdrop:"static"
         });
     });
-    //点击更新，更新课题信息
+    //点击修改
     $("#emp_update_btn").click(function(){
+        var gradeA = parseInt($("#gradeA_update_input").val());
+        var gradeB = parseInt($("#gradeB_update_input").val());
+        var gradeC = parseInt($("#gradeC_update_input").val());
+        var gradeD = parseInt($("#gradeD_update_input").val());
+        var sum = gradeA + gradeB +gradeC + gradeD;
+        alert(sum);
+        if(sum === 100){
         $.ajax({
-            url:"${pageContext.request.contextPath}/teacher/updTopic/"+$(this).attr("upd-id"),
+            url:"${pageContext.request.contextPath}/gradeScale/upd/"+$(this).attr("upd-id"),
             type:"PUT",
             data:$("#empUpdateModal form").serialize(),
             success:function(result){
@@ -497,70 +503,16 @@
                 to_page(pageNum);
             }
         });
-    });
-    //获得课题信息
-    function view(topicId){
-        $.ajax({
-            url:"${pageContext.request.contextPath}/teacher/topicDetails/"+topicId,
-            type:"GET",
-            success:function(result){
-                var topic = result.extend.topic;
-                $("#id").val(topic.id);
-                $("#name").val(topic.name);
-                $("#contents").val(topic.contents);
-                $("#type").val(topic.type);
-                $("#source").val(topic.source);
-                $("#difficulty").val(topic.difficulty);
-                $("#support").val(topic.support);
-                $("#department").val(topic.department);
-                $("#num").val(topic.num);
-            }
-        });
-    }
-    //点击详情，弹出详情弹窗
-    $(document).on("click",".view_btn",function(){
-        view($(this).attr("view-id"));
-        $("#detailModal").modal({
-            backdrop:"static"
-        });
-    });
-    //点击申请
-    $(document).on("click",".apply_btn",function(){
-        var name = $(this).parents("tr").find("td:eq(2)").text();
-        var topicId = $(this).attr("apply-id");
-        if(confirm("确认申请课题"+name+"吗？")){
-            $.ajax({
-                url:"${pageContext.request.contextPath}/teacher/applyTopic/"+topicId,
-                type:"PUT",
-                success:function(result){
-                    alert(result.msg);
-                    to_page(pageNum);
-                }
-            });
-        }
-    });
-    //点击重新申请
-    $(document).on("click",".reApply_Btn",function(){
-        var name = $(this).parents("tr").find("td:eq(2)").text();
-        var topicId = $(this).attr("reApply-id");
-        if(confirm("确认重新申请课题"+name+"吗？")){
-            $.ajax({
-                url:"${pageContext.request.contextPath}/teacher/reApplyTopic/"+topicId,
-                type:"PUT",
-                success:function(result){
-                    alert(result.msg);
-                    to_page(pageNum);
-                }
-            });
+        } else {
+            show_validate_msg("#gradeD_update_input", "error", "错误，四部分成绩比例和应为100%!请重更新输入");
         }
     });
     //单个删除
     $(document).on("click",".delete_btn",function(){
-        var ename = $(this).parents("tr").find("td:eq(2)").text();
-        var topicId = $(this).attr("del-id");
-        if(confirm("确认删除【"+ename+"】吗？")){
+        var gsId = $(this).attr("del-id");
+        if(confirm("确认删除【"+gsId+"】吗？")){
             $.ajax({
-                url:"${pageContext.request.contextPath}/teacher/delTopic/"+topicId,
+                url:"${pageContext.request.contextPath}/gradeScale/del/"+gsId,
                 type:"DELETE",
                 success:function(result){
                     alert(result.msg);

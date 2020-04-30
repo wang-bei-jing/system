@@ -6,10 +6,21 @@ import edu.zzti.service.TimeMangerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TimeMangerServiceImpl implements TimeMangerService {
-   @Autowired
-    TimeMangerMapper timeMangerMapper;
+   final TimeMangerMapper timeMangerMapper;
+
+    public TimeMangerServiceImpl(TimeMangerMapper timeMangerMapper) {
+        this.timeMangerMapper = timeMangerMapper;
+    }
+
+    //xwq
+    public List<TimeManger> findByCategory(Integer category) {
+        return timeMangerMapper.findByCategory(category);
+    }
+    //xwq
 
     //shc
     public TimeManger findTimeMangerByCategory(Integer category) {

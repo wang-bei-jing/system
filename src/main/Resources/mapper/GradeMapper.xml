@@ -62,6 +62,15 @@
   </sql>
 
   <!-- xwq分界线开始 -->
+  <select id="selectByGId" parameterType="java.lang.Integer" resultMap="BaseResultMapWith">
+    select *,t_topicselect.id tsId,t_topicselect.status tsStatus,t_student.name sName,t_student.department sDepartment,t_student.status sStatus,t_topic.id tpId,t_topic.name tpName,t_topic.department tpDepartment,t_topic.status tpStatus
+    from t_grade,t_topicselect,t_student,t_topic
+    where t_grade.g_ts_id = t_topicselect.id
+    and t_topicselect.s_sno = t_student.sno
+    and t_topicselect.tp_id = t_topic.id
+    and t_topicselect.status = 1
+    and t_grade.g_id = #{gId,jdbcType=INTEGER}
+  </select>
   <select id="student" parameterType="java.lang.Integer" resultMap="BaseResultMapWith">
     select *,t_topicselect.id tsId,t_topicselect.status tsStatus,t_student.name sName,t_student.department sDepartment,t_student.status sStatus,t_topic.id tpId,t_topic.name tpName,t_topic.department tpDepartment,t_topic.status tpStatus
     from t_grade,t_topicselect,t_student,t_topic
