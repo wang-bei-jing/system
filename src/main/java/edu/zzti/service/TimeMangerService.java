@@ -8,6 +8,8 @@ public interface TimeMangerService {
 
     //xwq
     List<TimeManger> findByCategory(Integer category);
+
+    TimeManger selectByPrimaryKey(Integer tiId);
     //xwq
 
     //shc

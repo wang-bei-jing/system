@@ -20,6 +20,10 @@ public class TimeMangerServiceImpl implements TimeMangerService {
     public List<TimeManger> findByCategory(Integer category) {
         return timeMangerMapper.findByCategory(category);
     }
+
+    public TimeManger selectByPrimaryKey(Integer tiId) {
+        return timeMangerMapper.selectByPrimaryKey(tiId);
+    }
     //xwq
 
     //shc

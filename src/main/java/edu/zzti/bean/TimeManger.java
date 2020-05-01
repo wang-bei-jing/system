@@ -10,12 +10,12 @@ public class TimeManger {
 
     private Integer tiCategory;
 
-    @JsonFormat(timezone="GMT+8",pattern = "yyyy-MM-dd hh:mm")
-    @DateTimeFormat(pattern ="yyyy-MM-dd hh:mm:ss" )
+    @JsonFormat(timezone="GMT+8",pattern="yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm" )
     private Date tiBegin;
 
-    @JsonFormat(timezone="GMT+8",pattern = "yyyy-MM-dd hh:mm")
-    @DateTimeFormat(pattern ="yyyy-MM-dd hh:mm:ss" )
+    @JsonFormat(timezone="GMT+8",pattern="yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm" )
     private Date tiEnd;
 
     public Integer getTiId() {

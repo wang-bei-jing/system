@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -287,8 +288,16 @@
         <div class="row layout-top-spacing">
             <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                 <div class="widget-content widget-content-area br-6">
-                    <div class="modal-header">
+                    <div style="text-align: center">
                         <h1>我的课题</h1>
+                    </div>
+                    <div class="modal-header">
+                        <div>
+                            <div id="time_div"  style="color: red"></div>
+                            <c:if test="${compare!=1}">
+                                <div style="color: red">非申报课题时间！</div>
+                            </c:if>
+                        </div>
                         <div class="row">
                             <div>
                                 <button id="topic_btn" class="btn btn-s btn-primary">刷新</button>
@@ -297,21 +306,38 @@
                         </div>
                     </div>
                     <div class="table-responsive mb-4 mt-4">
-                        <table class="table table-hover" id="topic_table" >
-                            <thead>
-                            <tr>
-                                <th>课题编号</th>
-                                <th>课题名称</th>
-                                <th>审题教研室</th>
-                                <th>状态</th>
-                                <th>详情</th>
-                                <th>申请</th>
-                                <th>编辑</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        <c:if test="${compare==1}">
+                            <table class="table table-hover" id="topic_table1" >
+                                <thead>
+                                <tr>
+                                    <th>课题编号</th>
+                                    <th>课题名称</th>
+                                    <th>审题教研室</th>
+                                    <th>状态</th>
+                                    <th>详情</th>
+                                    <th>申请</th>
+                                    <th>编辑</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </c:if>
+                        <c:if test="${compare==2||compare==0}">
+                            <table class="table table-hover" id="topic_table2" >
+                                <thead>
+                                <tr>
+                                    <th>课题编号</th>
+                                    <th>课题名称</th>
+                                    <th>审题教研室</th>
+                                    <th>状态</th>
+                                    <th>详情</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </c:if>
                     </div>
                     <!-- 显示分页信息 -->
                     <div class="row">
@@ -346,28 +372,124 @@
 <script type="text/javascript">
     var pageNum,total;
     var tno = ${teacher.tno};
+    var compare = ${compare};
     $(function(){
+        $.ajax({
+            url:"${pageContext.request.contextPath}/time/select",
+            type:"GET",
+            success:function(result){
+                var timeManger =result.extend.timeMangers[0];
+                build_time_div(timeManger);
+            }
+        });
         to_page(1);
     });
     $("#topic_btn").click(function () {
         to_page(1);
     });
+    function build_time_div(timeManger){
+        $("#time_div").append("当前申报课题时间：").append(timeManger.tiBegin).append("~").append(timeManger.tiEnd);
+    }
     function to_page(pn){
         $.ajax({
             url:"${pageContext.request.contextPath}/teacher/topic/"+tno,
             data:"pn="+pn,
             type:"GET",
             success:function(result){
-                build_topic_table(result.extend.pageInfo.list);
-                build_page_info(result.extend.pageInfo);
-                build_page_nav(result.extend.pageInfo);
+                alert(compare);
+                if(compare === 1){
+                    build_topic_table1(result.extend.pageInfo.list);
+                    build_page_info(result.extend.pageInfo);
+                    build_page_nav(result.extend.pageInfo);
+                }
+                else {
+                    build_topic_table2(result.extend.pageInfo.list);
+                    build_page_info(result.extend.pageInfo);
+                    build_page_nav(result.extend.pageInfo);
+                }
             }
         });
     }
     //解析显示数据
-    function build_topic_table(topics){
+    function build_topic_table1(topics){
         $("#topic_add_btn").attr("add-id",tno);
-        $("#topic_table tbody").empty();
+        $("#topic_table1 tbody").empty();
+        for(var i=0;i<topics.length;i++){
+            var topicIdTd = $("<td></td>").append(topics[i].id);
+            var topicNameTd = $("<td></td>").append(topics[i].name);
+            var topicDepartmentTd = $("<td></td>").append(topics[i].department);
+            var statusTd = $("<td></td>");
+            var viewBtn = $("<button></button>").addClass("btn btn-primary btn-sm view_btn")
+                .append($("<span></span>").addClass("glyphicon"))
+                .append("详情");
+            //为详情按钮添加一个自定义的属性，来表示当前课题id
+            viewBtn.attr("view-id",topics[i].id);
+            var applyBtn = $("<button></button>").addClass("btn btn-primary btn-sm apply_btn")
+                .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
+                .append("申请");
+            //为申请按钮添加一个自定义的属性，来表示当前课题id
+            applyBtn.attr("apply-id",topics[i].id);
+            var reApplyBtn = $("<button></button>").addClass("btn btn-primary btn-sm reApply_Btn")
+                .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
+                .append("重新申请");
+            //为重新申请按钮添加一个自定义的属性，来表示当前课题id
+            reApplyBtn.attr("reApply-id",topics[i].id);
+            var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
+                .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
+                .append("编辑");
+            //为编辑按钮添加一个自定义的属性，来表示当前课题id
+            editBtn.attr("edit-id",topics[i].id);
+            var delBtn =  $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
+                .append($("<span></span>").addClass("glyphicon glyphicon-trash"))
+                .append("删除");
+            //为删除按钮添加一个自定义的属性来表示当前删除的课题id
+            delBtn.attr("del-id",topics[i].id);
+            var viewBtnTd = $("<td></td>").append(viewBtn);
+            var btnTd = $("<td></td>");
+            var btn1Td = $("<td></td>");
+            if (topics[i].status===0)
+            {
+                statusTd.append("未处理");
+                btnTd.append("已申请");
+                btn1Td.append("已申请");
+            }
+            if (topics[i].status===1)
+            {
+                statusTd.append("已同意");
+                btnTd.append("已同意");
+                btn1Td.append("已同意");
+            }
+            if (topics[i].status===2)
+            {
+                statusTd.append("已拒绝");
+                btnTd.append(reApplyBtn);
+                btn1Td.append(editBtn).append(delBtn);
+            }
+            if (topics[i].status===3)
+            {
+                statusTd.append("已重新申请");
+                btnTd.append(reApplyBtn);
+                btn1Td.append(editBtn).append(delBtn);
+            }
+            if (topics[i].status===4)
+            {
+                statusTd.append("未申请");
+                btnTd.append(applyBtn);
+                btn1Td.append(editBtn).append(delBtn);
+            }
+            $("<tr></tr>").append(topicIdTd)
+                .append(topicNameTd)
+                .append(topicDepartmentTd)
+                .append(statusTd)
+                .append(viewBtnTd)
+                .append(btnTd)
+                .append(btn1Td)
+                .appendTo("#topic_table1 tbody");
+        }
+    }
+    function build_topic_table2(topics){
+        $("#topic_add_btn").attr("add-id",tno);
+        $("#topic_table2 tbody").empty();
         for(var i=0;i<topics.length;i++){
             var topicIdTd = $("<td></td>").append(topics[i].id);
             var topicNameTd = $("<td></td>").append(topics[i].name);
@@ -401,31 +523,31 @@
             var viewBtnTd = $("<td></td>").append(viewBtn);
             var btnTd = $("<td></td>");
             var btn1Td = $("<td></td>");
-            if (topics[i].status==0)
+            if (topics[i].status===0)
             {
                 statusTd.append("未处理");
                 btnTd.append("已申请");
                 btn1Td.append("已申请");
             }
-            if (topics[i].status==1)
+            if (topics[i].status===1)
             {
                 statusTd.append("已同意");
                 btnTd.append("已同意");
                 btn1Td.append("已同意");
             }
-            if (topics[i].status==2)
+            if (topics[i].status===2)
             {
                 statusTd.append("已拒绝");
                 btnTd.append(reApplyBtn);
                 btn1Td.append(editBtn).append(delBtn);
             }
-            if (topics[i].status==3)
+            if (topics[i].status===3)
             {
                 statusTd.append("已重新申请");
                 btnTd.append(reApplyBtn);
                 btn1Td.append(editBtn).append(delBtn);
             }
-            if (topics[i].status==4)
+            if (topics[i].status===4)
             {
                 statusTd.append("未申请");
                 btnTd.append(applyBtn);
@@ -436,9 +558,7 @@
                 .append(topicDepartmentTd)
                 .append(statusTd)
                 .append(viewBtnTd)
-                .append(btnTd)
-                .append(btn1Td)
-                .appendTo("#topic_table tbody");
+                .appendTo("#topic_table2 tbody");
         }
     }
     //解析显示分页信息

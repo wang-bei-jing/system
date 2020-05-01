@@ -3,13 +3,13 @@
 <html>
 <head>
     <title>个人信息</title>
-    <link href="${pageContext.request.contextPath}/static/css/index.css" rel="stylesheet" type="text/css"/>
-    <script src="${pageContext.request.contextPath}/static/js/index.js"></script>
+    <link href="${pageContext.request.contextPath}/static/mainstatic/css/index.css" rel="stylesheet" type="text/css"/>
+    <script src="${pageContext.request.contextPath}/static/mainstatic/js/index.js"></script>
     <%--引入jquery--%>
-    <script src="${pageContext.request.contextPath}/static/bootstrap/jquery/jquery-1.12.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/mainstatic/bootstrap/jquery/jquery-1.12.4.min.js"></script>
     <!-- 引入 Bootstrap样式-->
-    <link href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <script src="${pageContext.request.contextPath}/static/bootstrap/js/bootstrap.min.js"></script>
+    <link href="${pageContext.request.contextPath}/static/mainstatic/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="${pageContext.request.contextPath}/static/mainstatic/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div>
