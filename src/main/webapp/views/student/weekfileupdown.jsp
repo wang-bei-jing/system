@@ -1,6 +1,5 @@
-
 <%@ page language="java" contentType="text/html; charset=utf-8"
-         pageEncoding="utf-8"%>
+         pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -8,16 +7,17 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>文件上传下载</title>
-    <link href="${pageContext.request.contextPath}/static/mainstatic/css/index.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/static/mainstatic/css/index.css" rel="stylesheet" type="text/css"/>
     <script src="${pageContext.request.contextPath}/static/mainstatic/js/index.js"></script>
     <%--引入jquery--%>
     <script src="${pageContext.request.contextPath}/static/mainstatic/bootstrap/jquery/jquery-1.12.4.min.js"></script>
     <!-- 引入 Bootstrap样式-->
-    <link href="${pageContext.request.contextPath}/static/mainstatic/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/static/mainstatic/bootstrap/css/bootstrap.min.css" rel="stylesheet"
+          type="text/css">
     <script src="${pageContext.request.contextPath}/static/mainstatic/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-    /*  function todown(dname){
-            var ssno=${student.sno};
+        /*  function todown(dname){
+                var ssno=${student.sno};
 
             if (tpsStatus=='0'||tpsStatus=='2'){
                 $.ajax({
@@ -42,9 +42,18 @@
             }
 
         }*/
+        function isExist() {
+            var titleVal = $("input[name=remark]").val();
+            if (titleVal=="" || titleVal == null) {
+                $(".msg").html("请选择文件").css("color", "red");
+                return;
+
+            }
+            ;
+        }
     </script>
     <style>
-        table{
+        table {
             border-collapse: collapse;
             border-spacing: 0;
             border: 1px solid #404060;
@@ -52,6 +61,7 @@
             font-size: 10px;
             font-family: "微软雅黑";
         }
+
         th {
             text-align: center;
             vertical-align: middle;
@@ -61,11 +71,13 @@
             font: bold 15px "微软雅黑";
             color: #fff;
         }
-        td{
+
+        td {
             border: 1px solid #404060;
             padding: 10px;
         }
-        .header{
+
+        .header {
             position: fixed;
             top: 0;
             left: 0;
@@ -74,22 +86,22 @@
             color: white;
             font-size: 18px;
             height: 7%;
-            background:#204d74;
+            background: #204d74;
         }
     </style>
     <script type="text/javascript">
-            /*弹出添加模块框*/
-            $(document).ready(function() {
-                $("#add_modal", this).click(function () {
-                    $("#Add").modal({
-                        backdrop: "static"
-                    });
-                })
-            });
+        /*弹出添加模块框*/
+        $(document).ready(function () {
+            $("#add_modal", this).click(function () {
+                $("#Add").modal({
+                    backdrop: "static"
+                });
+            })
+        });
     </script>
 </head>
-<body >
-<header >
+<body>
+<header>
     <div class="header" style="text-align: center">
         <row>
             <h4>我的周报</h4>
@@ -100,132 +112,155 @@
     <!-- 搭建显示页面 -->
     <div class="container" style="width: 100%">
 
-<div style="text-align: center;margin-top: 0%;margin-right: 1%;height:100%;">
-    <div class="container page-header" style="border: 1px solid #DBDBDB;border-radius: 15px;width: auto;background: white;box-shadow: 2px 2px 2px #888888;">
-        <c:choose>
-            <c:when test="${student.status=='1'}">
-                <div class="modal-header">
-                    <h1>我的周报</h1>
-                    <div class="modal-header">
-                        <!-- 按钮 -->
-                        <div class="row">
-                            <div class="col-md-4 col-md-offset-8">
-                                <%--   <a href="../selectUserProject.do?userId=${user.userid}" class="btn btn-primary">查看我的项目</a>--%>
-                                <button class="btn btn-success" id="add_modal" >新增周报</button>
+        <div style="text-align: center;margin-top: 0%;margin-right: 1%;height:100%;">
+            <div class="container page-header"
+                 style="border: 1px solid #DBDBDB;border-radius: 15px;width: auto;background: white;box-shadow: 2px 2px 2px #888888;">
+                <c:choose>
+                    <c:when test="${student.status=='1'}">
+                        <div class="modal-header">
+                            <h1>我的周报</h1>
+                            <div class="modal-header">
+                                <!-- 按钮 -->
+                                <div class="row">
+                                    <div class="col-md-4 col-md-offset-8">
+                                            <%--   <a href="../selectUserProject.do?userId=${user.userid}" class="btn btn-primary">查看我的项目</a>--%>
+                                        <button class="btn btn-success" id="add_modal">新增周报</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 显示表格数据 -->
+                        <div class="row" id="table_page">
+                            <div class="col-md-12">
+                                <c:choose>
+                                    <c:when test="${weekDocuments[0]!=null}">
+                                        <table class="table table-hover" style="text-align: center">
+                                            <thead style="color: red">
+                                            <tr>
+                                                <th>周次</th>
+                                                <th>文件名</th>
+                                                <th>备注</th>
+                                                <th>上传时间</th>
+                                                <th>教师批注</th>
+
+                                                <th>操作</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <c:forEach items="${weekDocuments}" var="weekDocument">
+                                                <tr class="mytr">
+                                                    <td>${weekDocument.week}</td>
+                                                    <td>${weekDocument.documentname}</td>
+                                                    <td>${weekDocument.remark}</td>
+                                                    <td><fmt:formatDate value="${weekDocument.wkTime}"
+                                                                        pattern="yyyy-MM-dd hh:mm:ss"/></td>
+                                                    <td>${weekDocument.annotation}</td>
+                                                    <td>
+                                                        <a href="${pageContext.request.contextPath}/downWeekDocument?documentname=${weekDocument.documentname}&sSno=${student.sno}&week=${weekDocument.week}">
+                                                            <button class="btn btn-primary btn-sm edit_btn"
+                                                                    id="down_btn">
+                                                                下载
+                                                            </button>
+                                                        </a>
+                                                            <%-- <button class="btn btn-primary btn-sm edit_btn" id="edit_btn">
+                                                                 <span class="glyphicon glyphicon-pencil"></span>编辑
+                                                             </button>--%>
+                                                        <a href="${pageContext.request.contextPath}/deleteWeekDocument?documentname=${weekDocument.documentname}&dId=${weekDocument.dId}&sSno=${student.sno}&week=${weekDocument.week}"
+                                                           class="btn btn-danger btn-sm delete_btn">
+                                                            <span class="glyphicon glyphicon-trash"></span>删除
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span><strong>您还没有上传周报!</strong></span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <span style="color: red"><strong>您还没有被老师确认！请耐心等待</strong></span>
+                    </c:otherwise>
+                </c:choose>
+
+                <!-- 添加模态框 -->
+                <div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">上传周报</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="${pageContext.request.contextPath}/uploadWeekDocument" method="post"
+                                      class="form-horizontal" enctype="multipart/form-data">
+                                    <input type="text" name="tpsId" value="${wdaddtpsId}" style="display: none">
+                                    <input type="text" name="sSno" value="${student.sno}" style="display: none">
+                                    <input type="text" name="category" value="1" style="display: none">
+                                    <div class="form-group">
+                                        <label for="input7" class="col-sm-2 control-label">周次</label>
+                                        <div class="col-sm-10">
+                                            <select id="input7" class="form-control" name="week">
+                                                <c:if test="${weeks.contains('第一周')==false}">
+                                                  <option>第一周</option>
+                                                </c:if>
+                                                <c:if test="${weeks.contains('第二周')==false}">
+                                                    <option>第二周</option>
+                                                </c:if>
+                                                <c:if test="${weeks.contains('第三周')==false}">
+                                                    <option>第三周</option>
+                                                </c:if>
+                                                <c:if test="${weeks.contains('第四周')==false}">
+                                                    <option>第四周</option>
+                                                </c:if>
+                                                <c:if test="${weeks.contains('第五周')==false}">
+                                                    <option>第五周</option>
+                                                </c:if>
+                                                <c:if test="${weeks.contains('第六周')==false}">
+                                                    <option>第六周</option>
+                                                </c:if>
+                                                <c:if test="${weeks.contains('第七周')==false}">
+                                                    <option>第七周</option>
+                                                </c:if>
+                                                <c:if test="${weeks.contains('第八周')==false}">
+                                                    <option>第八周</option>
+                                                </c:if>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">附件</label>
+                                        <div class="col-sm-10">
+                                            <input type="file" name="file" width="120px" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">备注</label>
+                                        <div class="col-sm-10">
+                                            <%--   <input type="textarea" name="remark" class="form-control" style="height: 120px">--%>
+                                            <textarea  cols="62px" rows="5px" name="remark" onblur="isExist()"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                        <button type="submit"  id="beforesubmit" class="btn btn-primary">上传</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- 显示表格数据 -->
-                <div class="row" id="table_page" >
-                    <div class="col-md-12">
-                        <c:choose>
-                            <c:when test="${weekDocuments[0]!=null}">
-                                <table class="table table-hover" style="text-align: center">
-                                    <thead style="color: red">
-                                    <tr>
-                                        <th>周次</th>
-                                        <th>文件名</th>
-                                        <th>备注</th>
-                                        <th>上传时间</th>
-                                        <th>教师批注</th>
-
-                                        <th>操作</th>
-
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach items="${weekDocuments}" var="weekDocument">
-                                        <tr class="mytr">
-                                            <td>${weekDocument.week}</td>
-                                            <td>${weekDocument.documentname}</td>
-                                            <td>${weekDocument.remark}</td>
-                                            <td><fmt:formatDate value="${weekDocument.wkTime}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-                                            <td>${weekDocument.annotation}</td>
-                                            <td>
-                                                <a href="${pageContext.request.contextPath}/downWeekDocument?documentname=${weekDocument.documentname}" >
-                                                    <button class="btn btn-primary btn-sm edit_btn" id="down_btn" >
-                                                        下载
-                                                    </button>
-                                                </a>
-                                               <%-- <button class="btn btn-primary btn-sm edit_btn" id="edit_btn">
-                                                    <span class="glyphicon glyphicon-pencil"></span>编辑
-                                                </button>--%>
-                                                <a href="${pageContext.request.contextPath}/deleteWeekDocument?documentname=${weekDocument.documentname}&dId=${weekDocument.dId}&sSno=${student.sno}" class="btn btn-danger btn-sm delete_btn">
-                                                    <span class="glyphicon glyphicon-trash"></span>删除
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
-                            </c:when>
-                            <c:otherwise>
-                                <span><strong>您还没有上传周报!</strong></span>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <span style="color: red"><strong>您还没有被老师确认！请耐心等待</strong></span>
-            </c:otherwise>
-        </c:choose>
-
-        <!-- 添加模态框 -->
-        <div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">上传周报</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form  action="${pageContext.request.contextPath}/uploadWeekDocument" method="post" class="form-horizontal" enctype="multipart/form-data">
-                            <input type="text" name="tpsId" value="${wdaddtpsId}" style="display: none">
-                            <input type="text" name="sSno" value="${student.sno}" style="display: none">
-                            <input type="text" name="category" value="1" style="display: none">
-                            <div class="form-group">
-                                <label for="input7" class="col-sm-2 control-label">周次</label>
-                                <div class="col-sm-10">
-                                    <select id="input7" class="form-control" name="week">
-                                        <option>第一周</option>
-                                        <option>第二周</option>
-                                        <option>第三周</option>
-                                        <option>第四周</option>
-                                        <option>第五周</option>
-                                        <option>第六周</option>
-                                        <option>第七周</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">附件</label>
-                                <div class="col-sm-10">
-                                    <input type="file" name="file" width="120px">
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">备注</label>
-                                <div class="col-sm-10">
-                                    <%--   <input type="textarea" name="remark" class="form-control" style="height: 120px">--%>
-                                    <textarea cols="62px" rows="5px" name="remark"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="submit" class="btn btn-primary" >上传</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
-</div>
-        </div>
 
-</div>
+    </div>
 </body>
 </html>

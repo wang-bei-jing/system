@@ -7,7 +7,6 @@ import edu.zzti.service.StudentService;
 import edu.zzti.service.TeacherService;
 import edu.zzti.service.TopicSelectService;
 import edu.zzti.service.TopicService;
-import jdk.nashorn.internal.objects.Global;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

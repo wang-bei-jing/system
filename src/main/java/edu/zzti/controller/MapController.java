@@ -100,7 +100,7 @@ public class MapController {
         studentService.batchInsert(dataList);
     }
 
-    //======================================导入老师==========================================
+    //======================================导入教师==========================================
     @ResponseBody
     @RequestMapping(value = "/importTeachers", method = RequestMethod.POST)
     public ModelAndView importTeachers(HttpServletRequest request, MultipartFile file) throws Exception {

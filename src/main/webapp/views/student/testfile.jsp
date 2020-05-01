@@ -137,7 +137,7 @@
                                             <td>${testfile.remark}</td>
                                             <td><fmt:formatDate value="${testfile.wkTime}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                                             <td>
-                                                <a href="${pageContext.request.contextPath}/downTestfile?documentname=${testfile.documentname}" >
+                                                <a href="${pageContext.request.contextPath}/downTestfile?documentname=${testfile.documentname}&sSno=${student.sno}" >
                                                     <button class="btn btn-primary btn-sm edit_btn" id="down_btn" >
                                                         下载
                                                     </button>
