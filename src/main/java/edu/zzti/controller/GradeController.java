@@ -116,7 +116,7 @@ public class GradeController {
         if(grade !=null){
             Integer  b = -1;
             b = compute(gTsId,2);
-            if(b != -1 && grade.getgMidterm() == null){
+            if(b != -1){
                 grade.setgMidterm(b);
             }
             System.out.println("midterm--grade.getgMidterm()-"+grade.getgMidterm());
@@ -133,7 +133,7 @@ public class GradeController {
         if(grade !=null){
             Integer  c = -1;
             c = compute(gTsId,3);
-            if(c != -1 && grade.getgCheck() == null){
+            if(c != -1){
                 grade.setgCheck(c);
             }
             System.out.println("check--grade.getgCheck()-"+grade.getgCheck());

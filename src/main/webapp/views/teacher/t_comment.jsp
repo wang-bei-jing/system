@@ -20,63 +20,92 @@
 
 </head>
 <body>
+<!-- 记录添加的模态框 -->
+    <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">新建联系人</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">学生姓名</label>
+                        <div class="col-sm-10">
+                            <select id="student" name="two" class="form-control" onchange="getTopic()">
+                            </select>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">课题名</label>
+                        <div class="col-sm-10">
+                            <select id="topic" name="gTsId" class="form-control">
+                                <option>---请选择课题---</option>
+                            </select>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">消息内容</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="cComment" class="form-control" id="cComment_add_input">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
 
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="peaceTime_save_btn">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
     <div class="layout-px-spacing">
-        <div class="chat-section layout-top-spacing" >
-        <div class="layout-spacing">
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12">
-                    <div class="chat-system">
-                        <div class="hamburger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu mail-menu d-lg-none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
-                        <div class="user-list-box">
-                            <div class="search">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                <input type="text" class="form-control" placeholder="Search" />
-                            </div>
-                            <div class="people" id="person_area">
-                                <c:forEach items="${teacherCommentList}" var="teacherComment">
-                                    <div class="person" data-chat=${teacherComment.tcId}>
-                                        <div class="user-info">
-                                            <div class="f-body">
-                                                <div class="meta-info">
-                                                    <span class="user-name" data-name=${teacherComment.tcId}>${teacherComment.tcId}</span>
-                                                </div>
+        <div class="layout-top-spacing" >
+            <div class="layout-spacing">
+                <div>
+                    <button id="new_btn" class="btn btn-s btn-primary">新建联系人</button>
+                </div>
+                <div class="chat-system" style="height: 500px">
+                    <div class="hamburger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu mail-menu d-lg-none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
+                    <div class="user-list-box">
+                        <div class="search">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" class="form-control" placeholder="Search" />
+                        </div>
+                        <div class="people" id="person_area">
+                            <c:forEach items="${peopleList}" var="people">
+                                <div class="person" id="person${people.sno}" data-chat=${people.sno}>
+                                    <div class="user-info">
+                                        <div class="f-body">
+                                            <div class="meta-info">
+                                                <span class="user-name" data-name=${people.sno}>${people.name}</span>
                                             </div>
                                         </div>
                                     </div>
-                                </c:forEach>
-                            </div>
-                        </div>
-                        <div class="chat-box">
-                            <div class="chat-not-selected">
-                                <p> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Click User To Chat</p>
-                            </div>
-                            <div class="chat-box-inner">
-                                <div class="chat-conversation-box">
-                                    <div id="chat_area" class="chat-conversation-box-scroll">
-                                         <div class="chat" data-chat="123">
-                                             <div class="conversation-start">
-                                                 <span>Today, 6:48 AM</span>
-                                             </div>
-                                             <div class="bubble you">
-                                                 Hello,
-                                             </div>
-                                             <div class="bubble me">
-                                                 It's me.
-                                             </div>
-                                             <div class="bubble you">
-                                                 I have a question regarding project.
-                                             </div>
-                                         </div>
-                                    </div>
                                 </div>
-                                <div class="chat-footer">
-                                    <div class="chat-input">
-                                        <form class="chat-form" action="javascript:void(0);">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                                            <input type="text" class="mail-write-box form-control" placeholder="Message"/>
-                                        </form>
-                                    </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                    <div class="chat-box" style="height:100%">
+                        <div class="chat-not-selected">
+                            <p> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>选择聊天</p>
+                        </div>
+                        <div class="chat-box-inner">
+                            <div class="chat-conversation-box" style="height:100%">
+                                <div id="chat_area" class="chat-conversation-box-scroll">
+                                </div>
+                            </div>
+                            <div class="chat-footer" style="padding-top: 20px">
+                                <div class="chat-input" >
+                                    <form class="chat-form" id="add_form">
+                                        <input name="cContent" id="cContent_add_input" type="text" style="width:92%;display:inline;" class="mail-write-box form-control"/>
+                                        <button id="add_btn" class="btn btn-s btn-primary">发送</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +113,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
 <script src="${pageContext.request.contextPath}/static/cork/assets/js/libs/jquery-3.1.1.min.js"></script>
@@ -101,68 +129,140 @@
 <!-- END PAGE LEVEL SCRIPTS -->
 
 <script type="text/javascript">
-    var tno = ${teacher.tno};
+    var tno = "${teacher.tno}";
     $(function(){
-        automatic();
+        people();
     });
-    function automatic(){
-        //每隔两秒刷新一次页面
+    function people(){
         $.ajax({
-            url:"${pageContext.request.contextPath}/comment/select/"+tno,
+            url:"${pageContext.request.contextPath}/comment/people/"+tno,
             type:"GET",
             success:function(result){
-                build_chat_area(result.extend.teacherCommentList);
+                $("#chat_area").empty();
+                var peopleList = result.extend.peopleList;
+                for(var i=0;i<peopleList.length;i++) {
+                    chat(peopleList[i].sno);
+                }
             }
         });
-        //setTimeout(automatic,2*1000);
+        //setTimeout(people,10*1000);
     }
-    //解析显示分页信息
-    function build_person_area(){
-        $("#person_area").empty();
-        // <div class="person" data-chat="person1">
-        //     <div class="user-info">
-        //         <div class="f-body">
-        //             <div class="meta-info">
-        //                 <span class="user-name" data-name="小老鼠">小老鼠</span>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </div>
-        for(var i=1;i<3;i++){
-            var data_chat = "person"+[i];
-            alert(data_chat);
-            var data_name = "name"+[i];
-            var person = $("<div class=\"person\"></div>").attr("data-chat",data_chat);
-            var a =$("<div class=\"user-info\"></div>");
-            person.append(a);
-            var b =$("<div class=\"f-body\"></div>");
-            a.append(b);
-            var c =$("<div class=\"meta-info\"></div>");
-            b.append(c);
-            var d =$("<span class=\"user-name\"></span>").append(data_name);
-            c.append(d);
-            person.appendTo("#person_area");
+    function chat(two){
+        $.ajax({
+            url:"${pageContext.request.contextPath}/comment/chat",
+            data:"one="+tno+"&two="+two,
+            type:"GET",
+            success:function(result){
+                build_chat(result.extend.student,result.extend.commentList)
+            }
+        });
+        //setTimeout(chat,10*1000);
+    }
+    function build_chat(student,commentList){
+        var data_chat = student.sno;
+        var chat = $("<div class=\"chat\"></div>").attr("data-chat", data_chat).attr("id", "chat"+data_chat);
+        var name = ($("<div class=\"conversation-start\"></div>").append($("<span></span>").append(student.name)));
+        chat.append(name);
+        for(var i=0;i<commentList.length;i++) {
+            if (commentList[i].cIdentity === 21) {
+                var data_what1 = commentList[i].cContent;
+                var what1 = $("<div class=\"bubble you\"></div>")
+                    .append(data_what1);
+                chat.append(what1);
+            }
+            if (commentList[i].cIdentity === 12) {
+                var data_what2 = commentList[i].cContent;
+                var what2 = $("<div class=\"bubble me\"></div>")
+                    .append(data_what2);
+                chat.append(what2);
+            }
         }
+        chat.appendTo("#chat_area");
     }
-    //解析显示分页信息
-    function build_chat_area(teacherCommentList){
-        $("#chat_area").empty();
-        for(var i=0;i<teacherCommentList.length;i++){
-            var data_chat = teacherCommentList[i].tcId;
-            var data_what1 = teacherCommentList[i].studentComment.scContent;
-            var data_what2 = teacherCommentList[i].tcContent;
-            var chat = $("<div class=\"chat\"></div>").attr("data-chat",data_chat);
-            var time = ($("<div class=\"conversation-start\"></div>").append($("<span></span>").append("当前时间")));
-            chat.append(time);
-            var what1 =$("<div class=\"bubble you\"></div>")
-                .append(data_what1);
-            chat.append(what1);
-            var what2 =$("<div class=\"bubble me\"></div>")
-                .append(data_what2);
-            chat.append(what2);
-            chat.appendTo("#chat_area");
-        }
+    //点击添加
+    $("#add_btn").click(function(){
+        var two = $('#person_area div.active').attr('data-chat');
+        alert(two);
+        var cContent = $("#cContent_add_input").val();
+        $.ajax({
+            url:"${pageContext.request.contextPath}/comment/add",
+            type:"POST",
+            data:"cContent="+cContent+"&one="+tno+"&two="+two,
+            success:function(){
+                alert("成功1");
+                document.getElementById("person"+two).addClass("active");
+                document.getElementById("chat"+two).addClass("active");
+                alert("成功2");
+            }
+        });
+    });
+    //新增时显示学生姓名和课题
+    function getTopicSelect(ele){
+        //清空之前下拉列表的值
+        $(ele).empty();
+        $.ajax({
+            url:"${pageContext.request.contextPath}/gradeRecord/getStudent/"+tno,
+            type:"GET",
+            success:function(result){
+                var optionEle = $("<option></option>").append("---请选择学生---");
+                optionEle.appendTo(ele);
+                $.each(result.extend.topicSelectList,function(){
+                    var optionEle1 = $("<option></option>").append(this.student.name).attr("value",this.id);
+                    optionEle1.appendTo(ele);
+                });
+            }
+        });
     }
+    //级联显示课题名
+    function getTopic(){
+        //清空之前下拉列表的值
+        var id = $("#newModal #student").val();
+        $("#newModal #topic").empty();
+        var optionEle = $("<option></option>").append("---请选择课题---");
+        optionEle.appendTo("#newModal #topic");
+        $.ajax({
+            url:"${pageContext.request.contextPath}/gradeRecord/getTopic/"+id,
+            type:"GET",
+            success:function(result){
+                var optionEle1 = $("<option></option>").append(result.extend.topicSelect.topic.name).attr("value",result.extend.topicSelect.student.sno);
+                optionEle1.appendTo("#newModal #topic");
+            }
+        });
+    }
+    //点击新增按钮弹出模态框。
+    $("#new_btn").click(function(){
+        //清除表单数据（表单完整重置（表单的数据，表单的样式））
+        reset_form("#newModal form");
+        getTopicSelect("#newModal #student");
+        //弹出模态框
+        $("#newModal").modal({
+            backdrop:"static"
+        });
+    });
+    //清空表单样式及内容
+    function reset_form(ele){
+        $(ele)[0].reset();
+        //清空表单样式
+        $(ele).find("*").removeClass("has-error has-success");
+        $(ele).find(".help-block").text("");
+    }
+    //点击添加
+    $("#peaceTime_save_btn").click(function(){
+        var two = $("#newModal #topic").val();
+        var cComment = $("#cComment_add_input").val();
+        $.ajax({
+            url:"${pageContext.request.contextPath}/comment/add",
+            type:"POST",
+            data:"cContent="+cComment+"&one="+tno+"&two="+two,
+            success:function(result){
+                alert(result.msg);
+                if(result.code === 200){
+                    alert(result.extend.message);
+                }
+                $("#newModal").modal('hide');
+            }
+        });
+    });
 </script>
 </body>
 </html>

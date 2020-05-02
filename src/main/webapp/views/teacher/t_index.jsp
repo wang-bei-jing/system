@@ -225,9 +225,6 @@
                         </a>
                         <ul class="collapse submenu list-unstyled" id="comment" data-parent="#accordionExample">
                             <li>
-                                <a href="javascript:void(0);" target="mainFrame">教师消息</a>
-                            </li>
-                            <li>
                                 <a href="${pageContext.request.contextPath}/views/teacher/t_comment.jsp" target="mainFrame">学生消息</a>
                             </li>
                         </ul>
@@ -269,18 +266,28 @@
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 
 <script type="text/javascript">
+    var tno = "${teacher.tno}";
     $(function(){
-        automatic();
+        compareTime();
+        people();
     });
-    function automatic(){
-        //每隔两秒刷新一次页面
+    function compareTime(){
         $.ajax({
             url:"${pageContext.request.contextPath}/time/compare",
             type:"GET",
             success:function(){
             }
         });
-        setTimeout(automatic,2*1000);
+        //setTimeout(automatic,2*1000);
+    }
+    function people(){
+        $.ajax({
+            url:"${pageContext.request.contextPath}/comment/people/"+tno,
+            type:"GET",
+            success:function(result){
+            }
+        });
+        //setTimeout(automatic,2*1000);
     }
 </script>
 </body>
