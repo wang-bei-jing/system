@@ -23,6 +23,7 @@ public class Topic {
 
     private Integer num;
 
+    private Integer selectNum;
     private Teacher teacher;
 
     public Teacher getTeacher() {
@@ -121,6 +122,14 @@ public class Topic {
         this.num = num;
     }
 
+    public Integer getSelectNum() {
+        return selectNum;
+    }
+
+    public void setSelectNum(Integer selectNum) {
+        this.selectNum = selectNum;
+    }
+
     @Override
     public String toString() {
         return "Topic{" +
@@ -135,6 +144,7 @@ public class Topic {
                 ", department='" + department + '\'' +
                 ", status=" + status +
                 ", num=" + num +
+                ", selectNum=" + selectNum +
                 ", teacher=" + teacher +
                 '}';
     }

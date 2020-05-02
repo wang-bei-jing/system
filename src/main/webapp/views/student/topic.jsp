@@ -224,6 +224,7 @@
                         <th>是否重点扶持项目</th>
                         <th>审题教研室</th>
                         <th>所需人数</th>
+                        <th>已选人数</th>
                         <th>职称</th>
                         <th>办公室</th>
                         <th>联系方式</th>
@@ -243,6 +244,7 @@
                             <td>${list.support}</td>
                             <td>${list.department}</td>
                             <td>${list.num}</td>
+                            <td>${list.selectNum}</td>
                             <td>${list.teacher.title}</td>
                             <td>${list.teacher.office}</td>
                             <td>${list.teacher.tel}</td>
