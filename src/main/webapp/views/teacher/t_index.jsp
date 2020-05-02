@@ -228,7 +228,7 @@
                                 <a href="javascript:void(0);" target="mainFrame">教师消息</a>
                             </li>
                             <li>
-                                <a href="" target="mainFrame">学生消息</a>
+                                <a href="${pageContext.request.contextPath}/views/teacher/t_comment.jsp" target="mainFrame">学生消息</a>
                             </li>
                         </ul>
                     </li>

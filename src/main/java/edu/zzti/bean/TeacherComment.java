@@ -13,6 +13,8 @@ public class TeacherComment {
 
     private Date tcTime;
 
+    private StudentComment studentComment;
+
     public Integer getTcId() {
         return tcId;
     }
@@ -53,6 +55,14 @@ public class TeacherComment {
         this.tcTime = tcTime;
     }
 
+    public StudentComment getStudentComment() {
+        return studentComment;
+    }
+
+    public void setStudentComment(StudentComment studentComment) {
+        this.studentComment = studentComment;
+    }
+
     @Override
     public String toString() {
         return "TeacherComment{" +
@@ -61,6 +71,7 @@ public class TeacherComment {
                 ", tcScId=" + tcScId +
                 ", tcContent='" + tcContent + '\'' +
                 ", tcTime=" + tcTime +
+                ", studentComment=" + studentComment +
                 '}';
     }
 }

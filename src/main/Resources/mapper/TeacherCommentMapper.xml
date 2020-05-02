@@ -11,6 +11,29 @@
   <sql id="Base_Column_List">
     tc_id, tc_tps_id, tc_sc_id, tc_content, tc_time
   </sql>
+
+  <!-- xwq开始 -->
+  <resultMap id="BaseResultMapWith" type="edu.zzti.bean.TeacherComment">
+    <id column="tc_id" jdbcType="INTEGER" property="tcId" />
+    <result column="tc_tps_id" jdbcType="INTEGER" property="tcTpsId" />
+    <result column="tc_sc_id" jdbcType="INTEGER" property="tcScId" />
+    <result column="tc_content" jdbcType="VARCHAR" property="tcContent" />
+    <result column="tc_time" jdbcType="TIMESTAMP" property="tcTime" />
+    <association property="studentComment" javaType="edu.zzti.bean.StudentComment">
+      <id column="sc_id" jdbcType="INTEGER" property="scId" />
+      <result column="sc_tps_id" jdbcType="INTEGER" property="scTpsId" />
+      <result column="sc_content" jdbcType="VARCHAR" property="scContent" />
+      <result column="sc_time" jdbcType="TIMESTAMP" property="scTime" />
+    </association>
+  </resultMap>
+  <select id="selectByTsId" parameterType="java.lang.Integer" resultMap="BaseResultMapWith">
+    select *
+    from t_teachercomment,t_studentcomment
+	where t_teachercomment.tc_sc_id=t_studentcomment.sc_id
+    and t_teachercomment.tc_tps_id = #{tsId,jdbcType=INTEGER}
+  </select>
+  <!-- xwq结束 -->
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
