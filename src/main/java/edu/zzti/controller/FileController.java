@@ -114,6 +114,7 @@ public class FileController {
             out.flush();
         }
         out.close();
+        System.out.println("看完了");
     }
     @RequestMapping("/deleteWeekDocument")
     public ModelAndView deleteWeekDocument(HttpServletRequest request,String documentname,int dId,String sSno,String week) throws Exception{
