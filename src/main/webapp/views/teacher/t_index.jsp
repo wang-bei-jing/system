@@ -211,7 +211,7 @@
                                 <a href="${pageContext.request.contextPath}/views/teacher/t_weekdocument.jsp" target="mainFrame">学生周报</a>
                             </li>
                             <li>
-                                <a href="${pageContext.request.contextPath}/views/teacher/t_weekdocument.jsp" target="mainFrame">学生报告</a>
+                                <a href="${pageContext.request.contextPath}/views/teacher/t_document.jsp" target="mainFrame">学生报告</a>
                             </li>
                         </ul>
                     </li>

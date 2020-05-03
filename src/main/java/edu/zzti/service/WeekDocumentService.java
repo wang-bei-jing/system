@@ -8,6 +8,8 @@ import java.util.List;
 public interface WeekDocumentService {
 
     //xwq开始
+    int upd(WeekDocument weekDocument);
+
     List<WeekDocument> findBy(Integer tpsId,String category);
 
     WeekDocument selectById(Integer dId);
@@ -19,9 +21,6 @@ public interface WeekDocumentService {
     List<WeekDocument> findByCateory(Integer tpsId,String category);
 
     int deleteByPrimaryKey(Integer dId);
-
-
-
 }
 
 

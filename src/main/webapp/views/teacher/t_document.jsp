@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/static/cork/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/static/cork/assets/css/plugins.css" rel="stylesheet" type="text/css" />
-    <title>学生实训周报</title>
+    <title>学生实训报告</title>
 </head>
 <body>
 
@@ -81,7 +81,7 @@
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             <div class="widget-content widget-content-area br-6">
                 <div class="modal-header">
-                    <h1>学生周报</h1>
+                    <h1>学生实训报告</h1>
                     <div class="row">
                         <div>
                             <button id="peaceTime_btn" class="btn btn-s btn-primary">刷新</button>
@@ -99,7 +99,6 @@
                             <th>学生姓名</th>
                             <th>课题名</th>
                             <th>文件名</th>
-                            <th>周次</th>
                             <th>学生备注</th>
                             <th>上传时间</th>
                             <th>教师批阅</th>
@@ -172,7 +171,7 @@
     function to_page(pn){
         $.ajax({
             url:"${pageContext.request.contextPath}/file/findWeekDocument/"+tno,
-            data:"pn="+pn+"&category="+1,
+            data:"pn="+pn+"&category="+2,
             type:"GET",
             success:function(result){
                 build_peaceTime_table(result.extend.pageInfo.list);
@@ -190,7 +189,6 @@
             var dIdTd = $("<td></td>").append(weekDocuments[i].dId);
             var studentTd = $("<td></td>").append(weekDocuments[i].student.name);
             var topicTd = $("<td></td>").append(weekDocuments[i].topic.name);
-            var weekTd = $("<td></td>").append(weekDocuments[i].week);
             var documentnameTd = $("<td></td>").append(weekDocuments[i].documentname);
             var remarkTd = $("<td></td>").append(weekDocuments[i].remark);
             var annotationTd = $("<td></td>").append(weekDocuments[i].annotation);
@@ -211,7 +209,6 @@
                 .append(studentTd)
                 .append(topicTd)
                 .append(documentnameTd)
-                .append(weekTd)
                 .append(remarkTd)
                 .append(wkTimeTd)
                 .append(annotationTd)

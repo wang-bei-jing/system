@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
 
 @Controller
 @RequestMapping("/file")
@@ -43,7 +43,18 @@ public class FileController {
     @RequestMapping(value="/upd/{dId}",method= RequestMethod.PUT)
     public Msg upd(WeekDocument weekDocument){
         System.out.println("upd--grade.toString()"+weekDocument.toString());
+        weekDocumentService.upd(weekDocument);
         return Msg.success();
+    }
+
+    /**
+     * 查询详细信息
+     */
+    @ResponseBody
+    @RequestMapping("/detail/{dId}")
+    public Msg detail(@PathVariable("dId")Integer dId){
+        WeekDocument weekDocument = weekDocumentService.selectById(dId);
+        return Msg.success().add("weekDocument",weekDocument);
     }
 
     @ResponseBody
@@ -62,7 +73,6 @@ public class FileController {
         return Msg.success().add("pageInfo", page);
     }
 
-    @ResponseBody
     @RequestMapping(value="/uploadWeekDocument",method=RequestMethod.POST)
     public ModelAndView uploadDocument(MultipartFile file, HttpServletRequest request, WeekDocument weekDocument,String sSno) throws IOException {
         String week=weekDocument.getWeek();
@@ -86,16 +96,20 @@ public class FileController {
         return new ModelAndView("redirect:/findWeekDocument?sSno="+sSno+"");
     }
 
-    @ResponseBody
-    @RequestMapping("/downWeekDocument/{dId}")
-    public void downWeekDocument(HttpServletRequest request, HttpServletResponse response,@PathVariable("dId")Integer dId) throws Exception{
-        System.out.println("进来看看");
+    @RequestMapping("/download")
+    public void download(HttpServletRequest request, HttpServletResponse response,Integer dId) throws Exception{
         WeekDocument weekDocument = weekDocumentService.selectById(dId);
         String documentname = weekDocument.getDocumentname();
         String sSno = weekDocument.getStudent().getSno();
         String week = weekDocument.getWeek();
         //下载文件路径
-        String pathFileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/weekDocuments/"+week+"/"+documentname;
+        String pathFileName = "";
+        if (weekDocument.getCategory().equals("1")){
+            pathFileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/weekDocuments/"+week+"/"+documentname;
+        }
+        if (weekDocument.getCategory().equals("2")){
+            pathFileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/testFile/"+documentname;
+        }
         System.out.println(pathFileName);
         //获取输入流
         InputStream bis = new BufferedInputStream(new FileInputStream(new File(pathFileName)));
@@ -114,8 +128,8 @@ public class FileController {
             out.flush();
         }
         out.close();
-        System.out.println("看完了");
     }
+
     @RequestMapping("/deleteWeekDocument")
     public ModelAndView deleteWeekDocument(HttpServletRequest request,String documentname,int dId,String sSno,String week) throws Exception{
         String pathFileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/weekDocuments/"+week;
@@ -131,6 +145,7 @@ public class FileController {
         return new ModelAndView("redirect:/findWeekDocument?sSno="+sSno+"");
 
     }
+
     private void deleteFile(File file) {
         if (file.exists()) {//判断文件是否存在
             if (file.isFile()) {//判断是否是文件
@@ -147,25 +162,7 @@ public class FileController {
         }
     }
 
-
-
-
     //------------------------------------------------实训文件部分---------------------------
-    @RequestMapping("/findTestfile")
-    public ModelAndView findTestfile(HttpServletRequest request, String sSno) {
-        String status="1";
-        //通过sSno,status="1"查询实训课题的id来删除实训文件
-        Integer tpsId=topicSelectService.findTpsId(sSno,status);
-
-            String category="2";
-            List<WeekDocument> testfiles=weekDocumentService.findByCateory(tpsId,category);
-       /* for(int i=0;i<testfiles.size();i++){
-            System.out.println(testfiles.get(i).toString());
-        }*/
-            request.getSession().setAttribute("tfaddtpsId",tpsId);
-            request.getSession().setAttribute("testfiles",testfiles);
-            return new ModelAndView("student/testfile");
-    }
 
     @ResponseBody
     @RequestMapping(value="/uploadTestfile",method=RequestMethod.POST)
@@ -193,10 +190,11 @@ public class FileController {
         return new ModelAndView("redirect:/findTestfile?sSno="+sSno+"");
     }
 
-
     @RequestMapping("/downTestfile")
-    public void downTestfile(HttpServletRequest request, HttpServletResponse response,String documentname,String sSno) throws Exception{
-
+    public void downTestfile(HttpServletRequest request, HttpServletResponse response, Integer dId) throws Exception{
+        WeekDocument weekDocument = weekDocumentService.selectById(dId);
+        String documentname = weekDocument.getDocumentname();
+        String sSno = weekDocument.getStudent().getSno();
         String fileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/testFile/"+documentname;
         System.out.println(fileName);
         //获取输入流
@@ -217,6 +215,7 @@ public class FileController {
         }
         out.close();
     }
+
     @RequestMapping("/deleteTestfile")
     public ModelAndView deleteTestfile(HttpServletRequest request,String documentname,int dId,String sSno) throws Exception{
         String fileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/testFile/"+documentname;
@@ -229,7 +228,5 @@ public class FileController {
         return new ModelAndView("redirect:/findTestfile?sSno="+sSno+"");
     }
 //=========================================以上是薛文青部分==============================================================
-
-
 }
 

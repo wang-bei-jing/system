@@ -16,6 +16,10 @@ public class WeekDocumentServiceImpl implements WeekDocumentService {
         this.weekDocumentMapper = weekDocumentMapper;
     }
 
+    public int upd(WeekDocument weekDocument) {
+        return weekDocumentMapper.updateByPrimaryKeySelective(weekDocument);
+    }
+
     //xwq开始
     public List<WeekDocument> findBy(Integer tpsId, String category) {
         return weekDocumentMapper.findBy(tpsId,category);

@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/static/cork/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/static/cork/assets/css/plugins.css" rel="stylesheet" type="text/css" />
-    <title>学生实训周报</title>
+    <title>课题任务书</title>
 </head>
 <body>
 
@@ -96,13 +96,11 @@
                             <th>
                                 <input type="checkbox" id="check_all"/>
                             </th>
-                            <th>学生姓名</th>
                             <th>课题名</th>
+                            <th>学生姓名</th>
                             <th>文件名</th>
-                            <th>周次</th>
-                            <th>学生备注</th>
+                            <th>备注</th>
                             <th>上传时间</th>
-                            <th>教师批阅</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -172,7 +170,7 @@
     function to_page(pn){
         $.ajax({
             url:"${pageContext.request.contextPath}/file/findWeekDocument/"+tno,
-            data:"pn="+pn+"&category="+1,
+            data:"pn="+pn+"&category="+3,
             type:"GET",
             success:function(result){
                 build_peaceTime_table(result.extend.pageInfo.list);
@@ -190,10 +188,8 @@
             var dIdTd = $("<td></td>").append(weekDocuments[i].dId);
             var studentTd = $("<td></td>").append(weekDocuments[i].student.name);
             var topicTd = $("<td></td>").append(weekDocuments[i].topic.name);
-            var weekTd = $("<td></td>").append(weekDocuments[i].week);
             var documentnameTd = $("<td></td>").append(weekDocuments[i].documentname);
             var remarkTd = $("<td></td>").append(weekDocuments[i].remark);
-            var annotationTd = $("<td></td>").append(weekDocuments[i].annotation);
             var time = timeStamp2String(weekDocuments[i].wkTime);
             var wkTimeTd = $("<td></td>").append(time);
             var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
@@ -208,13 +204,11 @@
             delBtn.attr("del-id",weekDocuments[i].dId);
             var btnTd = $("<td></td>").append(editBtn).append(delBtn);
             $("<tr></tr>").append(checkBoxTd)
-                .append(studentTd)
                 .append(topicTd)
+                .append(studentTd)
                 .append(documentnameTd)
-                .append(weekTd)
                 .append(remarkTd)
                 .append(wkTimeTd)
-                .append(annotationTd)
                 .append(btnTd)
                 .appendTo("#peaceTime_table tbody");
         }

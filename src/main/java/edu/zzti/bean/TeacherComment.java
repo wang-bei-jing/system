@@ -5,6 +5,8 @@ import java.util.Date;
 public class TeacherComment {
     private Integer tcId;
 
+    private Integer tcTno;
+
     private Integer tcTpsId;
 
     private Integer tcScId;
@@ -13,7 +15,7 @@ public class TeacherComment {
 
     private Date tcTime;
 
-    private StudentComment studentComment;
+    private Integer tcAll;
 
     public Integer getTcId() {
         return tcId;
@@ -21,6 +23,14 @@ public class TeacherComment {
 
     public void setTcId(Integer tcId) {
         this.tcId = tcId;
+    }
+
+    public Integer getTcTno() {
+        return tcTno;
+    }
+
+    public void setTcTno(Integer tcTno) {
+        this.tcTno = tcTno;
     }
 
     public Integer getTcTpsId() {
@@ -55,23 +65,11 @@ public class TeacherComment {
         this.tcTime = tcTime;
     }
 
-    public StudentComment getStudentComment() {
-        return studentComment;
+    public Integer getTcAll() {
+        return tcAll;
     }
 
-    public void setStudentComment(StudentComment studentComment) {
-        this.studentComment = studentComment;
-    }
-
-    @Override
-    public String toString() {
-        return "TeacherComment{" +
-                "tcId=" + tcId +
-                ", tcTpsId=" + tcTpsId +
-                ", tcScId=" + tcScId +
-                ", tcContent='" + tcContent + '\'' +
-                ", tcTime=" + tcTime +
-                ", studentComment=" + studentComment +
-                '}';
+    public void setTcAll(Integer tcAll) {
+        this.tcAll = tcAll;
     }
 }
