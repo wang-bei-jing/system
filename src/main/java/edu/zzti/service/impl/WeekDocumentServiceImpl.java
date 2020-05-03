@@ -10,8 +10,26 @@ import java.util.List;
 
 @Service
 public class WeekDocumentServiceImpl implements WeekDocumentService {
-    @Autowired
-    WeekDocumentMapper weekDocumentMapper;
+    final WeekDocumentMapper weekDocumentMapper;
+
+    public WeekDocumentServiceImpl(WeekDocumentMapper weekDocumentMapper) {
+        this.weekDocumentMapper = weekDocumentMapper;
+    }
+
+    public int upd(WeekDocument weekDocument) {
+        return weekDocumentMapper.updateByPrimaryKeySelective(weekDocument);
+    }
+
+    //xwq开始
+    public List<WeekDocument> findBy(Integer tpsId, String category) {
+        return weekDocumentMapper.findBy(tpsId,category);
+    }
+
+    public WeekDocument selectById(Integer dId) {
+        return weekDocumentMapper.selectById(dId);
+    }
+    //xwq结束
+
     public int addWeekDocument(WeekDocument weekDocument) {
         System.out.println("进来咯");
         return weekDocumentMapper.addWeekDocumentSelective(weekDocument);

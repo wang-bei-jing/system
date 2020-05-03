@@ -31,6 +31,7 @@
                         <div>
                             <button id="grade_btn" class="btn btn-s btn-primary">刷新</button>
                             <button id="all_btn" class="btn btn-s btn-primary">计算总成绩</button>
+                            <button type="button" class="btn green" id="excell"  onclick="method5('peaceTime_table')">导出成绩表</button>
                         </div>
                     </div>
                 </div>
@@ -85,6 +86,13 @@
     var pageNum,total;
     var tno = ${teacher.tno};
     function to_page(pn){
+        $.ajax({
+            url:"${pageContext.request.contextPath}/grade/all/"+tno,
+            type:"GET",
+            success:function(){
+                alert("计算结束");
+            }
+        });
         $.ajax({
             url:"${pageContext.request.contextPath}/grade/student/"+tno,
             data:"pn="+pn,
@@ -162,7 +170,7 @@
         //构建元素
         var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href","#"));
         var prePageLi = $("<li></li>").append($("<a></a>").append("上一页"));
-        if(pageInfo.hasPreviousPage == false){
+        if(pageInfo.hasPreviousPage === false){
             firstPageLi.addClass("disabled");
             prePageLi.addClass("disabled");
         }else{
@@ -176,7 +184,7 @@
         }
         var nextPageLi = $("<li></li>").append($("<a></a>").append("下一页"));
         var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href","#"));
-        if(pageInfo.hasNextPage == false){
+        if(pageInfo.hasNextPage === false){
             nextPageLi.addClass("disabled");
             lastPageLi.addClass("disabled");
         }else{
@@ -192,7 +200,7 @@
         //1,2，3遍历给ul中添加页码提示
         $.each(pageInfo.navigatepageNums,function(index,item){
             var numLi = $("<li></li>").append($("<a></a>").append(item));
-            if(pageInfo.pageNum == item){
+            if(pageInfo.pageNum === item){
                 numLi.addClass("active");
             }
             numLi.click(function(){
@@ -206,6 +214,84 @@
         var navEle = $("<nav></nav>").append(ul);
         navEle.appendTo("#page_nav_area");
     }
+    //打印表格
+    var idTmr;
+    function  getExplorer() {
+        var explorer = window.navigator.userAgent ;
+        //ie
+        if (explorer.indexOf("MSIE") >= 0) {
+            return 'ie';
+        }
+        //firefox
+        else if (explorer.indexOf("Firefox") >= 0) {
+            return 'Firefox';
+        }
+        //Chrome
+        else if (explorer.indexOf("Chrome") >= 0) {
+            return 'Chrome';
+        }
+        //Opera
+        else if (explorer.indexOf("Opera") >= 0) {
+            return 'Opera';
+        }
+        //Safari
+        else if (explorer.indexOf("Safari") >= 0) {
+            return 'Safari';
+        }
+    }
+    function method5(tableid) {
+        if (getExplorer() === 'ie') {
+            var curTbl = document.getElementById(tableid);
+            var oXL = new ActiveXObject("Excel.Application");
+            var oWB = oXL.Workbooks.Add();
+            var xlsheet = oWB.Worksheets(1);
+            var sel = document.body.createTextRange();
+            sel.moveToElementText(curTbl);
+            sel.select();
+            sel.execCommand("Copy");
+            xlsheet.Paste();
+            oXL.Visible = true;
+
+            try {
+                var fname = oXL.Application.GetSaveAsFilename("Excel.xls",
+                    "Excel Spreadsheets (*.xls), *.xls");
+            } catch (e) {
+                print("Nested catch caught " + e);
+            } finally {
+                oWB.SaveAs(fname);
+                oWB.Close(savechanges = false);
+                oXL.Quit();
+                oXL = null;
+                idTmr = window.setInterval("Cleanup();", 1);
+            }
+
+        } else {
+            tableToExcel(tableid)
+        }
+    }
+    function Cleanup() {
+        window.clearInterval(idTmr);
+        CollectGarbage();
+    }
+    var tableToExcel = (function() {
+        var uri = 'data:application/vnd.ms-excel;base64,', template = '<html><head><meta charset="UTF-8"></head><body><table  border="1">{table}</table></body></html>', base64 = function(
+            s) {
+            return window.btoa(unescape(encodeURIComponent(s)))
+        }, format = function(s, c) {
+            return s.replace(/{(\w+)}/g, function(m, p) {
+                return c[p];
+            })
+        };
+        return function(table, name) {
+            if (!table.nodeType)
+                table = document.getElementById(table);
+            var ctx = {
+                worksheet : name || 'Worksheet',
+                table : table.innerHTML
+            };
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
 </script>
 </body>
 </html>

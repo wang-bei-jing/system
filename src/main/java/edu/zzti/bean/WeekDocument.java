@@ -21,6 +21,12 @@ public class WeekDocument {
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date wkTime;
 
+    private TopicSelect topicSelect;
+
+    private Student student;
+
+    private Topic topic;
+
     public Integer getdId() {
         return dId;
     }
@@ -85,6 +91,30 @@ public class WeekDocument {
         this.wkTime = wkTime;
     }
 
+    public TopicSelect getTopicSelect() {
+        return topicSelect;
+    }
+
+    public void setTopicSelect(TopicSelect topicSelect) {
+        this.topicSelect = topicSelect;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
+    }
+
     @Override
     public String toString() {
         return "WeekDocument{" +
@@ -96,6 +126,9 @@ public class WeekDocument {
                 ", remark='" + remark + '\'' +
                 ", annotation='" + annotation + '\'' +
                 ", wkTime=" + wkTime +
+                ", topicSelect=" + topicSelect +
+                ", student=" + student +
+                ", topic=" + topic +
                 '}';
     }
 }

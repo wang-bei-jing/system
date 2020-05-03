@@ -332,6 +332,7 @@
                 for(var i=0;i<grades.length;i++){
                     calculate(grades[i].tsId);
                 }
+                alert("期中验收成绩计算完成");
             }
         });
     }
@@ -340,7 +341,6 @@
             url:"${pageContext.request.contextPath}/grade/midterm/"+gTsId,
             type:"GET",
             success:function(){
-                alert("期中验收成绩计算完成");
             }
         });
     }
@@ -350,11 +350,10 @@
         $("#midterm_table tbody").empty();
         for(var i=0;i<midterms.length;i++){
             var midtermIdTd = $("<td></td>").append(midterms[i].mId);
-            //var midtermTsIdTd = $("<td></td>").append(midterms[i].tsId);
             var midtermsNameTd = $("<td></td>").append(midterms[i].student.name);
             var midtermtpNameTd = $("<td></td>").append(midterms[i].topic.name);
             var midtermpresentationTd;
-            if(midterms[i].presentation==1){
+            if(midterms[i].presentation === 1){
                 midtermpresentationTd = $("<td></td>").append("有");
             }
             else {
@@ -409,7 +408,7 @@
         //构建元素
         var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href","#"));
         var prePageLi = $("<li></li>").append($("<a></a>").append("上一页"));
-        if(pageInfo.hasPreviousPage == false){
+        if(pageInfo.hasPreviousPage === false){
             firstPageLi.addClass("disabled");
             prePageLi.addClass("disabled");
         }else{
@@ -423,7 +422,7 @@
         }
         var nextPageLi = $("<li></li>").append($("<a></a>").append("下一页"));
         var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href","#"));
-        if(pageInfo.hasNextPage == false){
+        if(pageInfo.hasNextPage === false){
             nextPageLi.addClass("disabled");
             lastPageLi.addClass("disabled");
         }else{
@@ -439,7 +438,7 @@
         //1,2，3遍历给ul中添加页码提示
         $.each(pageInfo.navigatepageNums,function(index,item){
             var numLi = $("<li></li>").append($("<a></a>").append(item));
-            if(pageInfo.pageNum == item){
+            if(pageInfo.pageNum === item){
                 numLi.addClass("active");
             }
             numLi.click(function(){

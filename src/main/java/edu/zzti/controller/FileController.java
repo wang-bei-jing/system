@@ -1,87 +1,80 @@
-
 package edu.zzti.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import edu.zzti.bean.Grade;
+import edu.zzti.bean.Msg;
+import edu.zzti.bean.TopicSelect;
 import edu.zzti.bean.WeekDocument;
 import edu.zzti.service.TopicSelectService;
 import edu.zzti.service.WeekDocumentService;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
-
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
 
-
 @Controller
-public class WeekDocumentController {
-    @Autowired
-    TopicSelectService topicSelectService;
-    @Autowired
-    WeekDocumentService weekDocumentService;
+@RequestMapping("/file")
+public class FileController {
+    final TopicSelectService topicSelectService;
+    final WeekDocumentService weekDocumentService;
+
+    public FileController(TopicSelectService topicSelectService, WeekDocumentService weekDocumentService) {
+        this.topicSelectService = topicSelectService;
+        this.weekDocumentService = weekDocumentService;
+    }
     //=========================================以下是薛文青部分==============================================================
 
-    //=========================================以上是薛文青部分==============================================================
-
-
-
-
-
-
-
-    //=========================================以下是施昊晨部分==============================================================
     //------------------------------------周报部分---------------------------------------
-    @RequestMapping("/findWeekDocument")
-    public ModelAndView findWeekDocument(HttpServletRequest request, String sSno, Model model) {
-        String status="1";
-        //通过sSno,status="1"查询实训课题的tpsId来删除周报
-        Integer tpsId=topicSelectService.findTpsId(sSno,status);
-        System.out.println(tpsId);
-            String category="1";
-            List weeks=new ArrayList();
-            List<WeekDocument> weekDocuments=weekDocumentService.findByCateory(tpsId,category);
-            for(int i=0;i<weekDocuments.size();i++){
-                System.out.println(weekDocuments.get(i).toString());
+    /**
+     * 修改记录
+     */
+    @ResponseBody
+    @RequestMapping(value="/upd/{dId}",method= RequestMethod.PUT)
+    public Msg upd(WeekDocument weekDocument){
+        System.out.println("upd--grade.toString()"+weekDocument.toString());
+        weekDocumentService.upd(weekDocument);
+        return Msg.success();
+    }
 
-                weeks.add(weekDocuments.get(i).getWeek());
-            }
-
-        System.out.println(weeks.toString());
-            model.addAttribute("weeks",weeks);
-            request.getSession().setAttribute("wdaddtpsId",tpsId);
-            request.getSession().setAttribute("weekDocuments",weekDocuments);
-            return new ModelAndView("student/weekfileupdown");
-
+    /**
+     * 查询详细信息
+     */
+    @ResponseBody
+    @RequestMapping("/detail/{dId}")
+    public Msg detail(@PathVariable("dId")Integer dId){
+        WeekDocument weekDocument = weekDocumentService.selectById(dId);
+        return Msg.success().add("weekDocument",weekDocument);
     }
 
     @ResponseBody
-    @RequestMapping(value="/uploadWeekDocument",method=RequestMethod.POST)
-    public ModelAndView uploadDocument(MultipartFile file, HttpServletRequest request, WeekDocument weekDocument,String sSno) throws IOException, ParseException {
-        /* Date date=new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        String currenttimestr = dateFormat.format(date);
-        Date currentDate = dateFormat.parse(currenttimestr);*/
-       /* Timestamp t = new Timestamp(date.getTime());*/
-        Timestamp t = new Timestamp(System.currentTimeMillis());
-        weekDocument.setWkTime(t);
+    @RequestMapping("/findWeekDocument/{tno}")
+    public Msg findWeekDocument(@RequestParam(value = "pn", defaultValue = "1")Integer pn, @PathVariable("tno")Integer tno, String category) {
+        PageHelper.startPage(pn, 5);
+        List<TopicSelect> topicSelectList = topicSelectService.selectMyStudent(tno);
+        List<WeekDocument> weekDocuments = new ArrayList<WeekDocument>();
+        for (TopicSelect topicSelect:topicSelectList){
+            weekDocuments.addAll(weekDocumentService.findBy(topicSelect.getId(),category));
+            for (WeekDocument weekDocument : weekDocuments) {
+                System.out.println(weekDocument.toString());
+            }
+        }
+        PageInfo page = new PageInfo(weekDocuments, 2);
+        return Msg.success().add("pageInfo", page);
+    }
 
-        System.out.println(weekDocument.toString());
+    @RequestMapping(value="/uploadWeekDocument",method=RequestMethod.POST)
+    public ModelAndView uploadDocument(MultipartFile file, HttpServletRequest request, WeekDocument weekDocument,String sSno) throws IOException {
         String week=weekDocument.getWeek();
         String path = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/weekDocuments/"+week;
         String fileName = file.getOriginalFilename();
@@ -103,11 +96,20 @@ public class WeekDocumentController {
         return new ModelAndView("redirect:/findWeekDocument?sSno="+sSno+"");
     }
 
-
-    @RequestMapping("/downWeekDocument")
-    public void downWeekDocument(HttpServletRequest request, HttpServletResponse response,String documentname,String sSno,String week) throws Exception{
+    @RequestMapping("/download")
+    public void download(HttpServletRequest request, HttpServletResponse response,Integer dId) throws Exception{
+        WeekDocument weekDocument = weekDocumentService.selectById(dId);
+        String documentname = weekDocument.getDocumentname();
+        String sSno = weekDocument.getStudent().getSno();
+        String week = weekDocument.getWeek();
         //下载文件路径
-        String pathFileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/weekDocuments/"+week+"/"+documentname;
+        String pathFileName = "";
+        if (weekDocument.getCategory().equals("1")){
+            pathFileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/weekDocuments/"+week+"/"+documentname;
+        }
+        if (weekDocument.getCategory().equals("2")){
+            pathFileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/testFile/"+documentname;
+        }
         System.out.println(pathFileName);
         //获取输入流
         InputStream bis = new BufferedInputStream(new FileInputStream(new File(pathFileName)));
@@ -127,6 +129,7 @@ public class WeekDocumentController {
         }
         out.close();
     }
+
     @RequestMapping("/deleteWeekDocument")
     public ModelAndView deleteWeekDocument(HttpServletRequest request,String documentname,int dId,String sSno,String week) throws Exception{
         String pathFileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/weekDocuments/"+week;
@@ -142,6 +145,7 @@ public class WeekDocumentController {
         return new ModelAndView("redirect:/findWeekDocument?sSno="+sSno+"");
 
     }
+
     private void deleteFile(File file) {
         if (file.exists()) {//判断文件是否存在
             if (file.isFile()) {//判断是否是文件
@@ -158,31 +162,11 @@ public class WeekDocumentController {
         }
     }
 
-
-
-
     //------------------------------------------------实训文件部分---------------------------
-    @RequestMapping("/findTestfile")
-    public ModelAndView findTestfile(HttpServletRequest request, String sSno) {
-        String status="1";
-        //通过sSno,status="1"查询实训课题的id来删除实训文件
-        Integer tpsId=topicSelectService.findTpsId(sSno,status);
-
-            String category="2";
-            List<WeekDocument> testfiles=weekDocumentService.findByCateory(tpsId,category);
-       /* for(int i=0;i<testfiles.size();i++){
-            System.out.println(testfiles.get(i).toString());
-        }*/
-            request.getSession().setAttribute("tfaddtpsId",tpsId);
-            request.getSession().setAttribute("testfiles",testfiles);
-            return new ModelAndView("student/testfile");
-    }
 
     @ResponseBody
     @RequestMapping(value="/uploadTestfile",method=RequestMethod.POST)
     public ModelAndView uploadTestfile(MultipartFile file, HttpServletRequest request, WeekDocument weekDocument,String sSno) throws IOException {
-        Timestamp t = new Timestamp(System.currentTimeMillis());
-        weekDocument.setWkTime(t);
         System.out.println(weekDocument.toString());
         String path = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/testFile";
         System.out.println(path);
@@ -206,10 +190,11 @@ public class WeekDocumentController {
         return new ModelAndView("redirect:/findTestfile?sSno="+sSno+"");
     }
 
-
     @RequestMapping("/downTestfile")
-    public void downTestfile(HttpServletRequest request, HttpServletResponse response,String documentname,String sSno) throws Exception{
-
+    public void downTestfile(HttpServletRequest request, HttpServletResponse response, Integer dId) throws Exception{
+        WeekDocument weekDocument = weekDocumentService.selectById(dId);
+        String documentname = weekDocument.getDocumentname();
+        String sSno = weekDocument.getStudent().getSno();
         String fileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/testFile/"+documentname;
         System.out.println(fileName);
         //获取输入流
@@ -230,6 +215,7 @@ public class WeekDocumentController {
         }
         out.close();
     }
+
     @RequestMapping("/deleteTestfile")
     public ModelAndView deleteTestfile(HttpServletRequest request,String documentname,int dId,String sSno) throws Exception{
         String fileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/testFile/"+documentname;
@@ -241,9 +227,6 @@ public class WeekDocumentController {
         System.out.println(i);
         return new ModelAndView("redirect:/findTestfile?sSno="+sSno+"");
     }
-//=========================================以上是施昊晨部分==============================================================
-
-
-
+//=========================================以上是薛文青部分==============================================================
 }
 

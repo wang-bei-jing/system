@@ -7,8 +7,16 @@ import java.util.List;
 
 public interface WeekDocumentMapper {
 
+    //xwq开始
+
+    List<WeekDocument> findBy(@Param("tpsId") Integer tpsId, @Param("category")String category);
+
+    WeekDocument selectById(Integer dId);
+    //xwq结束
+
     //shc
     int addWeekDocumentSelective(WeekDocument weekDocument);
+
     List<WeekDocument> findByCateory(@Param("tpsId") Integer tpsId, @Param("category")String category);
     //shc
     int deleteByPrimaryKey(Integer dId);
