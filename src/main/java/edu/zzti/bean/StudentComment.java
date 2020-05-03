@@ -10,16 +10,14 @@ public class StudentComment {
     private String scContent;
 
     private Date scTime;
+
     private TeacherComment teacherComment;
-    public TeacherComment getTeacherComment() {
-        return teacherComment;
-    }
 
-    public void setTeacherComment(TeacherComment teacherComment) {
-        this.teacherComment = teacherComment;
-    }
+    private TopicSelect topicSelect;
 
+    private Student student;
 
+    private Topic topic;
 
     public Integer getScId() {
         return scId;
@@ -49,6 +47,42 @@ public class StudentComment {
         return scTime;
     }
 
+    public void setScTime(Date scTime) {
+        this.scTime = scTime;
+    }
+
+    public TeacherComment getTeacherComment() {
+        return teacherComment;
+    }
+
+    public void setTeacherComment(TeacherComment teacherComment) {
+        this.teacherComment = teacherComment;
+    }
+
+    public TopicSelect getTopicSelect() {
+        return topicSelect;
+    }
+
+    public void setTopicSelect(TopicSelect topicSelect) {
+        this.topicSelect = topicSelect;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
+    }
+
     @Override
     public String toString() {
         return "StudentComment{" +
@@ -57,10 +91,9 @@ public class StudentComment {
                 ", scContent='" + scContent + '\'' +
                 ", scTime=" + scTime +
                 ", teacherComment=" + teacherComment +
+                ", topicSelect=" + topicSelect +
+                ", student=" + student +
+                ", topic=" + topic +
                 '}';
-    }
-
-    public void setScTime(Date scTime) {
-        this.scTime = scTime;
     }
 }

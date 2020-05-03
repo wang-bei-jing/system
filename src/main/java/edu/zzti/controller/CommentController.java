@@ -1,28 +1,26 @@
 package edu.zzti.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import edu.zzti.bean.*;
 import edu.zzti.service.CommentService;
+import edu.zzti.service.StudentCommentService;
 import edu.zzti.service.StudentService;
 import edu.zzti.service.TopicSelectService;
 import org.springframework.stereotype.Controller;
 
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @Controller
 @RequestMapping("/comment")
 public class CommentController {
+
+    private final StudentCommentService studentCommentService;
 
     private final CommentService commentService;
 
@@ -30,35 +28,38 @@ public class CommentController {
 
     private final StudentService studentService;
 
-    public CommentController(CommentService commentService, TopicSelectService topicSelectService, StudentService studentService) {
+    public CommentController(StudentCommentService studentCommentService,CommentService commentService, TopicSelectService topicSelectService, StudentService studentService) {
+        this.studentCommentService = studentCommentService;
         this.commentService = commentService;
         this.topicSelectService = topicSelectService;
         this.studentService = studentService;
     }
 
     /**
-     * 查询我的学生
+     * 查询我的学生提问
      */
     @ResponseBody
     @RequestMapping("/select/{tno}")
-    public Msg select(@PathVariable("tno")Integer tno, HttpServletRequest request){
-        List<TopicSelect> topicSelectList = topicSelectService.getStudent(tno);
-        List<TeacherComment> teacherCommentList = new ArrayList<TeacherComment>();
-        List<TeacherComment> teacherComments;
+    public Msg select(@RequestParam(value = "pn", defaultValue = "1")Integer pn, @PathVariable("tno")Integer tno, HttpServletRequest request){
+        PageHelper.startPage(pn, 5);
+        List<TopicSelect> topicSelectList = topicSelectService.selectMyStudent(tno);
+        List<StudentComment> studentComments;
+        List<StudentComment> studentCommentList = new ArrayList<StudentComment>();
         if(!topicSelectList.isEmpty()){
             for (TopicSelect topicSelect : topicSelectList) {
-                int tsId = topicSelect.getId();
-                teacherComments = commentService.selectByTsId(tsId);
-                if (!teacherComments.isEmpty()) {
-                    teacherCommentList.addAll(teacherComments);
+                String sno = topicSelect.getsSno();
+                studentComments = studentCommentService.findAllBySno(sno);
+                if (!studentComments.isEmpty()) {
+                    studentCommentList.addAll(studentComments);
                 }
             }
         }
-        for (TeacherComment teacherComment : teacherCommentList) {
-            System.out.println(teacherComment.toString());
+        for (StudentComment studentComment : studentCommentList) {
+            System.out.println(studentComment.toString());
         }
-        request.getSession().setAttribute("teacherCommentList", teacherCommentList);
-        return Msg.success().add("teacherCommentList", teacherCommentList);
+        request.getSession().setAttribute("studentCommentList", studentCommentList);
+        PageInfo page = new PageInfo(studentCommentList, 2);
+        return Msg.success().add("pageInfo", page);
     }
 
     /**

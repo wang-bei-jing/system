@@ -10,12 +10,17 @@ import java.util.List;
 
 @Service
 public class StudentCommentServiceImpl implements StudentCommentService {
-    @Autowired
-    StudentCommentMapper studentCommentMapper;
-    //xwq
+    final StudentCommentMapper studentCommentMapper;
 
     //xwq
+    public StudentCommentServiceImpl(StudentCommentMapper studentCommentMapper) {
+        this.studentCommentMapper = studentCommentMapper;
+    }
 
+    public List<StudentComment> findAllBySno(String sno) {
+        return studentCommentMapper.findAllBySno(sno);
+    }
+    //xwq
 
     //shc
     public List<StudentComment> findAllCommentsBySnoAndStatus(String sno) {

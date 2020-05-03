@@ -22,6 +22,10 @@ public class CommentServiceImpl implements CommentService {
         this.commentMapper = commentMapper;
     }
 
+    public int insert(TeacherComment teacherComment) {
+        return teacherCommentMapper.insertSelective(teacherComment);
+    }
+
     public int insert(Comment comment) {
         return commentMapper.insertSelective(comment);
     }
@@ -36,10 +40,6 @@ public class CommentServiceImpl implements CommentService {
 
     public List<Comment> selectAll(String id) {
         return commentMapper.selectAll(id);
-    }
-
-    public List<TeacherComment> selectByTsId(Integer tsId) {
-        return teacherCommentMapper.selectByTsId(tsId);
     }
 
     public int insertSelective(TeacherComment teacherComment) {

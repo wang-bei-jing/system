@@ -6,6 +6,10 @@ import java.util.List;
 
 public interface StudentCommentMapper {
 
+    //xwq开始
+    List<StudentComment> findAllBySno(String sno);
+    //xwq结束
+
     //shc
     List<StudentComment> findAllCommentsBySnoAndStatus(String sno);
     //shc

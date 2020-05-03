@@ -1,12 +1,13 @@
 package edu.zzti.service;
 
 import edu.zzti.bean.Comment;
-import edu.zzti.bean.StudentComment;
 import edu.zzti.bean.TeacherComment;
 
 import java.util.List;
 
 public interface CommentService {
+
+    int insert(TeacherComment teacherComment);
 
     //xwq
     int insert(Comment comment);
@@ -16,8 +17,6 @@ public interface CommentService {
     List<Comment> selectByTwo(String one,String two);
 
     List<Comment> selectAll(String tno);
-
-    List<TeacherComment> selectByTsId(Integer tsId);
 
     int insertSelective(TeacherComment record);
     //xwq
