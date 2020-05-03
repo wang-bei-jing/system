@@ -67,6 +67,10 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.findAllStudentByStatus(status);
     }
 
+    public List<Student> findAllStudentByStatusAndName(String status, String name) {
+        return studentMapper.findAllStudentByStatusAndName(status, name);
+    }
+
     public int batchInsert(List<Student> studentList) {
         return studentMapper.batchInsert(studentList);
     }

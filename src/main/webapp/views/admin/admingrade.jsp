@@ -112,13 +112,13 @@
                     <a href="${request}/adminGradeSelectAll?min=90&max=100" methods="post" class="btn btn-primary">100~90 分</a>
                 </div>
                 <div class="col-xs-1">
-                    <a  href="${request}/adminGradeSelectAll?min=90&max=80" methods="post" class="btn btn-primary">90~80 分</a>
+                    <a  href="${request}/adminGradeSelectAll?min=80&max=90" methods="post" class="btn btn-primary">90~80 分</a>
                 </div>
                 <div class="col-xs-1">
-                    <a  href="${request}/adminGradeSelectAll?min=80&max=70" methods="post" class="btn btn-primary">80~70 分</a>
+                    <a  href="${request}/adminGradeSelectAll?min=70&max=80" methods="post" class="btn btn-primary">80~70 分</a>
                 </div>
                 <div class="col-xs-1">
-                    <a  href="${request}/adminGradeSelectAll?min=70&max=60" methods="post" class="btn btn-primary">70~60 分</a>
+                    <a  href="${request}/adminGradeSelectAll?min=60&max=70" methods="post" class="btn btn-primary">70~60 分</a>
                 </div>
                 <div class="col-xs-1">
                     <a  href="${request}/adminGradeSelectAll?min=0&max=60" methods="post" class="btn btn-primary" style="background: #a71d2a;">

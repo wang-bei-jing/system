@@ -3,6 +3,7 @@ package edu.zzti.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import edu.zzti.bean.TimeManger;
 import edu.zzti.bean.Topic;
 import edu.zzti.bean.TopicSelect;
 import edu.zzti.service.TimeMangerService;
@@ -50,6 +51,9 @@ public class TopicController {
             System.out.println(topics.get(i).toString());
             System.out.println(topics.get(i).getTeacher().toString());
         }
+        Integer categoty=2;
+        TimeManger tpsTimeManger=timeMangerService.findTimeMangerByCategory(categoty);
+        request.setAttribute("tpsTimeManger",tpsTimeManger);
 
         PageInfo page = new PageInfo(topics, 5);
         request.getSession().setAttribute("topicList", page);

@@ -30,6 +30,8 @@ public interface StudentMapper {
     Integer studentDel(String sno);
 
     List<Student> findAllStudentByStatus(String status);
+    List<Student> findAllStudentByStatusAndName(@Param("status") String status,@Param("name") String name);
+
     int batchInsert(List<Student> studentList);
     //shc
 

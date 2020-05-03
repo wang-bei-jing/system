@@ -174,10 +174,10 @@
                                         <td>等待教师确认</td>
                                     </c:when>
                                     <c:when  test="${list.status=='1'}">
-                                        <td style="color: red">教师已确认!</td>
+                                        <td style="color: green">教师已确认!</td>
                                     </c:when>
                                     <c:otherwise>
-                                        <td>教师驳回申请!</td>
+                                        <td style="color: red">教师驳回申请!</td>
                                     </c:otherwise>
                                 </c:choose>
                                 <td>${list.topic.name}</td>

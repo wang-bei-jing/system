@@ -335,6 +335,9 @@
   <select id="findAllStudentByStatus" parameterType="java.lang.String" resultMap="BaseResultMap">
     select * from t_student where status=#{status,jdbcType=VARCHAR}
   </select>
+  <select id="findAllStudentByStatusAndName" parameterType="map" resultMap="BaseResultMap">
+    select * from t_student where status=#{status,jdbcType=VARCHAR} and name like concat('%',#{name},'%')
+  </select>
 
   <insert id="batchInsert" parameterType="list">
     insert into t_student (sno, name, department, classes)

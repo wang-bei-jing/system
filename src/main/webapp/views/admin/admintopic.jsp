@@ -94,7 +94,7 @@
                 </div>
 
                 <div class="col-md-6 col-md-offset-10">
-                    <a id="seeall"  href="${request}/TopicSelectAll" methods="post" class="btn btn-primary">查看全部课程</a>
+                    <a id="seeall"  href="${request}/adminTopicSelectAll" methods="post" class="btn btn-primary">查看全部课程</a>
                 </div>
             </div>
         </div>
@@ -152,9 +152,9 @@
             <div class="col-md-6">
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
-                        <li><a href="${pageContext.request.contextPath}/TopicSelectAll?pn=1">首页</a></li>
+                        <li><a href="${pageContext.request.contextPath}/adminTopicSelectAll?pn=1">首页</a></li>
                         <c:if test="${topicList.hasPreviousPage }">
-                            <li><a href="${pageContext.request.contextPath}/TopicSelectAll?pn=${topicList.pageNum-1}"
+                            <li><a href="${pageContext.request.contextPath}/adminTopicSelectAll?pn=${topicList.pageNum-1}"
                                    aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
                             </a></li>
                         </c:if>
@@ -164,17 +164,17 @@
                                 <li class="active"><a href="#">${page_Num }</a></li>
                             </c:if>
                             <c:if test="${page_Num != topicList.pageNum }">
-                                <li><a href="${pageContext.request.contextPath}/TopicSelectAll?pn=${page_Num }">${page_Num }</a></li>
+                                <li><a href="${pageContext.request.contextPath}/adminTopicSelectAll?pn=${page_Num }">${page_Num }</a></li>
                             </c:if>
                         </c:forEach>
 
                         <c:if test="${topicList.hasNextPage }">
-                            <li><a href="${pageContext.request.contextPath}/TopicSelectAll?pn=${topicList.pageNum+1 }"
+                            <li><a href="${pageContext.request.contextPath}/adminTopicSelectAll?pn=${topicList.pageNum+1 }"
                                    aria-label="Next"> <span aria-hidden="true">&raquo;</span>
                             </a></li>
                         </c:if>
 
-                        <li><a href="${pageContext.request.contextPath}/TopicSelectAll?pn=${topicList.pages}">末页</a></li>
+                        <li><a href="${pageContext.request.contextPath}/adminTopicSelectAll?pn=${topicList.pages}">末页</a></li>
                     </ul>
                 </nav>
             </div>

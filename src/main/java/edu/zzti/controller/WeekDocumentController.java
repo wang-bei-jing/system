@@ -4,6 +4,7 @@ package edu.zzti.controller;
 import edu.zzti.bean.WeekDocument;
 import edu.zzti.service.TopicSelectService;
 import edu.zzti.service.WeekDocumentService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -67,7 +73,16 @@ public class WeekDocumentController {
 
     @ResponseBody
     @RequestMapping(value="/uploadWeekDocument",method=RequestMethod.POST)
-    public ModelAndView uploadDocument(MultipartFile file, HttpServletRequest request, WeekDocument weekDocument,String sSno) throws IOException {
+    public ModelAndView uploadDocument(MultipartFile file, HttpServletRequest request, WeekDocument weekDocument,String sSno) throws IOException, ParseException {
+        /* Date date=new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String currenttimestr = dateFormat.format(date);
+        Date currentDate = dateFormat.parse(currenttimestr);*/
+       /* Timestamp t = new Timestamp(date.getTime());*/
+        Timestamp t = new Timestamp(System.currentTimeMillis());
+        weekDocument.setWkTime(t);
+
+        System.out.println(weekDocument.toString());
         String week=weekDocument.getWeek();
         String path = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/weekDocuments/"+week;
         String fileName = file.getOriginalFilename();
@@ -167,6 +182,8 @@ public class WeekDocumentController {
     @ResponseBody
     @RequestMapping(value="/uploadTestfile",method=RequestMethod.POST)
     public ModelAndView uploadTestfile(MultipartFile file, HttpServletRequest request, WeekDocument weekDocument,String sSno) throws IOException {
+        Timestamp t = new Timestamp(System.currentTimeMillis());
+        weekDocument.setWkTime(t);
         System.out.println(weekDocument.toString());
         String path = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/testFile";
         System.out.println(path);
