@@ -205,10 +205,13 @@
                         </a>
                         <ul class="collapse submenu list-unstyled" id="file" data-parent="#accordionExample">
                             <li>
-                                <a href="${pageContext.request.contextPath}/views/teacher/t_file.jsp" target="mainFrame">我的课题文件</a>
+                                <a href="${pageContext.request.contextPath}/views/teacher/t_weekdocument.jsp" target="mainFrame">我的课题文件</a>
                             </li>
                             <li>
-                                <a href="${pageContext.request.contextPath}/views/teacher/t_file.jsp" target="mainFrame">学生上传文件</a>
+                                <a href="${pageContext.request.contextPath}/views/teacher/t_weekdocument.jsp" target="mainFrame">学生周报</a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/views/teacher/t_weekdocument.jsp" target="mainFrame">学生报告</a>
                             </li>
                         </ul>
                     </li>

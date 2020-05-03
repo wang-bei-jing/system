@@ -11,9 +11,78 @@
     <result column="annotation" jdbcType="VARCHAR" property="annotation" />
     <result column="wk_time" jdbcType="TIMESTAMP" property="wkTime" />
   </resultMap>
+
+  <!-- xwq开始 -->
+  <resultMap id="BaseResultMapWith" type="edu.zzti.bean.WeekDocument">
+    <id column="d_id" jdbcType="INTEGER" property="dId" />
+    <result column="tps_id" jdbcType="INTEGER" property="tpsId" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="week" jdbcType="VARCHAR" property="week" />
+    <result column="documentname" jdbcType="VARCHAR" property="documentname" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="annotation" jdbcType="VARCHAR" property="annotation" />
+    <result column="wk_time" jdbcType="TIMESTAMP" property="wkTime" />
+    <association property="topicSelect" javaType="edu.zzti.bean.TopicSelect">
+      <id column="tsId" jdbcType="INTEGER" property="id" />
+      <result column="s_sno" jdbcType="VARCHAR" property="sSno" />
+      <result column="t_tno" jdbcType="INTEGER" property="tTno" />
+      <result column="tp_id" jdbcType="INTEGER" property="tpId" />
+      <result column="tsStatus" jdbcType="VARCHAR" property="status" />
+    </association>
+    <!-- 关联字段封装 -->
+    <association property="student" javaType="edu.zzti.bean.Student">
+      <id column="sno" jdbcType="VARCHAR" property="sno" />
+      <result column="password" jdbcType="VARCHAR" property="password" />
+      <result column="sName" jdbcType="VARCHAR" property="name" />
+      <result column="sex" jdbcType="VARCHAR" property="sex" />
+      <result column="tel" jdbcType="VARCHAR" property="tel" />
+      <result column="email" jdbcType="VARCHAR" property="email" />
+      <result column="sDepartment" jdbcType="VARCHAR" property="department" />
+      <result column="classes" jdbcType="VARCHAR" property="classes" />
+      <result column="sStatus" jdbcType="INTEGER" property="status" />
+    </association>
+    <association property="topic" javaType="edu.zzti.bean.Topic">
+      <id column="tpId" jdbcType="INTEGER" property="id" />
+      <result column="tpName" jdbcType="VARCHAR" property="name" />
+      <result column="contents" jdbcType="VARCHAR" property="contents" />
+      <result column="tno" jdbcType="INTEGER" property="tno" />
+      <result column="type" jdbcType="VARCHAR" property="type" />
+      <result column="source" jdbcType="VARCHAR" property="source" />
+      <result column="difficulty" jdbcType="VARCHAR" property="difficulty" />
+      <result column="support" jdbcType="VARCHAR" property="support" />
+      <result column="tpDepartment" jdbcType="VARCHAR" property="department" />
+      <result column="tpStatus" jdbcType="INTEGER" property="status" />
+      <result column="num" jdbcType="INTEGER" property="num" />
+    </association>
+  </resultMap>
+  <!-- xwq结束 -->
+
   <sql id="Base_Column_List">
     d_id, tps_id, category, week, documentname, remark, annotation, wk_time
   </sql>
+<!--  -->
+  <select id="findBy" parameterType="map" resultMap="BaseResultMapWith">
+    select *,t_topicselect.id tsId,t_topicselect.status tsStatus,t_student.name sName,t_student.department sDepartment,t_student.status sStatus,t_topic.id tpId,t_topic.name tpName,t_topic.department tpDepartment,t_topic.status tpStatus
+    from t_weekdocument,t_topicselect,t_student,t_topic
+    where t_weekdocument.tps_id = t_topicselect.id
+    and t_topicselect.s_sno = t_student.sno
+    and t_topicselect.tp_id = t_topic.id
+    and t_topicselect.status = 1
+    and tps_id=#{tpsId,jdbcType=INTEGER}
+    and category=#{category,jdbcType=VARCHAR};
+ </select>
+  <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMapWith">
+    select *,t_topicselect.id tsId,t_topicselect.status tsStatus,t_student.name sName,t_student.department sDepartment,t_student.status sStatus,t_topic.id tpId,t_topic.name tpName,t_topic.department tpDepartment,t_topic.status tpStatus
+    from t_weekdocument,t_topicselect,t_student,t_topic
+    where t_weekdocument.tps_id = t_topicselect.id
+    and t_topicselect.s_sno = t_student.sno
+    and t_topicselect.tp_id = t_topic.id
+    and t_topicselect.status = 1
+    and d_id = #{dId,jdbcType=INTEGER}
+ </select>
+
+
+<!--  -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

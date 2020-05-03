@@ -1,19 +1,19 @@
-
 package edu.zzti.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import edu.zzti.bean.Grade;
+import edu.zzti.bean.Msg;
+import edu.zzti.bean.TopicSelect;
 import edu.zzti.bean.WeekDocument;
 import edu.zzti.service.TopicSelectService;
 import edu.zzti.service.WeekDocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,44 +24,42 @@ import java.util.List;
 
 
 @Controller
-public class WeekDocumentController {
-    @Autowired
-    TopicSelectService topicSelectService;
-    @Autowired
-    WeekDocumentService weekDocumentService;
+@RequestMapping("/file")
+public class FileController {
+    final TopicSelectService topicSelectService;
+    final WeekDocumentService weekDocumentService;
+
+    public FileController(TopicSelectService topicSelectService, WeekDocumentService weekDocumentService) {
+        this.topicSelectService = topicSelectService;
+        this.weekDocumentService = weekDocumentService;
+    }
     //=========================================以下是薛文青部分==============================================================
 
-    //=========================================以上是薛文青部分==============================================================
-
-
-
-
-
-
-
-    //=========================================以下是施昊晨部分==============================================================
     //------------------------------------周报部分---------------------------------------
-    @RequestMapping("/findWeekDocument")
-    public ModelAndView findWeekDocument(HttpServletRequest request, String sSno, Model model) {
-        String status="1";
-        //通过sSno,status="1"查询实训课题的tpsId来删除周报
-        Integer tpsId=topicSelectService.findTpsId(sSno,status);
-        System.out.println(tpsId);
-            String category="1";
-            List weeks=new ArrayList();
-            List<WeekDocument> weekDocuments=weekDocumentService.findByCateory(tpsId,category);
-            for(int i=0;i<weekDocuments.size();i++){
-                System.out.println(weekDocuments.get(i).toString());
+    /**
+     * 修改记录
+     */
+    @ResponseBody
+    @RequestMapping(value="/upd/{dId}",method= RequestMethod.PUT)
+    public Msg upd(WeekDocument weekDocument){
+        System.out.println("upd--grade.toString()"+weekDocument.toString());
+        return Msg.success();
+    }
 
-                weeks.add(weekDocuments.get(i).getWeek());
+    @ResponseBody
+    @RequestMapping("/findWeekDocument/{tno}")
+    public Msg findWeekDocument(@RequestParam(value = "pn", defaultValue = "1")Integer pn, @PathVariable("tno")Integer tno, String category) {
+        PageHelper.startPage(pn, 5);
+        List<TopicSelect> topicSelectList = topicSelectService.selectMyStudent(tno);
+        List<WeekDocument> weekDocuments = new ArrayList<WeekDocument>();
+        for (TopicSelect topicSelect:topicSelectList){
+            weekDocuments.addAll(weekDocumentService.findBy(topicSelect.getId(),category));
+            for (WeekDocument weekDocument : weekDocuments) {
+                System.out.println(weekDocument.toString());
             }
-
-        System.out.println(weeks.toString());
-            model.addAttribute("weeks",weeks);
-            request.getSession().setAttribute("wdaddtpsId",tpsId);
-            request.getSession().setAttribute("weekDocuments",weekDocuments);
-            return new ModelAndView("student/weekfileupdown");
-
+        }
+        PageInfo page = new PageInfo(weekDocuments, 2);
+        return Msg.success().add("pageInfo", page);
     }
 
     @ResponseBody
@@ -88,9 +86,14 @@ public class WeekDocumentController {
         return new ModelAndView("redirect:/findWeekDocument?sSno="+sSno+"");
     }
 
-
-    @RequestMapping("/downWeekDocument")
-    public void downWeekDocument(HttpServletRequest request, HttpServletResponse response,String documentname,String sSno,String week) throws Exception{
+    @ResponseBody
+    @RequestMapping("/downWeekDocument/{dId}")
+    public void downWeekDocument(HttpServletRequest request, HttpServletResponse response,@PathVariable("dId")Integer dId) throws Exception{
+        System.out.println("进来看看");
+        WeekDocument weekDocument = weekDocumentService.selectById(dId);
+        String documentname = weekDocument.getDocumentname();
+        String sSno = weekDocument.getStudent().getSno();
+        String week = weekDocument.getWeek();
         //下载文件路径
         String pathFileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/weekDocuments/"+week+"/"+documentname;
         System.out.println(pathFileName);
@@ -224,8 +227,7 @@ public class WeekDocumentController {
         System.out.println(i);
         return new ModelAndView("redirect:/findTestfile?sSno="+sSno+"");
     }
-//=========================================以上是施昊晨部分==============================================================
-
+//=========================================以上是薛文青部分==============================================================
 
 
 }

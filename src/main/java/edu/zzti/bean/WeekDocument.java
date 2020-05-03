@@ -19,6 +19,12 @@ public class WeekDocument {
 
     private Date wkTime;
 
+    private TopicSelect topicSelect;
+
+    private Student student;
+
+    private Topic topic;
+
     public Integer getdId() {
         return dId;
     }
@@ -81,5 +87,46 @@ public class WeekDocument {
 
     public void setWkTime(Date wkTime) {
         this.wkTime = wkTime;
+    }
+
+    public TopicSelect getTopicSelect() {
+        return topicSelect;
+    }
+
+    public void setTopicSelect(TopicSelect topicSelect) {
+        this.topicSelect = topicSelect;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
+    }
+
+    @Override
+    public String toString() {
+        return "WeekDocument{" +
+                "dId=" + dId +
+                ", tpsId=" + tpsId +
+                ", category='" + category + '\'' +
+                ", week='" + week + '\'' +
+                ", documentname='" + documentname + '\'' +
+                ", remark='" + remark + '\'' +
+                ", annotation='" + annotation + '\'' +
+                ", wkTime=" + wkTime +
+                ", topicSelect=" + topicSelect +
+                ", student=" + student +
+                ", topic=" + topic +
+                '}';
     }
 }
