@@ -17,8 +17,16 @@ public class StudentCommentServiceImpl implements StudentCommentService {
         this.studentCommentMapper = studentCommentMapper;
     }
 
+    public List<StudentComment> selectByTno(Integer tno) {
+        return studentCommentMapper.selectByTno(tno);
+    }
+
     public List<StudentComment> findAllBySno(String sno) {
         return studentCommentMapper.findAllBySno(sno);
+    }
+
+    public StudentComment selectById(Integer scId) {
+        return studentCommentMapper.selectById(scId);
     }
     //xwq
 

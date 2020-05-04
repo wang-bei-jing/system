@@ -16,10 +16,12 @@
     <result column="sc_time" jdbcType="TIMESTAMP" property="scTime" />
     <association property="teacherComment" javaType="edu.zzti.bean.TeacherComment">
       <id column="tc_id" jdbcType="INTEGER" property="tcId" />
+      <result column="tc_tno" jdbcType="INTEGER" property="tcTno" />
       <result column="tc_tps_id" jdbcType="INTEGER" property="tcTpsId" />
       <result column="tc_sc_id" jdbcType="INTEGER" property="tcScId" />
       <result column="tc_content" jdbcType="VARCHAR" property="tcContent" />
       <result column="tc_time" jdbcType="TIMESTAMP" property="tcTime" />
+      <result column="tc_all" jdbcType="INTEGER" property="tcAll" />
     </association>
     <association property="topicSelect" javaType="edu.zzti.bean.TopicSelect">
       <id column="tsId" jdbcType="INTEGER" property="id" />
@@ -61,6 +63,16 @@
   </sql>
 
 <!-- xwq开始 -->
+  <select id="selectByTno" parameterType="java.lang.Integer" resultMap="BaseResultMapWith">
+    select *,t_topicselect.id tsId,t_topicselect.status tsStatus,t_student.name sName,t_student.department sDepartment,t_student.status sStatus,t_topic.id tpId,t_topic.name tpName,t_topic.department tpDepartment,t_topic.status tpStatus
+    from t_studentcomment left join t_teachercomment on t_studentcomment.sc_id=t_teachercomment.tc_sc_id,t_topicselect,t_student,t_topic
+    where t_studentcomment.sc_tps_id = t_topicselect.id
+    and t_topicselect.s_sno = t_student.sno
+    and t_topicselect.tp_id = t_topic.id
+    and t_topicselect.status = 1
+    and t_topicselect.t_tno= #{tno,jdbcType=INTEGER}
+    order by t_studentcomment.sc_time desc
+  </select>
   <select id="findAllBySno" parameterType="java.lang.String" resultMap="BaseResultMapWith">
     select *,t_topicselect.id tsId,t_topicselect.status tsStatus,t_student.name sName,t_student.department sDepartment,t_student.status sStatus,t_topic.id tpId,t_topic.name tpName,t_topic.department tpDepartment,t_topic.status tpStatus
     from t_studentcomment left join t_teachercomment on t_studentcomment.sc_id=t_teachercomment.tc_sc_id,t_topicselect,t_student,t_topic
@@ -70,6 +82,15 @@
     and t_topicselect.status = 1
     and t_studentcomment.sc_tps_id=
     (select tps.id from t_topicselect tps where s_sno=#{sno,jdbcType=VARCHAR} and status='1')
+  </select>
+  <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMapWith">
+    select *,t_topicselect.id tsId,t_topicselect.status tsStatus,t_student.name sName,t_student.department sDepartment,t_student.status sStatus,t_topic.id tpId,t_topic.name tpName,t_topic.department tpDepartment,t_topic.status tpStatus
+    from t_studentcomment left join t_teachercomment on t_studentcomment.sc_id=t_teachercomment.tc_sc_id,t_topicselect,t_student,t_topic
+    where t_studentcomment.sc_tps_id = t_topicselect.id
+    and t_topicselect.s_sno = t_student.sno
+    and t_topicselect.tp_id = t_topic.id
+    and t_topicselect.status = 1
+    and sc_id = #{scId,jdbcType=INTEGER}
   </select>
 <!-- xwq结束 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

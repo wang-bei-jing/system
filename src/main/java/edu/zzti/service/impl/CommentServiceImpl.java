@@ -26,6 +26,14 @@ public class CommentServiceImpl implements CommentService {
         return teacherCommentMapper.insertSelective(teacherComment);
     }
 
+    public int del(Integer tcId) {
+        return teacherCommentMapper.deleteByPrimaryKey(tcId);
+    }
+
+    public int upd(TeacherComment teacherComment) {
+        return teacherCommentMapper.updateByPrimaryKeySelective(teacherComment);
+    }
+
     public int insert(Comment comment) {
         return commentMapper.insertSelective(comment);
     }

@@ -7,7 +7,11 @@ import java.util.List;
 public interface StudentCommentService {
 
     //xwq
+    List<StudentComment> selectByTno(Integer tno);
+
     List<StudentComment> findAllBySno(String sno);
+
+    StudentComment selectById(Integer scId);
     //xwq
 
     //shc

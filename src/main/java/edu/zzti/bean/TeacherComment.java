@@ -72,4 +72,17 @@ public class TeacherComment {
     public void setTcAll(Integer tcAll) {
         this.tcAll = tcAll;
     }
+
+    @Override
+    public String toString() {
+        return "TeacherComment{" +
+                "tcId=" + tcId +
+                ", tcTno=" + tcTno +
+                ", tcTpsId=" + tcTpsId +
+                ", tcScId=" + tcScId +
+                ", tcContent='" + tcContent + '\'' +
+                ", tcTime=" + tcTime +
+                ", tcAll=" + tcAll +
+                '}';
+    }
 }

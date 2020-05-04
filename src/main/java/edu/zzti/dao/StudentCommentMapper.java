@@ -7,7 +7,11 @@ import java.util.List;
 public interface StudentCommentMapper {
 
     //xwq开始
+    List<StudentComment> selectByTno(Integer tno);
+
     List<StudentComment> findAllBySno(String sno);
+
+    StudentComment selectById(Integer scId);
     //xwq结束
 
     //shc

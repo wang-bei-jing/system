@@ -7,9 +7,13 @@ import java.util.List;
 
 public interface CommentService {
 
+    //xwq
     int insert(TeacherComment teacherComment);
 
-    //xwq
+    int del(Integer tcId);
+
+    int upd(TeacherComment teacherComment);
+
     int insert(Comment comment);
 
     List<Comment> selectPeople(String id);

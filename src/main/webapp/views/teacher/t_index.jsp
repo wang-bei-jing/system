@@ -230,9 +230,6 @@
                             <li>
                                 <a href="${pageContext.request.contextPath}/views/teacher/t_test.jsp" target="mainFrame">学生提问</a>
                             </li>
-                            <li>
-                                <a href="${pageContext.request.contextPath}/views/teacher/t_test.jsp" target="mainFrame">置顶消息</a>
-                            </li>
                         </ul>
                     </li>
             </ul>
@@ -275,22 +272,12 @@
     var tno = "${teacher.tno}";
     $(function(){
         compareTime();
-        people();
     });
     function compareTime(){
         $.ajax({
             url:"${pageContext.request.contextPath}/time/compare",
             type:"GET",
             success:function(){
-            }
-        });
-        //setTimeout(automatic,2*1000);
-    }
-    function people(){
-        $.ajax({
-            url:"${pageContext.request.contextPath}/comment/people/"+tno,
-            type:"GET",
-            success:function(result){
             }
         });
         //setTimeout(automatic,2*1000);
