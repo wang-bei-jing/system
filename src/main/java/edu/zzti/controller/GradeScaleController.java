@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -70,8 +69,11 @@ public class GradeScaleController {
     @ResponseBody
     @RequestMapping(value="/upd/{gsId}",method= RequestMethod.PUT)
     public Msg upd(GradeScale gradeScale){
-        System.out.println("upd--gradeScale.toString()"+gradeScale.toString());
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+        gradeScale.setGsTime(timestamp);
         gradeScale.setGsStatus(3);
+        System.out.println("upd--gradeScale.toString()"+gradeScale.toString());
         gradeScaleService.upd(gradeScale);
         return Msg.success();
     }

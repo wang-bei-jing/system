@@ -170,9 +170,9 @@
                                         <button class="btn btn-primary btn-sm edit_btn" id="agree_btn" value="${list.gsId}">
                                             <span class="glyphicon glyphicon-pencil"></span>同意
                                         </button>
-                                        <a class="btn btn-danger btn-sm delete_btn" id="reject_btn" value="${list.gsId}">
+                                        <button class="btn btn-danger btn-sm delete_btn" id="reject_btn" value="${list.gsId}">
                                             <span class="glyphicon glyphicon-trash"></span>驳回
-                                        </a>
+                                        </button>
                                     </c:otherwise>
                                 </c:choose>
 
