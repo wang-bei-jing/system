@@ -1,3 +1,4 @@
+<%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -231,7 +232,6 @@
                                                 <c:if test="${weeks.contains('第八周')==false}">
                                                     <option>第八周</option>
                                                 </c:if>
-
                                             </select>
                                         </div>
                                     </div>
@@ -262,5 +262,6 @@
         </div>
 
     </div>
+</div>
 </body>
 </html>

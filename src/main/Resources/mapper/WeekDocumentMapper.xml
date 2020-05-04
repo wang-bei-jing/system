@@ -9,7 +9,7 @@
     <result column="documentname" jdbcType="VARCHAR" property="documentname" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="annotation" jdbcType="VARCHAR" property="annotation" />
-    <result column="wk_time" jdbcType="TIMESTAMP" property="wkTime" />
+    <result column="wk_time" jdbcType="TIMESTAMP" property="wkTime" javaType="java.sql.Timestamp"/>
   </resultMap>
 
   <!-- xwq开始 -->
@@ -227,6 +227,9 @@
       <if test="annotation != null">
         annotation,
       </if>
+      <if test="wkTime != null">
+        wk_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="dId != null">
@@ -249,6 +252,9 @@
       </if>
       <if test="annotation != null">
         #{annotation,jdbcType=VARCHAR},
+      </if>
+      <if test="wkTime != null">
+        #{wkTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>

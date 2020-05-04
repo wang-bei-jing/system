@@ -12,17 +12,14 @@
     System.out.println(currenttime);
 
     Object obj=request.getSession().getAttribute("tpsTimeManger");
-    System.out.println(obj);
-    TimeManger timeManger=(TimeManger)obj;
-    System.out.println(timeManger.toString());
-    Date begintime=timeManger.getTiBegin();
-    Date endtime=timeManger.getTiEnd();
-   /*  String btimestr = dateFormat.format(btime);
-    String etimestr = dateFormat.format(etime);
-    java.util.Date begintime = dateFormat.parse(btimestr);
-    java.util.Date endtime = dateFormat.parse(etimestr);*/
-    System.out.println(begintime);
-    System.out.println(endtime);
+
+        TimeManger timeManger=(TimeManger)obj;
+        Date begintime=timeManger.getTiBegin();
+        Date endtime=timeManger.getTiEnd();
+       /*  String btimestr = dateFormat.format(btime);
+        String etimestr = dateFormat.format(etime);
+        java.util.Date begintime = dateFormat.parse(btimestr);
+        java.util.Date endtime = dateFormat.parse(etimestr);*/
     if(currenttime.after(begintime)&&currenttime.before(endtime)){
 %>
 

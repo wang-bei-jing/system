@@ -295,7 +295,7 @@
                             <a href="${pageContext.request.contextPath}/findAllStudentNotSelect" target="myfrm"> 未选题学生 </a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath}/adminTopicSelectTime" target="myfrm"> 选题时间管理 </a>
+                            <a href="${pageContext.request.contextPath}/timeMangerFind" target="myfrm"> 选题时间管理 </a>
                         </li>
                     </ul>
                 </li>

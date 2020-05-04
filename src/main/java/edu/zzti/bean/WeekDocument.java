@@ -1,5 +1,7 @@
 package edu.zzti.bean;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class WeekDocument {
@@ -16,7 +18,7 @@ public class WeekDocument {
     private String remark;
 
     private String annotation;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date wkTime;
 
     private TopicSelect topicSelect;

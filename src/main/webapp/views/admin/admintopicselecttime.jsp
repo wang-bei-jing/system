@@ -1,6 +1,3 @@
-<%@ page import="edu.zzti.bean.TimeManger" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -138,7 +135,10 @@
             <!-- 按钮 -->
             <div class="row">
                 <div class="col-md-4 col-md-offset-10">
-                    <button class="btn btn-success" id="add_modal" >添加时间范围</button>
+                    <c:if test="${tpsTimeManger==null}">
+                        <button class="btn btn-success" id="add_modal" >添加时间范围</button>
+                    </c:if>
+
                 </div>
             </div>
         </div>
@@ -177,7 +177,7 @@
 
                     </c:when>
                     <c:otherwise>
-                        <span><strong>暂无选题时间管理信息</strong></span>
+                        <span style="color: red"><strong>暂无选题时间管理信息,请先添加！</strong></span>
                     </c:otherwise>
                 </c:choose>
             </div>
@@ -232,7 +232,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">开始时间</label>
                                 <div class="col-sm-10">
-                                    <%
+                                  <%--  <%
                                         Object obj=request.getSession().getAttribute("tpsTimeManger");
                                         if (obj!=null){
                                             TimeManger timeManger=(TimeManger)obj;
@@ -243,25 +243,14 @@
                                             request.getSession().setAttribute("begintimestr",begintimestr);
                                         }
 
-                                    %>
+                                    %>--%>
                                     <input type="datetime-local" min="1970-01-01" max="2099-12-31" value="${begintimestr}" name="tiBegin">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">结束时间</label>
                                 <div class="col-sm-10">
-                                    <%
-                                        Object obj2=request.getSession().getAttribute("tpsTimeManger");
-                                        if (obj!=null){
-                                            TimeManger timeManger2=(TimeManger)obj;
-                                            Date endtime=timeManger2.getTiEnd();
-                                            SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-                                            String endtimestr=dateFormat2.format(endtime);
-                                            endtimestr=endtimestr.replace(" ","T");
-                                            request.getSession().setAttribute("endtimestr",endtimestr);
-                                        }
-                                      
-                                    %>
+
                                     <input type="datetime-local" min="1970-01-01" max="2099-12-31" value="${endtimestr}" name="tiEnd">
                                 </div>
                             </div>

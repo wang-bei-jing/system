@@ -101,7 +101,7 @@ public class AdminController {
             System.out.println(teacherList.toString());
         }
         PageInfo page = new PageInfo(teacherList, 5);
-        request.getSession().setAttribute("teacherList",page);
+        request.setAttribute("teacherList",page);
         return  new ModelAndView("admin/teacher");
     }
    /**
@@ -117,8 +117,8 @@ public class AdminController {
         PageHelper.startPage(pn, 5);
         List<Teacher> teacherList=teacherService.selectAllTeacherByName(name);
         PageInfo page = new PageInfo(teacherList, 5);
-        request.getSession().setAttribute("teacherList",page);
-        request.getSession().setAttribute("teachername",name);
+        request.setAttribute("teacherList",page);
+        request.setAttribute("teachername",name);
         return  new ModelAndView("admin/teacher");
     }
     @RequestMapping("/teacherDel")
@@ -157,9 +157,6 @@ public class AdminController {
     public Teacher selectTeacherByTno(HttpServletRequest request, int tno){
        Teacher oneteacher=teacherService.selectTeacherByTno(tno);
         System.out.println(oneteacher);
-
-    /*   request.getSession().setAttribute("oneteacher",oneteacher);*/
-    /*  request.setAttribute("oneteacher",oneteacher);*/
         return oneteacher;
     }
     /**
@@ -175,9 +172,6 @@ public class AdminController {
         System.out.println("新的"+teacher);
         int i=teacherService.updateTeacher(teacher);
         System.out.println(i);
-
-        /*   request.getSession().setAttribute("oneteacher",oneteacher);*/
-        /*  request.setAttribute("oneteacher",oneteacher);*/
         return new ModelAndView("redirect:/teacherSelectAll");
     }
     //-------------------------------------学生部分----------------------------------------------------
@@ -197,7 +191,7 @@ public class AdminController {
             System.out.println(studentList.toString());
         }
         PageInfo page = new PageInfo(studentList, 5);
-        request.getSession().setAttribute("studentList",page);
+        request.setAttribute("studentList",page);
         return  new ModelAndView("admin/student");
     }
     /**
@@ -215,8 +209,8 @@ public class AdminController {
         List<Student> studentList=studentService.findAllStudentByName(name);
         System.out.println(studentList.size());
         PageInfo page = new PageInfo(studentList, 5);
-        request.getSession().setAttribute("studentList",page);
-        request.getSession().setAttribute("studentname",name);
+        request.setAttribute("studentList",page);
+        request.setAttribute("studentname",name);
         return  new ModelAndView("admin/student");
     }
     @RequestMapping("/studentDel")
@@ -250,8 +244,6 @@ public class AdminController {
         Student onestudent=studentService.studentFindBySno(sno);
         System.out.println(onestudent);
 
-        /*   request.getSession().setAttribute("oneteacher",oneteacher);*/
-        /*  request.setAttribute("oneteacher",oneteacher);*/
         return onestudent;
     }
     /**
@@ -267,9 +259,6 @@ public class AdminController {
         System.out.println("新的"+student);
         int i=studentService.studentUpdSelective(student);
         System.out.println(i);
-
-        /*   request.getSession().setAttribute("oneteacher",oneteacher);*/
-        /*  request.setAttribute("oneteacher",oneteacher);*/
         return new ModelAndView("redirect:/studentSelectAll");
     }
     //=====================================课题管理================================================
@@ -292,7 +281,7 @@ public class AdminController {
         }
 
         PageInfo page = new PageInfo(topics, 5);
-        request.getSession().setAttribute("topicList", page);
+        request.setAttribute("topicList", page);
         return new ModelAndView("admin/admintopic");
     }
     /**
@@ -314,8 +303,8 @@ public class AdminController {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         PageInfo page = new PageInfo(topics, 5);
         System.out.println(page.getPageSize());
-        request.getSession().setAttribute("topicname", name);
-        request.getSession().setAttribute("topicList", page);
+        request.setAttribute("topicname", name);
+        request.setAttribute("topicList", page);
         return new ModelAndView("admin/admintopic");
     }
     /**
@@ -358,8 +347,8 @@ public class AdminController {
             System.out.println(topicSelectList.get(i).toString());
         }
         PageInfo page = new PageInfo(topicSelectList, 5);
-        request.getSession().setAttribute("studentname", name);
-        request.getSession().setAttribute("sttList", page);
+        request.setAttribute("studentname", name);
+        request.setAttribute("sttList", page);
         return new ModelAndView("admin/adminstudentselect");
     }
     /**
@@ -380,7 +369,7 @@ public class AdminController {
             System.out.println(studentList.get(i).toString());
         }
         PageInfo page = new PageInfo(studentList, 5);
-        request.getSession().setAttribute("studentList",page);
+        request.setAttribute("studentList",page);
         return new ModelAndView("admin/adminstudentnotselect");
     }
     /**
@@ -395,14 +384,13 @@ public class AdminController {
     public ModelAndView adminFindAllStudentNOTSELECTByName(HttpServletRequest request,@RequestParam String name, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5);
         String status="0";
-        List<TopicSelect> topicSelectList=topicSelectService.adminFindAllStudentAndTopicAndTeacherByName(name,status);
-        System.out.println(topicSelectList.size());
-        for (int i = 0; i < topicSelectList.size(); i++) {
-            System.out.println(topicSelectList.get(i).toString());
+        List<Student> studentList=studentService.findAllStudentByStatusAndName(status,name);
+        for (int i = 0; i < studentList.size(); i++) {
+            System.out.println(studentList.get(i).toString());
         }
-        PageInfo page = new PageInfo(topicSelectList, 5);
-        request.getSession().setAttribute("studentname", name);
-        request.getSession().setAttribute("studentList",page);
+        PageInfo page = new PageInfo(studentList, 5);
+        request.setAttribute("studentname", name);
+        request.setAttribute("studentList",page);
         return new ModelAndView("admin/adminstudentnotselect");
     }
     /**
@@ -412,12 +400,23 @@ public class AdminController {
      * @Date ：2020/4/25
      * @Description ：学生选题时间的管理
      **/
-    @RequestMapping(value = "/adminTopicSelectTime")
-    public ModelAndView adminTopicSelectTime(HttpServletRequest request){
+    @RequestMapping(value = "/timeMangerFind")
+    public ModelAndView timeMangerFind(HttpServletRequest request){
         Integer categoty=2;
         TimeManger tpsTimeManger=timeMangerService.findTimeMangerByCategory(categoty);
         System.out.println(tpsTimeManger);
-        request.getSession().setAttribute("tpsTimeManger",tpsTimeManger);
+            if (tpsTimeManger!=null){
+                Date begintime=tpsTimeManger.getTiBegin();
+                Date endtime=tpsTimeManger.getTiEnd();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                String begintimestr=dateFormat.format(begintime);
+                String endtimestr=dateFormat.format(endtime);
+                begintimestr=begintimestr.replace(" ","T");
+                endtimestr=endtimestr.replace(" ","T");
+                request.setAttribute("begintimestr",begintimestr);
+                request.setAttribute("endtimestr",endtimestr);
+            }
+        request.setAttribute("tpsTimeManger",tpsTimeManger);
         return new ModelAndView("admin/admintopicselecttime");
     }
     @ResponseBody
@@ -434,7 +433,7 @@ public class AdminController {
         timeManger.setTiEnd(endtime);
         int i=timeMangerService.insertSelective(timeManger);
         System.out.println(i);
-        return new ModelAndView("redirect:/adminTopicSelectTime");
+        return new ModelAndView("redirect:/timeMangerFind");
     }
     @ResponseBody
     @RequestMapping(value = "/timeMangerUpd")
@@ -451,14 +450,14 @@ public class AdminController {
         timeManger.setTiEnd(endtime);
         int i=timeMangerService.updateByPrimaryKeySelective(timeManger);
         System.out.println(i);
-        return new ModelAndView("redirect:/adminTopicSelectTime");
+        return new ModelAndView("redirect:/timeMangerFind");
     }
     @ResponseBody
     @RequestMapping(value = "/timeMangerDel")
     public ModelAndView timeMangerDel(int tiId)  {
         int i=timeMangerService.deleteByPrimaryKey(tiId);
         System.out.println(i);
-        return new ModelAndView("redirect:/adminTopicSelectTime");
+        return new ModelAndView("redirect:/timeMangerFind");
     }
 //=====================================成绩管理================================================
     @ResponseBody
@@ -473,8 +472,8 @@ public class AdminController {
         int studentsGradesSize=studentsGrades.size();
         System.out.println(studentsGradesSize);
         PageInfo page = new PageInfo(studentsGrades, 5);
-        request.getSession().setAttribute("studentsGrades", page);
-        request.getSession().setAttribute("studentsGradesSize", studentsGradesSize);
+        request.setAttribute("studentsGrades", page);
+        request.setAttribute("studentsGradesSize", studentsGradesSize);
         return new ModelAndView("admin/admingrade");
     }
     /**
@@ -491,9 +490,9 @@ public class AdminController {
         int studentsGradesSize=studentsGrades.size();
         System.out.println(studentsGradesSize);
         PageInfo page = new PageInfo(studentsGrades, 5);
-        request.getSession().setAttribute("studentsGrades", page);
-        request.getSession().setAttribute("admingradesno", sno);
-        request.getSession().setAttribute("studentsGradesSize", studentsGradesSize);
+        request.setAttribute("studentsGrades", page);
+        request.setAttribute("admingradesno", sno);
+        request.setAttribute("studentsGradesSize", studentsGradesSize);
         return new ModelAndView("admin/admingrade");
     }
     /**
@@ -510,9 +509,9 @@ public class AdminController {
         int studentsGradesSize=studentsGrades.size();
         System.out.println(studentsGradesSize);
         PageInfo page = new PageInfo(studentsGrades, 5);
-        request.getSession().setAttribute("studentsGrades", page);
-        request.getSession().setAttribute("admingradeteachername", tname);
-        request.getSession().setAttribute("studentsGradesSize", studentsGradesSize);
+        request.setAttribute("studentsGrades", page);
+        request.setAttribute("admingradeteachername", tname);
+        request.setAttribute("studentsGradesSize", studentsGradesSize);
         return new ModelAndView("admin/admingrade");
     }
     /**
@@ -529,7 +528,7 @@ public class AdminController {
         for (int i=0;i<gradeScaleApplys.size();i++){
             System.out.println(gradeScaleApplys.get(i).toString());
         }
-       request.getSession().setAttribute("gradeScaleApplys",gradeScaleApplys);
+       request.setAttribute("gradeScaleApplys",gradeScaleApplys);
       return  new ModelAndView("admin/admingradescaleapply");
 
     }

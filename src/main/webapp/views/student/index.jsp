@@ -56,7 +56,9 @@
 
             <li class="nav-item dropdown language-dropdown">
                <div>
-                   <span style="color: #ff6412">选题时间为:<fmt:formatDate value="${tpsTimeManger.tiBegin}" pattern="yyyy-MM-dd HH:mm" />~~<fmt:formatDate value="${tpsTimeManger.tiEnd}" pattern="yyyy-MM-dd HH:mm" /></span>
+                   <c:if test="${tpsTimeManger!=null}">
+                       <span style="color: #ff6412">选题时间为:<fmt:formatDate value="${tpsTimeManger.tiBegin}" pattern="yyyy-MM-dd HH:mm" />~~<fmt:formatDate value="${tpsTimeManger.tiEnd}" pattern="yyyy-MM-dd HH:mm" /></span>
+                   </c:if>
                </div>
             </li>
 
