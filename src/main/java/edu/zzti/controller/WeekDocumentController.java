@@ -4,7 +4,6 @@ package edu.zzti.controller;
 import edu.zzti.bean.WeekDocument;
 import edu.zzti.service.TopicSelectService;
 import edu.zzti.service.WeekDocumentService;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,9 +22,7 @@ import java.net.URLEncoder;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -55,7 +52,7 @@ public class WeekDocumentController {
         System.out.println(tpsId);
             String category="1";
             List weeks=new ArrayList();
-            List<WeekDocument> weekDocuments=weekDocumentService.findByCateory(tpsId,category);
+            List<WeekDocument> weekDocuments=weekDocumentService.findByCategory(tpsId,category);
             for(int i=0;i<weekDocuments.size();i++){
                 System.out.println(weekDocuments.get(i).toString());
 
@@ -72,7 +69,7 @@ public class WeekDocumentController {
 
     @ResponseBody
     @RequestMapping(value="/uploadWeekDocument",method=RequestMethod.POST)
-    public ModelAndView uploadDocument(MultipartFile file, HttpServletRequest request, WeekDocument weekDocument,String sSno) throws IOException, ParseException {
+    public ModelAndView uploadDocument(MultipartFile file, HttpServletRequest request, WeekDocument weekDocument, String sSno) throws IOException, ParseException {
         /* Date date=new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String currenttimestr = dateFormat.format(date);
@@ -169,7 +166,7 @@ public class WeekDocumentController {
         Integer tpsId=topicSelectService.findTpsId(sSno,status);
 
             String category="2";
-            List<WeekDocument> testfiles=weekDocumentService.findByCateory(tpsId,category);
+            List<WeekDocument> testfiles=weekDocumentService.findByCategory(tpsId,category);
        /* for(int i=0;i<testfiles.size();i++){
             System.out.println(testfiles.get(i).toString());
         }*/

@@ -344,11 +344,32 @@
             ids.push(id);
         });
         empNames = empNames.substring(0, empNames.length-1);
-        if(confirm("确认删除【"+empNames+"】吗？")){
-            for(var i=0;i<ids.length;i++){
-                var dId = ids[i];
-                location.href="${pageContext.request.contextPath}/file/download?dId="+dId;
+        if(ids.length!==0){
+            if(confirm("确认删除【"+empNames+"】吗？")){
+                var files = [];
+                for(var i=0;i<ids.length;i++){
+                    var dId = ids[i];
+                    //location.href="${pageContext.request.contextPath}/file/downloadTopicFile?dId="+dId;
+                    var href = "${pageContext.request.contextPath}/file/download?dId="+dId;
+                    files.push(href);
+                }
+                //let files = ['url1', 'url2']; // 所有文件
+                files.forEach(url => {
+                    if (isIE()) { // IE
+                        window.open(url, '_blank')
+                    } else {
+                        let a = document.createElement('a'); // 创建a标签
+                        let e = document.createEvent('MouseEvents'); // 创建鼠标事件对象
+                        e.initEvent('click', false, false);// 初始化事件对象
+                        a.href = url; // 设置下载地址
+                        a.download = ''; // 设置下载文件名
+                        a.dispatchEvent(e);
+                    }
+                });
             }
+        }
+        else {
+            alert("未选中任何文件！");
         }
     });
 </script>

@@ -9,6 +9,8 @@ public class WeekDocument {
 
     private Integer tpsId;
 
+    private Integer dTId;
+
     private String category;
 
     private String week;
@@ -18,6 +20,7 @@ public class WeekDocument {
     private String remark;
 
     private String annotation;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date wkTime;
 
@@ -41,6 +44,14 @@ public class WeekDocument {
 
     public void setTpsId(Integer tpsId) {
         this.tpsId = tpsId;
+    }
+
+    public Integer getdTId() {
+        return dTId;
+    }
+
+    public void setdTId(Integer dTId) {
+        this.dTId = dTId;
     }
 
     public String getCategory() {
@@ -120,6 +131,7 @@ public class WeekDocument {
         return "WeekDocument{" +
                 "dId=" + dId +
                 ", tpsId=" + tpsId +
+                ", dTId=" + dTId +
                 ", category='" + category + '\'' +
                 ", week='" + week + '\'' +
                 ", documentname='" + documentname + '\'' +

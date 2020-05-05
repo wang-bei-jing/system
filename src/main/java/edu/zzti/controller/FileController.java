@@ -2,11 +2,10 @@ package edu.zzti.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import edu.zzti.bean.Grade;
-import edu.zzti.bean.Msg;
-import edu.zzti.bean.TopicSelect;
-import edu.zzti.bean.WeekDocument;
+import edu.zzti.bean.*;
+import edu.zzti.service.TeacherService;
 import edu.zzti.service.TopicSelectService;
+import edu.zzti.service.TopicService;
 import edu.zzti.service.WeekDocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,96 +17,100 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 @RequestMapping("/file")
 public class FileController {
-    final TopicSelectService topicSelectService;
-    final WeekDocumentService weekDocumentService;
 
-    public FileController(TopicSelectService topicSelectService, WeekDocumentService weekDocumentService) {
-        this.topicSelectService = topicSelectService;
+    private final TopicService topicService;
+
+    private final WeekDocumentService weekDocumentService;
+
+    public FileController(TopicService topicService, WeekDocumentService weekDocumentService) {
+        this.topicService = topicService;
         this.weekDocumentService = weekDocumentService;
     }
-    //=========================================以下是薛文青部分==============================================================
 
-    //------------------------------------周报部分---------------------------------------
-    /**
-     * 修改记录
-     */
+    //文件上传
     @ResponseBody
-    @RequestMapping(value="/upd/{dId}",method= RequestMethod.PUT)
-    public Msg upd(WeekDocument weekDocument){
-        System.out.println("upd--grade.toString()"+weekDocument.toString());
-        weekDocumentService.upd(weekDocument);
-        return Msg.success();
-    }
-
-    /**
-     * 查询详细信息
-     */
-    @ResponseBody
-    @RequestMapping("/detail/{dId}")
-    public Msg detail(@PathVariable("dId")Integer dId){
-        WeekDocument weekDocument = weekDocumentService.selectById(dId);
-        return Msg.success().add("weekDocument",weekDocument);
-    }
-
-    @ResponseBody
-    @RequestMapping("/findWeekDocument/{tno}")
-    public Msg findWeekDocument(@RequestParam(value = "pn", defaultValue = "1")Integer pn, @PathVariable("tno")Integer tno, String category) {
-        PageHelper.startPage(pn, 5);
-        List<TopicSelect> topicSelectList = topicSelectService.selectMyStudent(tno);
-        List<WeekDocument> weekDocuments = new ArrayList<WeekDocument>();
-        for (TopicSelect topicSelect:topicSelectList){
-            weekDocuments.addAll(weekDocumentService.findBy(topicSelect.getId(),category));
-            for (WeekDocument weekDocument : weekDocuments) {
-                System.out.println(weekDocument.toString());
-            }
-        }
-        PageInfo page = new PageInfo(weekDocuments, 2);
-        return Msg.success().add("pageInfo", page);
-    }
-
-    @RequestMapping(value="/uploadWeekDocument",method=RequestMethod.POST)
-    public ModelAndView uploadDocument(MultipartFile file, HttpServletRequest request, WeekDocument weekDocument,String sSno) throws IOException {
-        String week=weekDocument.getWeek();
-        String path = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/weekDocuments/"+week;
+    @RequestMapping(value="/uploadTopicFile",method=RequestMethod.POST)
+    public void uploadDocument(MultipartFile file, Integer tno, Integer dTId, String remark, HttpServletRequest request) throws IOException {
+        String path = request.getSession().getServletContext().getRealPath("upload")+"/"+tno+"/topic/"+dTId;
         String fileName = file.getOriginalFilename();
-       /* String newpathName=path+"/"+fileName;*/
+        WeekDocument weekDocument =new WeekDocument();
+        weekDocument.setdTId(dTId);
         weekDocument.setDocumentname(fileName);
         System.out.println(weekDocument.getDocumentname());
+        weekDocument.setCategory("3");
+        weekDocument.setRemark(remark);
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+        weekDocument.setWkTime(timestamp);
+        weekDocumentService.add(weekDocument);
+        System.out.println("uploadTopicFile--"+weekDocument.toString());
         File dir = new File(path,fileName);
         if(!dir.exists()){
             dir.mkdirs();
         }
-        //MultipartFile自带的解析方法
         file.transferTo(dir);
-        int i=0;
-        System.out.println(i);
-        i=weekDocumentService.addWeekDocument(weekDocument);
-        System.out.println(i);
-        System.out.println("上传成功");
-        //进入下一个控制器函数/findWeekDocument
-        return new ModelAndView("redirect:/findWeekDocument?sSno="+sSno+"");
     }
 
-    @RequestMapping("/download")
-    public void download(HttpServletRequest request, HttpServletResponse response,Integer dId) throws Exception{
+    //文件下载
+    @ResponseBody
+    @RequestMapping("/downloadTopicFile")
+    public void downloadTopicFile(HttpServletRequest request, HttpServletResponse response,Integer dId) throws Exception{
         WeekDocument weekDocument = weekDocumentService.selectById(dId);
         String documentname = weekDocument.getDocumentname();
-        String sSno = weekDocument.getStudent().getSno();
-        String week = weekDocument.getWeek();
+        //下载文件路径
+        String pathFileName = "";
+        if (weekDocument.getCategory().equals("3")){
+            Integer dTId = weekDocument.getdTId();
+            Integer tno = topicService.selectTopicById(dTId).getTno();
+            pathFileName = request.getSession().getServletContext().getRealPath("upload")+"/"+tno+"/topic/"+dTId+"/"+documentname;
+        }
+        System.out.println(pathFileName);
+        //获取输入流
+        InputStream bis = new BufferedInputStream(new FileInputStream(new File(pathFileName)));
+        //假如以中文名下载的话
+        String filename = documentname;
+        //转码，免得文件名中文乱码
+        filename = URLEncoder.encode(filename,"UTF-8");
+        //设置文件下载头
+        response.addHeader("Content-Disposition", "attachment;filename=" + filename);
+        //1.设置文件ContentType类型，这样设置，会自动判断下载文件类型
+        response.setContentType("multipart/form-data");
+        BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+        int len = 0;
+        while((len = bis.read()) != -1){
+            out.write(len);
+            out.flush();
+        }
+        out.close();
+    }
+
+    //文件下载
+    @ResponseBody
+    @RequestMapping("/download")
+    public void download(HttpServletRequest request, HttpServletResponse response,Integer dId) throws Exception{
+        WeekDocument weekDocument = weekDocumentService.selectBy(dId);
+        String documentname = weekDocument.getDocumentname();
+        String sSno = "";
         //下载文件路径
         String pathFileName = "";
         if (weekDocument.getCategory().equals("1")){
+            String week = weekDocument.getWeek();
+            sSno = weekDocument.getStudent().getSno();
             pathFileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/weekDocuments/"+week+"/"+documentname;
         }
         if (weekDocument.getCategory().equals("2")){
+            sSno = weekDocument.getStudent().getSno();
             pathFileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/testFile/"+documentname;
         }
         System.out.println(pathFileName);
@@ -130,22 +133,26 @@ public class FileController {
         out.close();
     }
 
-    @RequestMapping("/deleteWeekDocument")
-    public ModelAndView deleteWeekDocument(HttpServletRequest request,String documentname,int dId,String sSno,String week) throws Exception{
-        String pathFileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/weekDocuments/"+week;
-        System.out.println(pathFileName);
-
-       /* File deletefile = new File(pathFileName);*/
-        /*deletefile.delete();*/
+    //删除
+    @ResponseBody
+    @RequestMapping(value="/del/{dId}", method=RequestMethod.DELETE)
+    public Msg del(HttpServletRequest request,@PathVariable("dId")Integer dId){
+        WeekDocument weekDocument = weekDocumentService.selectById(dId);
+        Integer dTId = weekDocument.getdTId();
+        Integer tno = topicService.selectTopicById(dTId).getTno();
+        String documentname = weekDocument.getDocumentname();
+        String pathFileName = request.getSession().getServletContext().getRealPath("upload")+"/"+tno+"/topic/"+dTId+"/"+documentname;
+        try {
+            pathFileName = URLDecoder.decode(pathFileName, "UTF-8");
+            System.out.println(pathFileName);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         File file = new File(pathFileName);
         deleteFile(file);
-        int i=0;
-        i=weekDocumentService.deleteByPrimaryKey(dId);
-        System.out.println(i);
-        return new ModelAndView("redirect:/findWeekDocument?sSno="+sSno+"");
-
+        weekDocumentService.deleteByPrimaryKey(dId);
+        return Msg.success();
     }
-
     private void deleteFile(File file) {
         if (file.exists()) {//判断文件是否存在
             if (file.isFile()) {//判断是否是文件
@@ -162,71 +169,71 @@ public class FileController {
         }
     }
 
-    //------------------------------------------------实训文件部分---------------------------
+    /**
+     * 修改记录
+     */
+    @ResponseBody
+    @RequestMapping(value="/upd/{dId}",method= RequestMethod.PUT)
+    public Msg upd(WeekDocument weekDocument){
+        System.out.println("upd--grade.toString()"+weekDocument.toString());
+        weekDocumentService.upd(weekDocument);
+        return Msg.success();
+    }
+
+    /**
+     * 查询详细信息
+     */
+    @ResponseBody
+    @RequestMapping("/detail/{dId}")
+    public Msg detail(@PathVariable("dId")Integer dId){
+        WeekDocument weekDocument = weekDocumentService.selectBy(dId);
+        return Msg.success().add("weekDocument",weekDocument);
+    }
 
     @ResponseBody
-    @RequestMapping(value="/uploadTestfile",method=RequestMethod.POST)
-    public ModelAndView uploadTestfile(MultipartFile file, HttpServletRequest request, WeekDocument weekDocument,String sSno) throws IOException {
-        System.out.println(weekDocument.toString());
-        String path = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/testFile";
-        System.out.println(path);
-        String fileName = file.getOriginalFilename();
-        String newpathName=path+fileName;
-        weekDocument.setDocumentname(fileName);
-        System.out.println(weekDocument.getDocumentname());
-        System.out.println(weekDocument.toString());
-        File dir = new File(path,fileName);
-        if(!dir.exists()){
-            dir.mkdirs();
+    @RequestMapping("/findTopic/{dTId}")
+    public Msg findTopic(@RequestParam(value = "pn", defaultValue = "1")Integer pn, @PathVariable("dTId")Integer dTId, String category) {
+        PageHelper.startPage(pn, 5);
+        List<WeekDocument> weekDocumentList = weekDocumentService.findTopic(dTId,category);
+        for (WeekDocument weekDocument : weekDocumentList) {
+            System.out.println(weekDocument.toString());
         }
-        //MultipartFile自带的解析方法
-        file.transferTo(dir);
-        int i=0;
-        System.out.println(i);
-        i=weekDocumentService.addWeekDocument(weekDocument);
-        System.out.println(i);
-        System.out.println("上传成功");
-        //进入下一个控制器函数/findTestfile
-        return new ModelAndView("redirect:/findTestfile?sSno="+sSno+"");
+        PageInfo page = new PageInfo(weekDocumentList, 2);
+        return Msg.success().add("pageInfo", page);
     }
 
-    @RequestMapping("/downTestfile")
-    public void downTestfile(HttpServletRequest request, HttpServletResponse response, Integer dId) throws Exception{
-        WeekDocument weekDocument = weekDocumentService.selectById(dId);
-        String documentname = weekDocument.getDocumentname();
-        String sSno = weekDocument.getStudent().getSno();
-        String fileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/testFile/"+documentname;
-        System.out.println(fileName);
-        //获取输入流
-        InputStream bis = new BufferedInputStream(new FileInputStream(new File(fileName)));
-        //假如以中文名下载的话
-        String filename = documentname;
-        //转码，免得文件名中文乱码
-        filename = URLEncoder.encode(filename,"UTF-8");
-        //设置文件下载头
-        response.addHeader("Content-Disposition", "attachment;filename=" + filename);
-        //1.设置文件ContentType类型，这样设置，会自动判断下载文件类型
-        response.setContentType("multipart/form-data");
-        BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
-        int len = 0;
-        while((len = bis.read()) != -1){
-            out.write(len);
-            out.flush();
+    @ResponseBody
+    @RequestMapping("/findTopicBy/{tno}")
+    public Msg findTopicBy(@RequestParam(value = "pn", defaultValue = "1")Integer pn, @PathVariable("tno")Integer tno, String category) {
+        PageHelper.startPage(pn, 5);
+        List<WeekDocument> weekDocumentList = weekDocumentService.findTopicBy(tno,category);
+        for (WeekDocument weekDocument : weekDocumentList) {
+            System.out.println(weekDocument.toString());
         }
-        out.close();
+        PageInfo page = new PageInfo(weekDocumentList, 2);
+        return Msg.success().add("pageInfo", page);
     }
 
-    @RequestMapping("/deleteTestfile")
-    public ModelAndView deleteTestfile(HttpServletRequest request,String documentname,int dId,String sSno) throws Exception{
-        String fileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/testFile/"+documentname;
-        System.out.println(fileName);
-        File deletefile = new File(fileName);
-        deleteFile(deletefile);
-        int i=0;
-        i=weekDocumentService.deleteByPrimaryKey(dId);
-        System.out.println(i);
-        return new ModelAndView("redirect:/findTestfile?sSno="+sSno+"");
+    @ResponseBody
+    @RequestMapping("/findWeekDocument/{tno}")
+    public Msg findWeekDocument(@RequestParam(value = "pn", defaultValue = "1")Integer pn, @PathVariable("tno")Integer tno, String category) {
+        PageHelper.startPage(pn, 5);
+        List<WeekDocument> weekDocumentList = weekDocumentService.findBy(tno,category);
+        for (WeekDocument weekDocument : weekDocumentList) {
+            System.out.println(weekDocument.toString());
+        }
+        PageInfo page = new PageInfo(weekDocumentList, 2);
+        return Msg.success().add("pageInfo", page);
     }
-//=========================================以上是薛文青部分==============================================================
+
+    /**
+     * 查询所有课题
+     */
+    @ResponseBody
+    @RequestMapping("/topic/{tno}")
+    public Msg topic(@PathVariable("tno")Integer tno){
+        List<Topic> topicList=topicService.selectTopicByTno(tno);
+        return Msg.success().add("topicList", topicList);
+    }
 }
 

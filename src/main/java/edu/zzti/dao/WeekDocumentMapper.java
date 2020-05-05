@@ -8,8 +8,11 @@ import java.util.List;
 public interface WeekDocumentMapper {
 
     //xwq开始
+    List<WeekDocument> findTopic(@Param("dTId") Integer dTId, @Param("category")String category);
 
-    List<WeekDocument> findBy(@Param("tpsId") Integer tpsId, @Param("category")String category);
+    List<WeekDocument> findTopicBy(@Param("tno") Integer tno, @Param("category")String category);
+
+    List<WeekDocument> findBy(@Param("tno") Integer tno, @Param("category")String category);
 
     WeekDocument selectById(Integer dId);
     //xwq结束
@@ -17,8 +20,9 @@ public interface WeekDocumentMapper {
     //shc
     int addWeekDocumentSelective(WeekDocument weekDocument);
 
-    List<WeekDocument> findByCateory(@Param("tpsId") Integer tpsId, @Param("category")String category);
+    List<WeekDocument> findByCategory(@Param("tpsId") Integer tpsId, @Param("category")String category);
     //shc
+
     int deleteByPrimaryKey(Integer dId);
 
     int insert(WeekDocument record);

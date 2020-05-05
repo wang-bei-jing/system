@@ -4,18 +4,20 @@
   <resultMap id="BaseResultMap" type="edu.zzti.bean.WeekDocument">
     <id column="d_id" jdbcType="INTEGER" property="dId" />
     <result column="tps_id" jdbcType="INTEGER" property="tpsId" />
+    <result column="d_t_id" jdbcType="INTEGER" property="dTId" />
     <result column="category" jdbcType="VARCHAR" property="category" />
     <result column="week" jdbcType="VARCHAR" property="week" />
     <result column="documentname" jdbcType="VARCHAR" property="documentname" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="annotation" jdbcType="VARCHAR" property="annotation" />
-    <result column="wk_time" jdbcType="TIMESTAMP" property="wkTime" javaType="java.sql.Timestamp"/>
+    <result column="wk_time" jdbcType="TIMESTAMP" property="wkTime" />
   </resultMap>
 
   <!-- xwq开始 -->
   <resultMap id="BaseResultMapWith" type="edu.zzti.bean.WeekDocument">
     <id column="d_id" jdbcType="INTEGER" property="dId" />
     <result column="tps_id" jdbcType="INTEGER" property="tpsId" />
+    <result column="d_t_id" jdbcType="INTEGER" property="dTId" />
     <result column="category" jdbcType="VARCHAR" property="category" />
     <result column="week" jdbcType="VARCHAR" property="week" />
     <result column="documentname" jdbcType="VARCHAR" property="documentname" />
@@ -55,12 +57,53 @@
       <result column="num" jdbcType="INTEGER" property="num" />
     </association>
   </resultMap>
-  <!-- xwq结束 -->
 
+  <resultMap id="BaseResultMapWithTopic" type="edu.zzti.bean.WeekDocument">
+    <id column="d_id" jdbcType="INTEGER" property="dId" />
+    <result column="tps_id" jdbcType="INTEGER" property="tpsId" />
+    <result column="d_t_id" jdbcType="INTEGER" property="dTId" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="week" jdbcType="VARCHAR" property="week" />
+    <result column="documentname" jdbcType="VARCHAR" property="documentname" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="annotation" jdbcType="VARCHAR" property="annotation" />
+    <result column="wk_time" jdbcType="TIMESTAMP" property="wkTime" />
+    <association property="topic" javaType="edu.zzti.bean.Topic">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="contents" jdbcType="VARCHAR" property="contents" />
+      <result column="tno" jdbcType="INTEGER" property="tno" />
+      <result column="type" jdbcType="VARCHAR" property="type" />
+      <result column="source" jdbcType="VARCHAR" property="source" />
+      <result column="difficulty" jdbcType="VARCHAR" property="difficulty" />
+      <result column="support" jdbcType="VARCHAR" property="support" />
+      <result column="department" jdbcType="VARCHAR" property="department" />
+      <result column="status" jdbcType="INTEGER" property="status" />
+      <result column="num" jdbcType="INTEGER" property="num" />
+      <result column="select_num" jdbcType="INTEGER" property="selectNum" />
+    </association>
+  </resultMap>
+
+  <!-- xwq结束 -->
   <sql id="Base_Column_List">
-    d_id, tps_id, category, week, documentname, remark, annotation, wk_time
+    d_id, tps_id, d_t_id, category, week, documentname, remark, annotation, wk_time
   </sql>
-<!--  -->
+
+  <!-- xwq开始 -->
+  <select id="findTopic" parameterType="map" resultMap="BaseResultMapWithTopic">
+    select *
+    from t_weekdocument,t_topic
+    where t_weekdocument.d_t_id = t_topic.id
+    and t_topic.id	= #{dTId,jdbcType=VARCHAR}
+    and category = #{category,jdbcType=VARCHAR}
+  </select>
+  <select id="findTopicBy" parameterType="map" resultMap="BaseResultMapWithTopic">
+    select *
+    from t_weekdocument,t_topic
+    where t_weekdocument.d_t_id = t_topic.id
+    and t_topic.tno	= #{tno,jdbcType=VARCHAR}
+    and category = #{category,jdbcType=VARCHAR}
+  </select>
   <select id="findBy" parameterType="map" resultMap="BaseResultMapWith">
     select *,t_topicselect.id tsId,t_topicselect.status tsStatus,t_student.name sName,t_student.department sDepartment,t_student.status sStatus,t_topic.id tpId,t_topic.name tpName,t_topic.department tpDepartment,t_topic.status tpStatus
     from t_weekdocument,t_topicselect,t_student,t_topic
@@ -68,9 +111,9 @@
     and t_topicselect.s_sno = t_student.sno
     and t_topicselect.tp_id = t_topic.id
     and t_topicselect.status = 1
-    and tps_id=#{tpsId,jdbcType=INTEGER}
-    and category=#{category,jdbcType=VARCHAR};
- </select>
+    and t_topicselect.t_tno = #{tno,jdbcType=INTEGER}
+    and category = #{category,jdbcType=VARCHAR}
+  </select>
   <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMapWith">
     select *,t_topicselect.id tsId,t_topicselect.status tsStatus,t_student.name sName,t_student.department sDepartment,t_student.status sStatus,t_topic.id tpId,t_topic.name tpName,t_topic.department tpDepartment,t_topic.status tpStatus
     from t_weekdocument,t_topicselect,t_student,t_topic
@@ -79,10 +122,9 @@
     and t_topicselect.tp_id = t_topic.id
     and t_topicselect.status = 1
     and d_id = #{dId,jdbcType=INTEGER}
- </select>
+  </select>
 
-
-<!--  -->
+  <!-- xwq结束 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -94,12 +136,14 @@
     where d_id = #{dId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="edu.zzti.bean.WeekDocument">
-    insert into t_weekdocument (d_id, tps_id, category, 
-      week, documentname, remark, 
-      annotation, wk_time)
-    values (#{dId,jdbcType=INTEGER}, #{tpsId,jdbcType=INTEGER}, #{category,jdbcType=VARCHAR}, 
-      #{week,jdbcType=VARCHAR}, #{documentname,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{annotation,jdbcType=VARCHAR}, #{wkTime,jdbcType=TIMESTAMP})
+    insert into t_weekdocument (d_id, tps_id, d_t_id, 
+      category, week, documentname, 
+      remark, annotation, wk_time
+      )
+    values (#{dId,jdbcType=INTEGER}, #{tpsId,jdbcType=INTEGER}, #{dTId,jdbcType=INTEGER}, 
+      #{category,jdbcType=VARCHAR}, #{week,jdbcType=VARCHAR}, #{documentname,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{annotation,jdbcType=VARCHAR}, #{wkTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="edu.zzti.bean.WeekDocument">
     insert into t_weekdocument
@@ -109,6 +153,9 @@
       </if>
       <if test="tpsId != null">
         tps_id,
+      </if>
+      <if test="dTId != null">
+        d_t_id,
       </if>
       <if test="category != null">
         category,
@@ -136,6 +183,9 @@
       <if test="tpsId != null">
         #{tpsId,jdbcType=INTEGER},
       </if>
+      <if test="dTId != null">
+        #{dTId,jdbcType=INTEGER},
+      </if>
       <if test="category != null">
         #{category,jdbcType=VARCHAR},
       </if>
@@ -162,6 +212,9 @@
       <if test="tpsId != null">
         tps_id = #{tpsId,jdbcType=INTEGER},
       </if>
+      <if test="dTId != null">
+        d_t_id = #{dTId,jdbcType=INTEGER},
+      </if>
       <if test="category != null">
         category = #{category,jdbcType=VARCHAR},
       </if>
@@ -186,6 +239,7 @@
   <update id="updateByPrimaryKey" parameterType="edu.zzti.bean.WeekDocument">
     update t_weekdocument
     set tps_id = #{tpsId,jdbcType=INTEGER},
+      d_t_id = #{dTId,jdbcType=INTEGER},
       category = #{category,jdbcType=VARCHAR},
       week = #{week,jdbcType=VARCHAR},
       documentname = #{documentname,jdbcType=VARCHAR},
@@ -194,14 +248,6 @@
       wk_time = #{wkTime,jdbcType=TIMESTAMP}
     where d_id = #{dId,jdbcType=INTEGER}
   </update>
-
-
-
-
-
-
-
-
 
   <insert id="addWeekDocumentSelective" parameterType="edu.zzti.bean.WeekDocument">
     insert into t_weekdocument
@@ -259,7 +305,7 @@
     </trim>
   </insert>
 
-  <select id="findByCateory" parameterType="map" resultMap="BaseResultMap">
+  <select id="findByCategory" parameterType="map" resultMap="BaseResultMap">
         select * from t_weekdocument where  tps_id=#{tpsId,jdbcType=INTEGER} and category=#{category,jdbcType=VARCHAR};
  </select>
 

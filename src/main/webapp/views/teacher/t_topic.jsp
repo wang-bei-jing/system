@@ -22,6 +22,97 @@
     <div id="load_screen"> <div class="loader"> <div class="loader-content"> <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 792 723" style="enable-background:new 0 0 792 723;" xml:space="preserve"> <g> <g> <path class="st0" d="M213.9,584.4c-47.4-25.5-84.7-60.8-111.8-106.1C75,433.1,61.4,382,61.4,324.9c0-57,13.6-108.1,40.7-153.3 S166.5,91,213.9,65.5s100.7-38.2,159.9-38.2c49.9,0,95,8.8,135.3,26.3s74.1,42.8,101.5,75.7l-85.5,78.9 c-38.9-44.9-87.2-67.4-144.7-67.4c-35.6,0-67.4,7.8-95.4,23.4s-49.7,37.4-65.4,65.4c-15.6,28-23.4,59.8-23.4,95.4 s7.8,67.4,23.4,95.4s37.4,49.7,65.4,65.4c28,15.6,59.7,23.4,95.4,23.4c57.6,0,105.8-22.7,144.7-68.2l85.5,78.9 c-27.4,33.4-61.4,58.9-102,76.5c-40.6,17.5-85.8,26.3-135.7,26.3C314.3,622.7,261.3,809.9,213.9,584.4z"/> </g> <circle class="st1" cx="375.4" cy="322.9" r="100"/> </g> <g> <circle class="st2" cx="275.4" cy="910" r="65"></circle> <circle class="st4" cx="475.4" cy="910" r="65"></circle> </g> </svg> </div></div></div>
     <!--  END LOADER -->
 
+    <!-- 添加模态框 -->
+    <div class="modal fade" id="fileAddModal" tabindex="-1" role="dialog" aria-labelledby="addFileModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="addFileModalLabel">上传课题文件</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form id="upload_form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">课题名称</label>
+                            <div class="col-sm-10">
+                                <select id="topicName" class="form-control" onchange="getTopic()">
+                                </select>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">课题编号</label>
+                            <div class="col-sm-10">
+                                <select id="topicId" class="form-control">
+                                    <option>---请选择课题---</option>
+                                </select>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">附件</label>
+                            <div class="col-sm-10">
+                                <input type="file" id="file" name="file" width="120px" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">备注</label>
+                            <div class="col-sm-10">
+                                <textarea id="remark" cols="50px" rows="5px" name="remark"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button"  id="file_add" class="btn btn-primary">上传</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 文件弹框 -->
+    <div class="modal fade bd-example-modal-lg" id="peaceTimeUpdateModal" tabindex="-1" role="dialog" aria-labelledby="fieModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="fieModalLabel">课题文件</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="dTId" id="dTId">
+                    <a id="topic"></a>
+                    <div style="float: right">
+                        <button id="download_all_btn" class="btn btn-s btn-primary">批量下载</button>
+                    </div>
+                    <div class="table-responsive mb-4 mt-4">
+                        <table class="table table-hover" id="peaceTime_table" >
+                            <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" id="check_all"/>
+                                </th>
+                                <th>文件名</th>
+                                <th>备注</th>
+                                <th>上传时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6" id="page_info_area2"></div>
+                        <div class="paginating-container pagination-solid" id="page_nav_area2"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 课题详情弹框 -->
     <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -300,6 +391,9 @@
                         </div>
                         <div class="row">
                             <div>
+                                <c:if test="${compare!=1}">
+                                    <button type="button" class="btn btn-primary" id="topicFile_add_btn">上传文件</button>
+                                </c:if>
                                 <button id="topic_btn" class="btn btn-s btn-primary">刷新</button>
                                 <button id="topic_add_btn" class="btn btn-s btn-primary">新增</button>
                             </div>
@@ -313,6 +407,7 @@
                                     <th>课题编号</th>
                                     <th>课题名称</th>
                                     <th>审题教研室</th>
+                                    <th>文件</th>
                                     <th>状态</th>
                                     <th>详情</th>
                                     <th>申请</th>
@@ -323,13 +418,14 @@
                                 </tbody>
                             </table>
                         </c:if>
-                        <c:if test="${compare==2||compare==0}">
+                        <c:if test="${compare!=1}">
                             <table class="table table-hover" id="topic_table2" >
                                 <thead>
                                 <tr>
                                     <th>课题编号</th>
                                     <th>课题名称</th>
                                     <th>审题教研室</th>
+                                    <th>文件</th>
                                     <th>状态</th>
                                     <th>详情</th>
                                 </tr>
@@ -371,8 +467,29 @@
 
 <script type="text/javascript">
     var pageNum,total;
+    var pageNum2,total2;
     var tno = ${teacher.tno};
     var compare = ${compare};
+    function timeStamp2String (time){
+        var datetime = new Date();
+        datetime.setTime(time);
+        var year = datetime.getFullYear();
+        var month = datetime.getMonth() + 1;
+        var date = datetime.getDate();
+        var hour = datetime.getHours();
+        if(hour<=9){
+            hour="0"+hour;
+        }
+        var minute = datetime.getMinutes();
+        if(minute<=9){
+            minute="0"+minute;
+        }
+        var second = datetime.getSeconds();
+        if(second<=9){
+            second="0"+second;
+        }
+        return year + "-" + month + "-" + date+" "+hour+":"+minute+":"+second;
+    }
     $(function(){
         $.ajax({
             url:"${pageContext.request.contextPath}/time/select",
@@ -396,7 +513,6 @@
             data:"pn="+pn,
             type:"GET",
             success:function(result){
-                alert(compare);
                 if(compare === 1){
                     build_topic_table1(result.extend.pageInfo.list);
                     build_page_info(result.extend.pageInfo);
@@ -419,6 +535,11 @@
             var topicNameTd = $("<td></td>").append(topics[i].name);
             var topicDepartmentTd = $("<td></td>").append(topics[i].department);
             var statusTd = $("<td></td>");
+            var fileBtn = $("<button></button>").addClass("btn btn-primary btn-sm file_btn")
+                .append($("<span></span>").addClass("glyphicon"))
+                .append("查看");
+            fileBtn.attr("file-id",topics[i].id);
+            var fileTd = $("<td></td>").append(fileBtn);
             var viewBtn = $("<button></button>").addClass("btn btn-primary btn-sm view_btn")
                 .append($("<span></span>").addClass("glyphicon"))
                 .append("详情");
@@ -480,6 +601,7 @@
             $("<tr></tr>").append(topicIdTd)
                 .append(topicNameTd)
                 .append(topicDepartmentTd)
+                .append(fileTd)
                 .append(statusTd)
                 .append(viewBtnTd)
                 .append(btnTd)
@@ -494,6 +616,12 @@
             var topicIdTd = $("<td></td>").append(topics[i].id);
             var topicNameTd = $("<td></td>").append(topics[i].name);
             var topicDepartmentTd = $("<td></td>").append(topics[i].department);
+            var fileBtn = $("<button></button>").addClass("btn btn-primary btn-sm file_btn")
+                .append($("<span></span>").addClass("glyphicon"))
+                .append("查看");
+            fileBtn.attr("file-id",topics[i].id);
+            fileBtn.attr("file-name",topics[i].name);
+            var fileTd = $("<td></td>").append(fileBtn);
             var statusTd = $("<td></td>");
             var viewBtn = $("<button></button>").addClass("btn btn-primary btn-sm view_btn")
                 .append($("<span></span>").addClass("glyphicon"))
@@ -556,6 +684,7 @@
             $("<tr></tr>").append(topicIdTd)
                 .append(topicNameTd)
                 .append(topicDepartmentTd)
+                .append(fileTd)
                 .append(statusTd)
                 .append(viewBtnTd)
                 .appendTo("#topic_table2 tbody");
@@ -577,7 +706,7 @@
         //构建元素
         var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href","#"));
         var prePageLi = $("<li></li>").append($("<a></a>").append("上一页"));
-        if(pageInfo.hasPreviousPage == false){
+        if(pageInfo.hasPreviousPage === false){
             firstPageLi.addClass("disabled");
             prePageLi.addClass("disabled");
         }else{
@@ -591,7 +720,7 @@
         }
         var nextPageLi = $("<li></li>").append($("<a></a>").append("下一页"));
         var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href","#"));
-        if(pageInfo.hasNextPage == false){
+        if(pageInfo.hasNextPage === false){
             nextPageLi.addClass("disabled");
             lastPageLi.addClass("disabled");
         }else{
@@ -607,7 +736,7 @@
         //1,2，3遍历给ul中添加页码提示
         $.each(pageInfo.navigatepageNums,function(index,item){
             var numLi = $("<li></li>").append($("<a></a>").append(item));
-            if(pageInfo.pageNum == item){
+            if(pageInfo.pageNum === item){
                 numLi.addClass("active");
             }
             numLi.click(function(){
@@ -620,6 +749,60 @@
         //把ul加入到nav
         var navEle = $("<nav></nav>").append(ul);
         navEle.appendTo("#page_nav_area");
+    }
+    function to_page2(pn2,dTId){
+        $.ajax({
+            url:"${pageContext.request.contextPath}/file/findTopic/"+dTId,
+            data:"pn="+pn2+"&category="+3,
+            type:"GET",
+            success:function(result){
+                build_peaceTime_table(result.extend.pageInfo.list);
+                build_page_info2(result.extend.pageInfo);
+                build_page_nav2(result.extend.pageInfo);
+            }
+        });
+    }
+    //点击编辑，弹出编辑弹窗
+    $(document).on("click",".file_btn",function(){
+        var dTId = $(this).attr("file-id");
+        $("#dTId").val(dTId);
+        $("#topic").empty();
+        $("#topic").append("课题名称"+$(this).attr("file-name"));
+        to_page2(1,dTId);
+        $("#peaceTimeUpdateModal").modal({
+            backdrop:"static"
+        });
+    });
+    //解析显示数据
+    function build_peaceTime_table(weekDocuments){
+        //$("#peaceTime_add_btn").attr("add-id",tno);
+        $("#peaceTime_table tbody").empty();
+        for(var i=0;i<weekDocuments.length;i++){
+            var checkBoxTd = $("<td><input type='checkbox' class='check_item'/></td>");
+            var dIdTd = $("<td></td>").append(weekDocuments[i].dId);
+            var topicTd = $("<td></td>").append(weekDocuments[i].topic.name);
+            var documentnameTd = $("<td></td>").append(weekDocuments[i].documentname);
+            var remarkTd = $("<td></td>").append(weekDocuments[i].remark);
+            var time = timeStamp2String(weekDocuments[i].wkTime);
+            var wkTimeTd = $("<td></td>").append(time);
+            var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit2_btn")
+                .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
+                .append("修改");
+            //为编辑按钮添加一个自定义的属性，来表示当前记录id
+            editBtn.attr("edit-id",weekDocuments[i].dId);
+            var delBtn =  $("<button></button>").addClass("btn btn-danger btn-sm delete_btn2")
+                .append($("<span></span>").addClass("glyphicon glyphicon-trash"))
+                .append("删除").val(weekDocuments[i].dId);
+            //为删除按钮添加一个自定义的属性来表示当前删除的记录id
+            delBtn.attr("del-id2",weekDocuments[i].dId);
+            var btnTd = $("<td></td>").append(delBtn);
+            $("<tr></tr>").append(checkBoxTd)
+                .append(documentnameTd)
+                .append(remarkTd)
+                .append(wkTimeTd)
+                .append(btnTd)
+                .appendTo("#peaceTime_table tbody");
+        }
     }
     //点击新增按钮弹出模态框。
     $("#topic_add_btn").click(function(){
@@ -644,7 +827,7 @@
             type:"POST",
             data:$("#empAddModal form").serialize(),
             success:function(result){
-                if(result.code == 100){
+                if(result.code === 100){
                     $("#empAddModal").modal('hide');
                     to_page(total);
                 }else{
@@ -766,6 +949,197 @@
             });
         }
     });
+    //点击新增按钮弹出模态框。
+    $("#topicFile_add_btn").click(function(){
+        //清除表单数据（表单完整重置（表单的数据，表单的样式））
+        reset_form("#fileAddModal form");
+        getTopicSelect("#fileAddModal #topicName");
+        //弹出模态框
+        $("#fileAddModal").modal({
+            backdrop:"static"
+        });
+    });
+    //新增时显示学生姓名和课题
+    function getTopicSelect(ele){
+        //清空之前下拉列表的值
+        $(ele).empty();
+        $.ajax({
+            url:"${pageContext.request.contextPath}/file/topic/"+tno,
+            type:"GET",
+            success:function(result){
+                var optionEle = $("<option></option>").append("---请选择课题---");
+                optionEle.appendTo(ele);
+                $.each(result.extend.topicList,function(){
+                    var optionEle1 = $("<option></option>").append(this.name).attr("value",this.id);
+                    optionEle1.appendTo(ele);
+                });
+            }
+        });
+    }
+    //级联显示课题名
+    function getTopic(){
+        //清空之前下拉列表的值
+        var id = $("#fileAddModal #topicName").val();
+        $("#fileAddModal #topicId").empty();
+        var optionEle = $("<option></option>").append(id);
+        optionEle.appendTo("#fileAddModal #topicId");
+    }
+    function uploadFile(){
+        var dTId = $("#fileAddModal #topicName").val();
+        var remark = $("#fileAddModal #remark").val();
+        var file = $("#file")[0].files[0];
+        console.log(file);
+        var fd = new FormData();
+        fd.append('file', file);
+        fd.append('tno', tno);
+        fd.append('dTId', dTId);
+        fd.append('remark', remark);
+        $.ajax({
+            url: 'http://localhost:8080/system/file/uploadTopicFile',
+            type: 'POST',
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function () {
+                alert("上传成功");
+                $("#fileAddModal").modal('hide');
+                to_page(total);
+            }
+        });
+    }
+    $("#file_add").on("click",uploadFile);
+    //完成全选/全不选功能
+    $("#check_all").click(function(){
+        //attr获取checked是undefined;
+        //我们这些dom原生的属性；attr获取自定义属性的值；
+        //prop修改和读取dom原生属性的值
+        $(".check_item").prop("checked",$(this).prop("checked"));
+    });
+    //check_item
+    $(document).on("click",".check_item",function(){
+        //判断当前选择中的元素是否5个
+        var flag = $(".check_item:checked").length===$(".check_item").length;
+        $("#check_all").prop("checked",flag);
+    });
+    //点击全部下载，就批量下载
+    $("#download_all_btn").click(function(){
+        var empNames = "";
+        var empNameList = [];
+        var ids = [];
+        $.each($(".check_item:checked"),function(){
+            empNames += $(this).parents("tr").find("td:eq(1)").text()+",";
+            var empName = $(this).parents("tr").find("td:eq(1)").text();
+            empNameList.push(empName);
+            var id = $(this).parents("tr").find("td:eq(4)").find("button:eq(0)").attr("del-id2");
+            ids.push(id);
+        });
+        empNames = empNames.substring(0, empNames.length-1);
+        if(ids.length!==0){
+            if(confirm("确认下载【"+empNames+"】吗？")){
+                var files = [];
+                for(var i=0;i<ids.length;i++){
+                    var dId = ids[i];
+                    //location.href="${pageContext.request.contextPath}/file/downloadTopicFile?dId="+dId;
+                    var href = "${pageContext.request.contextPath}/file/downloadTopicFile?dId="+dId;
+                    files.push(href);
+                }
+                //let files = ['url1', 'url2']; // 所有文件
+                files.forEach(url => {
+                    if (isIE()) { // IE
+                        window.open(url, '_blank')
+                    } else {
+                        let a = document.createElement('a'); // 创建a标签
+                        let e = document.createEvent('MouseEvents'); // 创建鼠标事件对象
+                        e.initEvent('click', false, false);// 初始化事件对象
+                        a.href = url; // 设置下载地址
+                        a.download = ''; // 设置下载文件名
+                        a.dispatchEvent(e);
+                    }
+                });
+            }
+        }
+        else {
+            alert("未选中任何文件！");
+        }
+    });
+    function isIE () {
+        return !!window.ActiveXObject || 'ActiveXObject' in window;
+    }
+    $(document).on("click",".delete_btn2",function(){
+        var dId = $(this).attr("del-id2");
+        var dTId = $("#dTId").val();
+        alert(tno);
+        if(confirm("确认删除【"+dId+"】吗？")){
+            $.ajax({
+                url:"${pageContext.request.contextPath}/file/del/"+dId,
+                type:"DELETE",
+                success:function(result){
+                    alert(result.msg);
+                    to_page2(pageNum2,dTId);
+                }
+            });
+        }
+    });
+    //解析显示分页信息
+    function build_page_info2(pageInfo){
+        $("#page_info_area2").empty();
+        $("#page_info_area2").append("当前第"+pageInfo.pageNum+"页,总"+
+            pageInfo.pages+"页,总"+
+            pageInfo.total+"条记录");
+        total2 = pageInfo.total;
+        pageNum2 = pageInfo.pageNum;
+    }
+    //解析显示分页条
+    function build_page_nav2(pageInfo){
+        $("#page_nav_area2").empty();
+        var ul = $("<ul></ul>").addClass("pagination");
+        //构建元素
+        var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href","#"));
+        var prePageLi = $("<li></li>").append($("<a></a>").append("上一页"));
+        if(pageInfo.hasPreviousPage === false){
+            firstPageLi.addClass("disabled");
+            prePageLi.addClass("disabled");
+        }else{
+            //为元素添加点击翻页的事件
+            firstPageLi.click(function(){
+                to_page(1);
+            });
+            prePageLi.click(function(){
+                to_page(pageInfo.pageNum -1);
+            });
+        }
+        var nextPageLi = $("<li></li>").append($("<a></a>").append("下一页"));
+        var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href","#"));
+        if(pageInfo.hasNextPage === false){
+            nextPageLi.addClass("disabled");
+            lastPageLi.addClass("disabled");
+        }else{
+            nextPageLi.click(function(){
+                to_page(pageInfo.pageNum +1);
+            });
+            lastPageLi.click(function(){
+                to_page(pageInfo.pages);
+            });
+        }
+        //添加首页和前一页 的提示
+        ul.append(firstPageLi).append(prePageLi);
+        //1,2，3遍历给ul中添加页码提示
+        $.each(pageInfo.navigatepageNums,function(index,item){
+            var numLi = $("<li></li>").append($("<a></a>").append(item));
+            if(pageInfo.pageNum === item){
+                numLi.addClass("active");
+            }
+            numLi.click(function(){
+                to_page(item);
+            });
+            ul.append(numLi);
+        });
+        //添加下一页和末页 的提示
+        ul.append(nextPageLi).append(lastPageLi);
+        //把ul加入到nav
+        var navEle = $("<nav></nav>").append(ul);
+        navEle.appendTo("#page_nav_area2");
+    }
 </script>
 </body>
 </html>
