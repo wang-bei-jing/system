@@ -35,44 +35,45 @@
                 <a href="${pageContext.request.contextPath}/views/teacher/t_index.jsp" target="_parent" class="nav-link">首页</a>
             </li>
         </ul>
-        <ul class="navbar-item flex-row ml-md-auto">
-            <li class="nav-item dropdown user-profile-dropdown">
-                <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <img src="${pageContext.request.contextPath}/static/cork/assets/img/profile-16.jpeg.jpg" alt="avatar">
-                </a>
-                <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
-                    <div class="">
-                        <div class="dropdown-item">
-                            <a class="" href=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>个人信息</a>
-                        </div>
-                        <div class="dropdown-item">
-                            <a class="" href=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-inbox"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg>我的消息</a>
-                        </div>
-                        <div class="dropdown-item">
-                            <a class="" href=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>锁屏</a>
-                        </div>
-                        <div class="dropdown-item">
-                            <a class="" href=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>退出</a>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
+<%--        <ul class="navbar-item flex-row ml-md-auto">--%>
+<%--            <li class="nav-item dropdown user-profile-dropdown">--%>
+<%--                <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">--%>
+<%--                    <img src="${pageContext.request.contextPath}/static/cork/assets/img/profile-16.jpeg.jpg" alt="avatar">--%>
+<%--                </a>--%>
+<%--                <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">--%>
+<%--                    <div class="">--%>
+<%--                        <div class="dropdown-item">--%>
+<%--                            <a class="" href=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>个人信息</a>--%>
+<%--                        </div>--%>
+<%--                        <div class="dropdown-item">--%>
+<%--                            <a class="" href=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-inbox"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg>我的消息</a>--%>
+<%--                        </div>--%>
+<%--                        <div class="dropdown-item">--%>
+<%--                            <a class="" href=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>锁屏</a>--%>
+<%--                        </div>--%>
+<%--                        <div class="dropdown-item">--%>
+<%--                            <a class="" href=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>退出</a>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </li>--%>
+<%--        </ul>--%>
     </header>
 </div>
 <!--  END NAVBAR  -->
 
 <!--  BEGIN NAVBAR  -->
-<div class="sub-header-container">
+<div class="sub-header-container" style="padding-top: 0">
     <header class="header navbar navbar-expand-sm">
         <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
         <ul class="navbar-nav flex-row">
             <li>
-                <div class="page-header">
-                    <div class="page-title">
-                        <h3></h3>
-                    </div>
-                </div>
+                <nav class="breadcrumb-one" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">教师端</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><span>${teacher.name}</span></li>
+                    </ol>
+                </nav>
             </li>
         </ul>
     </header>
@@ -126,7 +127,13 @@
                                 <a href="${pageContext.request.contextPath}/views/teacher/t_topic.jsp" target="mainFrame">我的课题</a>
                             </li>
                             <li>
+                                <a href="${pageContext.request.contextPath}/views/teacher/t_myTopicFile.jsp" target="mainFrame">我的课题文件</a>
+                            </li>
+                            <li>
                                 <a href="${pageContext.request.contextPath}/views/teacher/t_allTopic.jsp" target="mainFrame">审核课题</a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/views/teacher/t_allTopicFile.jsp" target="mainFrame">全部课题文件</a>
                             </li>
                         </ul>
                     </li>
@@ -147,6 +154,9 @@
                             <li>
                                 <a href="${pageContext.request.contextPath}/views/teacher/t_topic.jsp" target="mainFrame">我的课题</a>
                             </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/views/teacher/t_myTopicFile.jsp" target="mainFrame">我的课题文件</a>
+                            </li>
                         </ul>
                     </li>
                     </c:if>
@@ -163,7 +173,7 @@
                         </a>
                         <ul class="collapse submenu list-unstyled" id="student" data-parent="#accordionExample">
                             <li>
-                                <a href="${pageContext.request.contextPath}/views/teacher/t_student.jsp" target="mainFrame">学生课题申请</a>
+                                <a href="${pageContext.request.contextPath}/views/teacher/t_student.jsp" target="mainFrame">学生选题申请</a>
                             </li>
                             <li>
                                 <a href="${pageContext.request.contextPath}/views/teacher/t_myStudent.jsp" target="mainFrame">我的学生</a>
@@ -197,7 +207,7 @@
                         <a href="#file" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
-                                <span>我的文件</span>
+                                <span>学生上传文件</span>
                             </div>
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -277,7 +287,7 @@
             success:function(){
             }
         });
-        //setTimeout(automatic,2*1000);
+        setTimeout(automatic,2*1000);
     }
 </script>
 </body>

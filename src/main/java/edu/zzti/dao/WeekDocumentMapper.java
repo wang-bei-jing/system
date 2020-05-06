@@ -14,6 +14,8 @@ public interface WeekDocumentMapper {
 
     List<WeekDocument> findBy(@Param("tno") Integer tno, @Param("category")String category);
 
+    List<WeekDocument> findAll(String category);
+
     WeekDocument selectById(Integer dId);
     //xwq结束
 

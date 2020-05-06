@@ -198,12 +198,10 @@
         $(ele).find("*").removeClass("has-error has-success");
         $(ele).find(".help-block").text("");
     }
-    //点击保存，添加课题。
+    //点击保存
     $("#emp_save_btn").click(function(){
         var begin = $("#tiBegin_add").val().replace("T"," ");
-        alert(begin);
         var end = $("#tiEnd_add").val().replace("T"," ");
-        alert(end);
         $.ajax({
             url:"${pageContext.request.contextPath}/time/add",
             type:"POST",
@@ -243,13 +241,9 @@
     });
     //点击更新，更新信息
     $("#emp_update_btn").click(function(){
-
         var begin = $("#tiBegin_update_input").val().replace("T"," ");
-        alert(begin);
         var end = $("#tiEnd_update_input").val().replace("T"," ");
-        alert(end);
         var tiId = $(this).attr("upd-id");
-        alert(tiId);
         $.ajax({
             url:"${pageContext.request.contextPath}/time/upd/"+$(this).attr("upd-id"),
             type:"PUT",

@@ -27,6 +27,9 @@
     <div class="row layout-top-spacing">
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             <div class="widget-content widget-content-area br-6">
+                <div class="modal-header">
+                    <h1>学生选题申请</h1>
+                </div>
                 <div class="table-responsive mb-4 mt-4">
                     <table class="table table-hover" id="student_table">
                         <thead>
@@ -121,14 +124,19 @@
             //为删除按钮添加一个自定义的属性来表示当前拒绝的课题选择id
             delBtn.attr("del-id",item.id);
             var btnTd = $("<td></td>");
-            if (item.status==0)
+            if (item.status==="0")
             {
                 statusTd.append("未处理");
-                btnTd.append(editBtn).append(delBtn);
                 editBtn.append("同意");
                 delBtn.append("拒绝");
+                btnTd.append(editBtn).append(delBtn);
             }
-            if (item.status==2)
+            if (item.status==="1")
+            {
+                statusTd.append("已同意");
+                btnTd.append("已同意");
+            }
+            if (item.status==="2")
             {
                 statusTd.append("已拒绝");
                 btnTd.append("已拒绝");
@@ -154,7 +162,7 @@
                 url:"${pageContext.request.contextPath}/teacher/agreeStudent/"+id,
                 type:"PUT",
                 success:function(result){
-                    if(result.code == 100){
+                    if(result.code === 100){
                         to_page(pageNum);
                     }else{
                         alert(result.msg);

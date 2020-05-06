@@ -70,17 +70,30 @@
     <result column="wk_time" jdbcType="TIMESTAMP" property="wkTime" />
     <association property="topic" javaType="edu.zzti.bean.Topic">
       <id column="id" jdbcType="INTEGER" property="id" />
-      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="tpName" jdbcType="VARCHAR" property="name" />
       <result column="contents" jdbcType="VARCHAR" property="contents" />
-      <result column="tno" jdbcType="INTEGER" property="tno" />
+      <result column="tpTno" jdbcType="INTEGER" property="tno" />
       <result column="type" jdbcType="VARCHAR" property="type" />
       <result column="source" jdbcType="VARCHAR" property="source" />
-      <result column="difficulty" jdbcType="VARCHAR" property="difficulty" />
+      <result column="tpDifficulty" jdbcType="VARCHAR" property="difficulty" />
       <result column="support" jdbcType="VARCHAR" property="support" />
-      <result column="department" jdbcType="VARCHAR" property="department" />
-      <result column="status" jdbcType="INTEGER" property="status" />
+      <result column="tpDepartment" jdbcType="VARCHAR" property="department" />
+      <result column="tpStatus" jdbcType="INTEGER" property="status" />
       <result column="num" jdbcType="INTEGER" property="num" />
-      <result column="select_num" jdbcType="INTEGER" property="selectNum" />
+    </association>
+    <!-- 关联字段封装 -->
+    <association property="teacher" javaType="edu.zzti.bean.Teacher">
+      <id column="tTno" jdbcType="INTEGER" property="tno" />
+      <result column="password" jdbcType="VARCHAR" property="password" />
+      <result column="tName" jdbcType="VARCHAR" property="name" />
+      <result column="sex" jdbcType="VARCHAR" property="sex" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="identity" jdbcType="INTEGER" property="identity" />
+      <result column="tDepartment" jdbcType="VARCHAR" property="department" />
+      <result column="office" jdbcType="VARCHAR" property="office" />
+      <result column="tel" jdbcType="VARCHAR" property="tel" />
+      <result column="email" jdbcType="VARCHAR" property="email" />
+      <result column="tStatus" jdbcType="INTEGER" property="status" />
     </association>
   </resultMap>
 
@@ -98,9 +111,11 @@
     and category = #{category,jdbcType=VARCHAR}
   </select>
   <select id="findTopicBy" parameterType="map" resultMap="BaseResultMapWithTopic">
-    select *
-    from t_weekdocument,t_topic
+    select *,t_topic.name tpName,t_topic.tno tpTno,t_topic.department tpDepartment,t_topic.status tpStatus,
+    t_teacher.name tName,t_teacher.tno tTno,t_teacher.department tDepartment,t_teacher.status tStatus
+    from t_weekdocument,t_topic,t_teacher
     where t_weekdocument.d_t_id = t_topic.id
+    and t_topic.tno = t_teacher.tno
     and t_topic.tno	= #{tno,jdbcType=VARCHAR}
     and category = #{category,jdbcType=VARCHAR}
   </select>
@@ -112,6 +127,14 @@
     and t_topicselect.tp_id = t_topic.id
     and t_topicselect.status = 1
     and t_topicselect.t_tno = #{tno,jdbcType=INTEGER}
+    and category = #{category,jdbcType=VARCHAR}
+  </select>
+  <select id="findAll" parameterType="map" resultMap="BaseResultMapWithTopic">
+    select *,t_topic.name tpName,t_topic.tno tpTno,t_topic.department tpDepartment,t_topic.status tpStatus,
+    t_teacher.name tName,t_teacher.tno tTno,t_teacher.department tDepartment,t_teacher.status tStatus
+    from t_weekdocument,t_topic,t_teacher
+    where t_weekdocument.d_t_id = t_topic.id
+    and t_topic.tno = t_teacher.tno
     and category = #{category,jdbcType=VARCHAR}
   </select>
   <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMapWith">

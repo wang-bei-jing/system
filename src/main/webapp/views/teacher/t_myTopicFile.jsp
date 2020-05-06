@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/static/cork/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/static/cork/assets/css/plugins.css" rel="stylesheet" type="text/css" />
-    <title>平时成绩记录</title>
+    <title>我的课题文件</title>
 </head>
 <body>
 
@@ -26,7 +26,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">修改成绩</h4>
+                <h4 class="modal-title">批阅</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
@@ -53,16 +53,16 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">平时成绩</label>
+                        <label class="col-sm-2 control-label">文件名</label>
                         <div class="col-sm-10">
-                            <input type="number" name="gPeacetime" class="form-control" id="gPeacetime_update_input">
+                            <input type="text" name="documentname" class="form-control" disabled="disabled" id="documentname_update_input">
                             <span class="help-block"></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">报告成绩</label>
+                        <label class="col-sm-2 control-label">批阅内容</label>
                         <div class="col-sm-10">
-                            <input type="number" name="gPresentation" class="form-control" id="gPresentation_update_input">
+                            <input type="text" name="annotation" class="form-control" id="annotation_update_input">
                             <span class="help-block"></span>
                         </div>
                     </div>
@@ -76,68 +76,15 @@
     </div>
 </div>
 
-<!-- 记录添加的模态框 -->
-<div class="modal fade" id="peaceTimeAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">添加平时或报告成绩</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">学生姓名</label>
-                        <div class="col-sm-10">
-                            <select id="student" name="gTsId" class="form-control" onchange="getTopic()">
-                            </select>
-                            <span class="help-block"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">课题名</label>
-                        <div class="col-sm-10">
-                            <select id="topic" class="form-control">
-                                <option>---请选择课题---</option>
-                            </select>
-                            <span class="help-block"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">平时成绩</label>
-                        <div class="col-sm-10">
-                            <input type="number" name="gPeacetime" class="form-control" id="gPeacetime_add_input">
-                            <span class="help-block"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">报告成绩</label>
-                        <div class="col-sm-10">
-                            <input type="number" name="gPresentation" class="form-control" id="gPresentation_add_input">
-                            <span class="help-block"></span>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" id="peaceTime_save_btn">保存</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="layout-px-spacing">
     <div class="row layout-top-spacing">
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             <div class="widget-content widget-content-area br-6">
                 <div class="modal-header">
-                    <h1>平时和报告成绩记录</h1>
+                    <h1>我的课题文件</h1>
                     <div class="row">
                         <div>
-                            <button id="peaceTime_btn" class="btn btn-s btn-primary">刷新</button>
-                            <button id="peaceTime_add_btn" class="btn btn-s btn-primary">新增</button>
+                            <button id="download_all_btn" class="btn btn-s btn-primary">批量下载</button>
                         </div>
                     </div>
                 </div>
@@ -145,11 +92,13 @@
                     <table class="table table-hover" id="peaceTime_table" >
                         <thead>
                         <tr>
-                            <th>id</th>
-                            <th>学生姓名</th>
+                            <th>
+                                <input type="checkbox" id="check_all"/>
+                            </th>
                             <th>课题名</th>
-                            <th>平时成绩</th>
-                            <th>报告成绩</th>
+                            <th>文件名</th>
+                            <th>上传时间</th>
+                            <th>上传备注</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -190,59 +139,72 @@
 <script type="text/javascript">
     var pageNum,total;
     var tno = ${teacher.tno};
+    function timeStamp2String (time){
+        var datetime = new Date();
+        datetime.setTime(time);
+        var year = datetime.getFullYear();
+        var month = datetime.getMonth() + 1;
+        var date = datetime.getDate();
+        var hour = datetime.getHours();
+        if(hour<=9){
+            hour="0"+hour;
+        }
+        var minute = datetime.getMinutes();
+        if(minute<=9){
+            minute="0"+minute;
+        }
+        var second = datetime.getSeconds();
+        if(second<=9){
+            second="0"+second;
+        }
+        return year + "-" + month + "-" + date+" "+hour+":"+minute+":"+second;
+    }
     $(function(){
-        to_page(1);
-    });
-    $("#peaceTime_btn").click(function () {
         to_page(1);
     });
     function to_page(pn){
         $.ajax({
-            url:"${pageContext.request.contextPath}/grade/student/"+tno,
-            data:"pn="+pn,
+            url:"${pageContext.request.contextPath}/file/findTopicBy/"+tno,
+            data:"pn="+pn+"&category="+3,
             type:"GET",
             success:function(result){
                 build_peaceTime_table(result.extend.pageInfo.list);
                 build_page_info(result.extend.pageInfo);
                 build_page_nav(result.extend.pageInfo);
-                calculate();
-            }
-        });
-    }
-    function calculate(){
-        $.ajax({
-            url:"${pageContext.request.contextPath}/grade/all/"+tno,
-            type:"GET",
-            success:function(result){
             }
         });
     }
     //解析显示数据
-    function build_peaceTime_table(grades){
+    function build_peaceTime_table(weekDocuments){
         $("#peaceTime_add_btn").attr("add-id",tno);
         $("#peaceTime_table tbody").empty();
-        for(var i=0;i<grades.length;i++){
-            var gradeIdTd = $("<td></td>").append(grades[i].gId);
-            var gradeSNameTd = $("<td></td>").append(grades[i].student.name);
-            var gradeTpNameTd = $("<td></td>").append(grades[i].topic.name);
-            var gradePeacetimeTd = $("<td></td>").append(grades[i].gPeacetime);
-            var gradePresentationTd = $("<td></td>").append(grades[i].gPresentation);
+        for(var i=0;i<weekDocuments.length;i++){
+            var checkBoxTd = $("<td><input type='checkbox' class='check_item'/></td>");
+            var dIdTd = $("<td></td>").append(weekDocuments[i].dId);
+            var topicTd = $("<td></td>").append(weekDocuments[i].topic.name);
+            var documentnameTd = $("<td></td>").append(weekDocuments[i].documentname);
+            //var teacherTd = $("<td></td>").append(weekDocuments[i].teacher.name);
+            var remarkTd = $("<td></td>").append(weekDocuments[i].remark);
+            //var annotationTd = $("<td></td>").append(weekDocuments[i].annotation);
+            var time = timeStamp2String(weekDocuments[i].wkTime);
+            var wkTimeTd = $("<td></td>").append(time);
             var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
-                .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
-                .append("编辑");
-            //为编辑按钮添加一个自定义的属性，来表示当前记录id
-            editBtn.attr("edit-id",grades[i].gId);
-            var delBtn =  $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash"))
-                .append("删除");
+                .append("下载");
+            //为编辑按钮添加一个自定义的属性，来表示当前记录id
+            editBtn.attr("edit-id",weekDocuments[i].dId);
+            var delBtn =  $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
+                .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
+                .append("删除").val(weekDocuments[i].dId);
             //为删除按钮添加一个自定义的属性来表示当前删除的记录id
-            delBtn.attr("del-id",grades[i].gId);
-            var btnTd = $("<td></td>").append(editBtn).append(delBtn);
-            $("<tr></tr>").append(gradeIdTd)
-                .append(gradeSNameTd)
-                .append(gradeTpNameTd)
-                .append(gradePeacetimeTd)
-                .append(gradePresentationTd)
+            delBtn.attr("del-id",weekDocuments[i].dId);
+            var btnTd = $("<td></td>").append(delBtn).append(editBtn);
+            $("<tr></tr>").append(checkBoxTd)
+                .append(topicTd)
+                .append(documentnameTd)
+                .append(wkTimeTd)
+                //.append(teacherTd)
+                .append(remarkTd)
                 .append(btnTd)
                 .appendTo("#peaceTime_table tbody");
         }
@@ -277,7 +239,7 @@
         }
         var nextPageLi = $("<li></li>").append($("<a></a>").append("下一页"));
         var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href","#"));
-        if(pageInfo.hasNextPage == false){
+        if(pageInfo.hasNextPage === false){
             nextPageLi.addClass("disabled");
             lastPageLi.addClass("disabled");
         }else{
@@ -293,7 +255,7 @@
         //1,2，3遍历给ul中添加页码提示
         $.each(pageInfo.navigatepageNums,function(index,item){
             var numLi = $("<li></li>").append($("<a></a>").append(item));
-            if(pageInfo.pageNum == item){
+            if(pageInfo.pageNum === item){
                 numLi.addClass("active");
             }
             numLi.click(function(){
@@ -307,99 +269,40 @@
         var navEle = $("<nav></nav>").append(ul);
         navEle.appendTo("#page_nav_area");
     }
-    //新增时显示学生姓名和课题
-    function getTopicSelect(ele){
-        //清空之前下拉列表的值
-        $(ele).empty();
+    //获得课题信息
+    function getPeaceTime(dId){
         $.ajax({
-            url:"${pageContext.request.contextPath}/gradeRecord/getStudent/"+tno,
+            url:"${pageContext.request.contextPath}/file/detail/"+dId,
             type:"GET",
             success:function(result){
-                var optionEle = $("<option></option>").append("---请选择学生---");
-                optionEle.appendTo(ele);
-                $.each(result.extend.topicSelectList,function(){
-                    var optionEle1 = $("<option></option>").append(this.student.name).attr("value",this.id);
-                    optionEle1.appendTo(ele);
-                });
+                var weekDocument = result.extend.weekDocument;
+                $("#id_update_input").val(weekDocument.dId);
+                //$("#sName_update_input").val(weekDocument.student.name);
+                $("#tpName_update_input").val(weekDocument.topic.name);
+                $("#documentname_update_input").val(weekDocument.documentname);
+                //$("#annotation_update_input").val(weekDocument.annotation);
             }
         });
     }
-    //级联显示课题名
-    function getTopic(){
-        //清空之前下拉列表的值
-        var id = $("#peaceTimeAddModal #student").val();
-        $("#peaceTimeAddModal #topic").empty();
-        var optionEle = $("<option></option>").append("---请选择课题---");
-        optionEle.appendTo("#peaceTimeAddModal #topic");
-        $.ajax({
-            url:"${pageContext.request.contextPath}/gradeRecord/getTopic/"+id,
-            type:"GET",
-            success:function(result){
-                var optionEle1 = $("<option></option>").append(result.extend.topicSelect.topic.name);
-                optionEle1.appendTo("#peaceTimeAddModal #topic");
-            }
-        });
-    }
-    //点击新增按钮弹出模态框。
-    $("#peaceTime_add_btn").click(function(){
-        //清除表单数据（表单完整重置（表单的数据，表单的样式））
-        reset_form("#peaceTimeAddModal form");
-        getTopicSelect("#peaceTimeAddModal #student");
-        //弹出模态框
-        $("#peaceTimeAddModal").modal({
-            backdrop:"static"
-        });
-    });
-    //清空表单样式及内容
-    function reset_form(ele){
-        $(ele)[0].reset();
-        //清空表单样式
-        $(ele).find("*").removeClass("has-error has-success");
-        $(ele).find(".help-block").text("");
-    }
-    //点击添加
-    $("#peaceTime_save_btn").click(function(){
-        $.ajax({
-            url:"${pageContext.request.contextPath}/grade/add",
-            type:"POST",
-            data:$("#peaceTimeAddModal form").serialize(),
-            success:function(result){
-                alert(result.msg);
-                if(result.code === 200){
-                    alert(result.extend.message);
+    //单个删除
+    $(document).on("click",".delete_btn",function(){
+        var dId = $(this).attr("del-id");
+        var fileName = $(this).parents("tr").find("td:eq(2)").text();
+        if(confirm("确认删除【"+fileName+"】吗？")){
+            $.ajax({
+                url:"${pageContext.request.contextPath}/file/del/"+dId,
+                type:"DELETE",
+                success:function(result){
+                    alert(result.msg);
+                    to_page(pageNum);
                 }
-                $("#peaceTimeAddModal").modal('hide');
-                to_page(total);
-            }
-        });
-    });
-    //获得详细信息
-    function getPeaceTime(gId){
-        $.ajax({
-            url:"${pageContext.request.contextPath}/grade/detail/"+gId,
-            type:"GET",
-            success:function(result){
-                var grade = result.extend.grade;
-                $("#id_update_input").val(grade.gId);
-                $("#sName_update_input").val(grade.student.name);
-                $("#tpName_update_input").val(grade.topic.name);
-                $("#gPeacetime_update_input").val(grade.gPeacetime);
-                $("#gPresentation_update_input").val(grade.gPresentation);
-            }
-        });
-    }
-    //点击编辑，弹出编辑弹窗
-    $(document).on("click",".edit_btn",function(){
-        getPeaceTime($(this).attr("edit-id"));
-        $("#peaceTime_update_btn").attr("upd-id",$(this).attr("edit-id"));
-        $("#peaceTimeUpdateModal").modal({
-            backdrop:"static"
-        });
+            });
+        }
     });
     //点击更新，更新记录信息
     $("#peaceTime_update_btn").click(function(){
         $.ajax({
-            url:"${pageContext.request.contextPath}/grade/upd/"+$("#peaceTime_update_btn").attr("upd-id"),
+            url:"${pageContext.request.contextPath}/file/upd/"+$(this).attr("upd-id"),
             type:"PUT",
             data:$("#peaceTimeUpdateModal form").serialize(),
             success:function(result){
@@ -409,21 +312,69 @@
             }
         });
     });
-    //单个删除
-    $(document).on("click",".delete_btn",function(){
-        var name = $(this).parents("tr").find("td:eq(0)").text();
-        var id = $(this).attr("del-id");
-        if(confirm("确认删除【"+name+"】吗？")){
-            $.ajax({
-                url:"${pageContext.request.contextPath}/grade/del/"+id,
-                type:"DELETE",
-                success:function(result){
-                    alert(result.msg);
-                    to_page(pageNum);
-                }
-            });
+    //单个下载
+    $(document).on("click",".edit_btn",function(){
+        //var teacher = $(this).parents("tr").find("td:eq(5)").text();
+        var fileName = $(this).parents("tr").find("td:eq(2)").text();
+        var dId = $(this).attr("edit-id");
+        if(confirm("确认下载的"+fileName+"吗？")){
+            location.href="${pageContext.request.contextPath}/file/downloadTopicFile?dId="+dId;
         }
     });
+    //完成全选/全不选功能
+    $("#check_all").click(function(){
+        //attr获取checked是undefined;
+        //我们这些dom原生的属性；attr获取自定义属性的值；
+        //prop修改和读取dom原生属性的值
+        $(".check_item").prop("checked",$(this).prop("checked"));
+    });
+    //check_item
+    $(document).on("click",".check_item",function(){
+        //判断当前选择中的元素是否5个
+        var flag = $(".check_item:checked").length===$(".check_item").length;
+        $("#check_all").prop("checked",flag);
+    });
+    //点击全部下载，就批量下载
+    $("#download_all_btn").click(function(){
+        var empNames = "";
+        var ids = [];
+        $.each($(".check_item:checked"),function(){
+            empNames += $(this).parents("tr").find("td:eq(2)").text()+",";
+            var id = $(this).parents("tr").find("td:eq(5)").find("button:eq(0)").attr("del-id");
+            ids.push(id);
+        });
+        empNames = empNames.substring(0, empNames.length-1);
+        if(ids.length!==0){
+            if(confirm("确认下载【"+empNames+"】吗？")){
+                var files = [];
+                for(var i=0;i<ids.length;i++){
+                    var dId = ids[i];
+                    //location.href="${pageContext.request.contextPath}/file/downloadTopicFile?dId="+dId;
+                    var href = "${pageContext.request.contextPath}/file/downloadTopicFile?dId="+dId;
+                    files.push(href);
+                }
+                //let files = ['url1', 'url2']; // 所有文件
+                files.forEach(url => {
+                    if (isIE()) { // IE
+                        window.open(url, '_blank')
+                    } else {
+                        let a = document.createElement('a'); // 创建a标签
+                        let e = document.createEvent('MouseEvents'); // 创建鼠标事件对象
+                        e.initEvent('click', false, false);// 初始化事件对象
+                        a.href = url; // 设置下载地址
+                        a.download = ''; // 设置下载文件名
+                        a.dispatchEvent(e);
+                    }
+                });
+            }
+        }
+        else {
+            alert("未选中任何文件！");
+        }
+    });
+    function isIE () {
+        return !!window.ActiveXObject || 'ActiveXObject' in window;
+    }
 </script>
 </body>
 </html>

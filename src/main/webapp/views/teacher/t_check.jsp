@@ -139,7 +139,6 @@
                     <h1>我的验收成绩记录</h1>
                     <div class="row">
                         <div>
-                            <button id="peaceTime_btn" class="btn btn-s btn-primary">刷新</button>
                             <button id="peaceTime_add_btn" class="btn btn-s btn-primary">新增</button>
                         </div>
                     </div>
@@ -196,9 +195,6 @@
     $(function(){
         to_page(1);
     });
-    $("#topic_btn").click(function () {
-        to_page(1);
-    });
     function to_page(pn){
         $.ajax({
             url:"${pageContext.request.contextPath}/gradeRecord/selectByTno/"+tno,
@@ -219,8 +215,7 @@
         $.ajax({
             url:"${pageContext.request.contextPath}/grade/check/"+gTsId,
             type:"GET",
-            success:function(result){
-                alert("验收成绩计算完毕");
+            success:function(){
             }
         });
     }

@@ -30,6 +30,8 @@ public class WeekDocument {
 
     private Topic topic;
 
+    private Teacher teacher;
+
     public Integer getdId() {
         return dId;
     }
@@ -126,6 +128,14 @@ public class WeekDocument {
         this.topic = topic;
     }
 
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
     @Override
     public String toString() {
         return "WeekDocument{" +
@@ -141,6 +151,7 @@ public class WeekDocument {
                 ", topicSelect=" + topicSelect +
                 ", student=" + student +
                 ", topic=" + topic +
+                ", teacher=" + teacher +
                 '}';
     }
 }

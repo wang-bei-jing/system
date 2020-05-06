@@ -90,7 +90,6 @@
             url:"${pageContext.request.contextPath}/grade/all/"+tno,
             type:"GET",
             success:function(){
-                alert("计算结束");
             }
         });
         $.ajax({
@@ -115,7 +114,7 @@
             url:"${pageContext.request.contextPath}/grade/all/"+tno,
             type:"GET",
             success:function(){
-                alert("计算结束");
+                alert("计算完成");
                 to_page(1);
             }
         });

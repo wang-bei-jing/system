@@ -110,7 +110,7 @@
   <select id="countByTpId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select count(*)
     from t_topicselect
-    where t_topicselect.status=1
+    where t_topicselect.status="1"
     and t_topicselect.tp_id = #{tpId,jdbcType=INTEGER}
   </select>
 
@@ -127,7 +127,7 @@
     from t_topicselect,t_student,t_topic
     where t_topicselect.s_sno = t_student.sno
     and tp_id=t_topic.id
-    and t_topicselect.status=1
+    and t_topicselect.status="1"
     and t_topicselect.s_sno = #{sno,jdbcType=INTEGER}
   </select>
 
@@ -136,7 +136,7 @@
     from t_topicselect,t_student,t_topic
     where t_topicselect.s_sno = t_student.sno
     and tp_id=t_topic.id
-    and t_topicselect.status=1
+    and t_topicselect.status="1"
   </select>
 
   <select id="selectByTpId" parameterType="java.lang.Integer" resultMap="BaseResultMapWith">
@@ -144,7 +144,7 @@
     from t_topicselect,t_student,t_topic
     where t_topicselect.s_sno = t_student.sno
     and tp_id=t_topic.id
-    and t_topicselect.status=1
+    and t_topicselect.status="1"
     and t_topicselect.tp_id = #{id,jdbcType=INTEGER}
   </select>
 
@@ -153,8 +153,6 @@
     from t_topicselect,t_student,t_topic
     where t_topicselect.s_sno = t_student.sno
     and tp_id=t_topic.id
-    and (t_topicselect.status=0
-		or t_topicselect.status=2)
     and t_topic.tno = #{tno,jdbcType=INTEGER}
   </select>
 
@@ -163,7 +161,7 @@
     from t_topicselect,t_student,t_topic
     where t_topicselect.s_sno = t_student.sno
     and tp_id=t_topic.id
-    and t_topicselect.status=1
+    and t_topicselect.status="1"
     and t_topic.tno = #{tno,jdbcType=INTEGER}
   </select>
 
@@ -172,19 +170,19 @@
     from t_topicselect,t_student,t_topic
     where t_topicselect.s_sno = t_student.sno
     and tp_id=t_topic.id
-    and t_topicselect.status=1
+    and t_topicselect.status="1"
     and t_topic.tno = #{tno,jdbcType=INTEGER}
   </select>
 
   <update id="acceptStudent" parameterType="java.lang.Integer" >
     update t_topicselect
-    set status=1
+    set status="1"
     where id=#{id,jdbcType=INTEGER}
   </update>
 
   <update id="refuseStudent" parameterType="java.lang.Integer" >
     update t_topicselect
-    set status=2
+    set status="2"
     where id=#{id,jdbcType=INTEGER}
   </update>
   <!-- xwq结束 -->

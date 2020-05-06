@@ -226,6 +226,18 @@ public class FileController {
         return Msg.success().add("pageInfo", page);
     }
 
+    @ResponseBody
+    @RequestMapping("/findAll")
+    public Msg findAll(@RequestParam(value = "pn", defaultValue = "1")Integer pn, String category) {
+        PageHelper.startPage(pn, 5);
+        List<WeekDocument> weekDocumentList = weekDocumentService.findAll(category);
+        for (WeekDocument weekDocument : weekDocumentList) {
+            System.out.println(weekDocument.toString());
+        }
+        PageInfo page = new PageInfo(weekDocumentList, 2);
+        return Msg.success().add("pageInfo", page);
+    }
+
     /**
      * 查询所有课题
      */

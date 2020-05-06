@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/static/cork/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/static/cork/assets/css/plugins.css" rel="stylesheet" type="text/css" />
-    <title>我的课题</title>
+    <title>期中检查记录</title>
 </head>
 <body>
 
@@ -332,7 +332,6 @@
                 for(var i=0;i<grades.length;i++){
                     calculate(grades[i].tsId);
                 }
-                alert("期中验收成绩计算完成");
             }
         });
     }
@@ -569,7 +568,7 @@
                 $("#id").val(midterm.mId);
                 $("#sName").val(midterm.student.name);
                 $("#tpName").val(midterm.topic.name);
-                if(midterm.presentation == 1){
+                if(midterm.presentation === 1){
                     $("#presentation").val("有");
                 }
                 else {

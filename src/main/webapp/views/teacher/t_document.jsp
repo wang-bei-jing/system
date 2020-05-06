@@ -341,11 +341,12 @@
         $.each($(".check_item:checked"),function(){
             empNames += $(this).parents("tr").find("td:eq(3)").text()+",";
             var id = $(this).parents("tr").find("td:eq(8)").find("button:eq(1)").attr("del-id");
+            alert(id);
             ids.push(id);
         });
         empNames = empNames.substring(0, empNames.length-1);
         if(ids.length!==0){
-            if(confirm("确认删除【"+empNames+"】吗？")){
+            if(confirm("确认下载【"+empNames+"】吗？")){
                 var files = [];
                 for(var i=0;i<ids.length;i++){
                     var dId = ids[i];
@@ -372,6 +373,9 @@
             alert("未选中任何文件！");
         }
     });
+    function isIE () {
+        return !!window.ActiveXObject || 'ActiveXObject' in window;
+    }
 </script>
 </body>
 </html>

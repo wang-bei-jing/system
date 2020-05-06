@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>课题管理</title>
+    <title>我的学生</title>
 
     <link href="${pageContext.request.contextPath}/static/cork/assets/css/loader.css" rel="stylesheet" type="text/css" />
     <script src="${pageContext.request.contextPath}/static/cork/assets/js/loader.js"></script>
@@ -27,6 +27,9 @@
     <div class="row layout-top-spacing">
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             <div class="widget-content widget-content-area br-6">
+                <div class="modal-header">
+                    <h1>我的学生</h1>
+                </div>
                 <div class="table-responsive mb-4 mt-4">
                     <table class="table table-hover" id="student_table">
                         <thead>

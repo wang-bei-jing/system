@@ -388,12 +388,13 @@
                             <c:if test="${compare!=1}">
                                 <div style="color: red">非申报课题时间！</div>
                             </c:if>
+                            <c:if test="${compare==1}">
+                                <div style="color: red">当前是报课题时间！</div>
+                            </c:if>
                         </div>
                         <div class="row">
                             <div>
-                                <c:if test="${compare!=1}">
-                                    <button type="button" class="btn btn-primary" id="topicFile_add_btn">上传文件</button>
-                                </c:if>
+                                <button type="button" class="btn btn-primary" id="topicFile_add_btn">上传文件</button>
                                 <button id="topic_btn" class="btn btn-s btn-primary">刷新</button>
                                 <button id="topic_add_btn" class="btn btn-s btn-primary">新增</button>
                             </div>
@@ -539,6 +540,7 @@
                 .append($("<span></span>").addClass("glyphicon"))
                 .append("查看");
             fileBtn.attr("file-id",topics[i].id);
+            fileBtn.attr("file-name",topics[i].name);
             var fileTd = $("<td></td>").append(fileBtn);
             var viewBtn = $("<button></button>").addClass("btn btn-primary btn-sm view_btn")
                 .append($("<span></span>").addClass("glyphicon"))
@@ -762,12 +764,13 @@
             }
         });
     }
-    //点击编辑，弹出编辑弹窗
+    //点击文件查看，弹出文件弹窗
     $(document).on("click",".file_btn",function(){
+        $("#topic").empty();
         var dTId = $(this).attr("file-id");
         $("#dTId").val(dTId);
-        $("#topic").empty();
-        $("#topic").append("课题名称"+$(this).attr("file-name"));
+        alert($(this).attr("file-name"));
+        $("#topic").append("课题名称："+$(this).attr("file-name"));
         to_page2(1,dTId);
         $("#peaceTimeUpdateModal").modal({
             backdrop:"static"
@@ -1068,8 +1071,8 @@
     $(document).on("click",".delete_btn2",function(){
         var dId = $(this).attr("del-id2");
         var dTId = $("#dTId").val();
-        alert(tno);
-        if(confirm("确认删除【"+dId+"】吗？")){
+        var fileName = $(this).parents("tr").find("td:eq(1)").text();
+        if(confirm("确认删除【"+fileName+"】吗？")){
             $.ajax({
                 url:"${pageContext.request.contextPath}/file/del/"+dId,
                 type:"DELETE",

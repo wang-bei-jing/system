@@ -20,6 +20,8 @@ public interface WeekDocumentService {
 
     WeekDocument selectBy(Integer dId);
 
+    List<WeekDocument> findAll(String category);
+
     WeekDocument selectById(Integer dId);
     //xwq结束
 

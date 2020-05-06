@@ -40,6 +40,10 @@ public class WeekDocumentServiceImpl implements WeekDocumentService {
         return weekDocumentMapper.selectById(dId);
     }
 
+    public List<WeekDocument> findAll(String category) {
+        return weekDocumentMapper.findAll(category);
+    }
+
     public WeekDocument selectById(Integer dId) {
         return weekDocumentMapper.selectByPrimaryKey(dId);
     }
