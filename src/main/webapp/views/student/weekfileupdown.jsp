@@ -43,7 +43,7 @@
             }
 
         }*/
-        function isExist() {
+       /* function isExist() {
             var titleVal = $("input[name=remark]").val();
             if (titleVal=="" || titleVal == null) {
                 $(".msg").html("请选择文件").css("color", "red");
@@ -51,7 +51,7 @@
 
             }
             ;
-        }
+        }*/
     </script>
     <style>
         table {
@@ -245,7 +245,7 @@
                                         <label class="col-sm-2 control-label">备注</label>
                                         <div class="col-sm-10">
                                             <%--   <input type="textarea" name="remark" class="form-control" style="height: 120px">--%>
-                                            <textarea  cols="62px" rows="5px" name="remark" onblur="isExist()"></textarea>
+                                            <textarea  cols="62px" rows="5px" name="remark" <%--onblur="isExist()"--%>></textarea>
                                         </div>
                                     </div>
 

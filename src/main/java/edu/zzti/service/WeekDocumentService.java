@@ -31,6 +31,10 @@ public interface WeekDocumentService {
     List<WeekDocument> findByCategory(Integer tpsId,String category);
 
     int deleteByPrimaryKey(Integer dId);
+
+    WeekDocument selectByDTId(Integer dTId);
+    List<WeekDocument> findDIdlist(Integer dTId);
+    //shc
 }
 
 

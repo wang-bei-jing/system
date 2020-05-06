@@ -23,6 +23,8 @@ public interface WeekDocumentMapper {
     int addWeekDocumentSelective(WeekDocument weekDocument);
 
     List<WeekDocument> findByCategory(@Param("tpsId") Integer tpsId, @Param("category")String category);
+    WeekDocument selectBydTId(Integer dTId);
+    List<WeekDocument> findDIdlist(Integer dTId);
     //shc
 
     int deleteByPrimaryKey(Integer dId);

@@ -115,9 +115,9 @@ public class TopicSelectController {
           just="0";
       }
 
-         request.getSession().setAttribute("just",just);
-        request.getSession().setAttribute("mytopicSelect",topicSelect);
-         request.getSession().setAttribute("grade",grade);
+         request.setAttribute("just",just);
+         request.setAttribute("mytopicSelect",topicSelect);
+         request.setAttribute("grade",grade);
          return new ModelAndView("student/myworktopic");
     }
     //=========================================以上是施昊晨部分==============================================================

@@ -36,19 +36,47 @@
     <c:set var="request" value="${pageContext.request.contextPath}"></c:set>
 
     <script type="text/javascript">
+        function see(name,contents,type,tname,source,difficulty,support,department,num,selectNum,dTId){
+            $("#name").val(name);
+            $("#contents").val(contents);
+            $("#type").val(type);
+            $("#tname").val(tname);
+            $("#source").val(source);
+            $("#difficulty").val(difficulty);
+            $("#support").val(support);
+            $("#department").val(department);
+            $("#num").val(num);
+            $("#selectNum").val(selectNum);
+            $("#dTId").val(dTId);
+            $("#Add").modal({
+                backdrop: "static",
+            });
+        };
 
-        /*  $(function () {
-              document.getElementById("seeall").trigger().click();
-          })*/
-        /*
-                $(function(){
-                    $('#seeall').trigger("click");
-                })*/
-        /* setTimeout(function() {
-                  var e = document.createEvent("MouseEvents");
-                  e.initEvent("click", true, true);
-                  document.getElementById("seeall").dispatchEvent(e);
-          }, 50);*/
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#down_btn", this).click(function () {
+                var  dTId=$("#dTId").val();
+                $.ajax({
+                    type:"post",
+                    url:"/system/findDIdlist",
+                    data:{"dTId":dTId},
+                    dateType:"json",
+                    success:function(data){
+                        for(var i=0;i<data.length;i++){
+                            var dId = data[i];
+                            location.href="${pageContext.request.contextPath}/downloadOneTopicFile?dId="+dId;
+
+                        }
+
+                    }
+                });
+
+
+            })
+        });
+
     </script>
     <script type="text/javascript">
         function signup(num,tno,id){
@@ -231,7 +259,7 @@
                     <tbody>
                     <c:forEach items="${topicList.list}" var="list">
                         <tr class="mytr">
-                            <td><a  href="javascript:void(0)" onclick="signup('${list.num}','${list.tno}','${list.id}')">报名</a></td>
+                            <td><a  href="javascript:void(0)" onclick="signup('${list.num}','${list.tno}','${list.id}')">报名</a> | <a  href="javascript:void(0)" onclick="see('${list.name}','${list.contents}','${list.type}','${list.teacher.name}','${list.source}','${list.difficulty}','${list.support}','${list.department}','${list.num}','${list.selectNum}','${list.id}')">详情</a></td>
                             <td>${list.name}</td>
                             <td>${list.contents}</td>
                             <td>${list.teacher.name}</td>
@@ -250,6 +278,106 @@
                     </c:forEach>
                     </tbody>
                 </table>
+            </div>
+        </div>
+        <!-- 添加模态框 -->
+        <div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" >课题详情</h4>
+                    </div>
+                    <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">课题名</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="name" class="form-control" readonly >
+                                    <span class="help-block"></span>
+                                    <!--一个较长的帮助文本块，超过一行，需要扩展到下一行 -->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">简介</label>
+                                <div class="col-sm-10">
+                                    <textarea id="contents" cols="94px" rows="5px"  disabled></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">教师姓名</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="tname" class="form-control" readonly >
+                                    <!--一个较长的帮助文本块，超过一行，需要扩展到下一行 -->
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">类型</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="type" class="form-control" readonly >
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">来源</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="source" class="form-control" readonly >
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">难度</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="difficulty" class="form-control" readonly >
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否重点扶持项目</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="support" class="form-control" readonly >
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">审题教研室</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="department" class="form-control" readonly >
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">所需人数</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="num" class="form-control" readonly >
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">已选人数</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="selectNum" class="form-control" readonly >
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                        <input id="dTId" style="display: none">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">下载附件</label>
+                            <div class="col-sm-10">
+
+                                    <button class="btn btn-primary btn-sm edit_btn"
+                                            id="down_btn">
+                                        下载
+                                    </button>
+
+                            </div>
+                        </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            </div>
+
+                    </div>
+                </div>
             </div>
         </div>
         <%--分页信息--%>
@@ -311,99 +439,6 @@
     <link href="${pageContext.request.contextPath}/static/mainstatic/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <script src="${pageContext.request.contextPath}/static/mainstatic/bootstrap/js/bootstrap.min.js"></script>
     <c:set var="request" value="${pageContext.request.contextPath}"></c:set>
-
-    <script type="text/javascript">
-
-        /*  $(function () {
-              document.getElementById("seeall").trigger().click();
-          })*/
-        /*
-                $(function(){
-                    $('#seeall').trigger("click");
-                })*/
-        /* setTimeout(function() {
-                  var e = document.createEvent("MouseEvents");
-                  e.initEvent("click", true, true);
-                  document.getElementById("seeall").dispatchEvent(e);
-          }, 50);*/
-    </script>
-    <script type="text/javascript">
-        function signup(num,tno,id){
-
-            var sstatus=${student.status};
-            var ssno=${student.sno};
-
-            $.ajax({
-                type:"post",
-                url:"/system/TopicSelectExistBySSno",
-                data:{"sSno":ssno,"tpId":id},
-                dataType:"json",
-                success:function(exist){
-                    /* alert("exist进来了"+exist);*/
-                    if (sstatus==0){
-                        if (num>0){
-                            /* alert("num进来了");*/
-                            if (exist<3){
-                                /*    alert("要提交了");*/
-                                $.ajax({
-                                    type:"post",
-                                    url:"/system/TopicSelectExistBySSnoandtpid",
-                                    data:{"sSno":ssno,"tpId":id},
-                                    dataType:"json",
-                                    success:function(data){
-                                        /*  alert("我回来啦");*/
-                                        if(data == "0"){
-                                            /*alert("我回来啦2");*/
-                                            $.ajax({
-                                                type:"post",
-                                                url:"/system/TopicSelectAdd",
-                                                data:{"sSno":ssno,"tTno":tno,"tpId":id},
-                                                dateType:"json",
-                                                success:function (data) {
-                                                    /* alert("我you回来啦");*/
-                                                    if(data=="1"){
-                                                        alert("报名成功，等待老师确认！")
-                                                        $.ajax({
-                                                            type:"post",
-                                                            url:"/system/TopicSelectExist",
-                                                            data:{"sSno":ssno,"tpId":id},
-                                                            dataType:"json"
-                                                        });
-                                                    }
-                                                }
-                                            });
-
-                                        }else {
-                                            alert("您已报名该课题！")
-                                        }
-                                    }
-                                });
-                            } else {alert("您已报名3个课题！达到上限！");}
-
-                        }else {
-                            alert("该课题人数已满！请选择其他课题");
-                        }
-                    } else {
-                        alert("已被老师确认，无法报名!");
-                    };
-
-
-
-                }
-            });
-
-
-
-        }
-
-
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("tbody>tr:odd").css("background-color","#e4e4e4");
-            $("tbody>tr:even").css("background-color","white");
-        })
-    </script>
 
     <style>
         table{
