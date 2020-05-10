@@ -70,7 +70,7 @@ public class TopicController {
 
     @ResponseBody
     @RequestMapping(value = "/TopicSelectByName")
-    public ModelAndView TopicSelectByCname(HttpServletRequest request,String name, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+    public ModelAndView TopicSelectByCname(HttpServletRequest request,@RequestParam(value = "name", defaultValue = "") String name, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5);
         List<Topic> topics = topicService.selectByName(name);
         System.out.println(topics.size());
@@ -78,6 +78,11 @@ public class TopicController {
             System.out.println(topics.get(i).toString());
         }
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+        Integer categoty=2;
+        TimeManger tpsTimeManger=timeMangerService.findTimeMangerByCategory(categoty);
+        request.setAttribute("tpsTimeManger",tpsTimeManger);
+
         PageInfo page = new PageInfo(topics, 5);
         System.out.println(page.getPageSize());
         request.getSession().setAttribute("topicname", name);
@@ -85,7 +90,10 @@ public class TopicController {
         return new ModelAndView("student/topic");
     }
 
-
+    /**
+     * @Author ：shc
+     * @Description ：我申报过的课题
+     **/
     @ResponseBody
     @RequestMapping(value = "/myTopic")
     public ModelAndView myTopic(HttpServletRequest request,String sSno) {
@@ -98,6 +106,10 @@ public class TopicController {
         request.getSession().setAttribute("topicsandteacherList", topicsandteacher);
         return new ModelAndView("student/mytopic");
     }
+   /**
+    * @Author ：shc
+    * @Description ：找到该课题下的所有的附件的id
+    **/
     @ResponseBody
     @RequestMapping(value = "/findDIdlist")
     public List findDIdlist(Integer dTId) {
@@ -109,15 +121,19 @@ public class TopicController {
         System.out.println(ids.toString());
         return ids;
     }
-    //文件下载
+    /**
+     * @Author ：shc
+     * @Description ：下载该课题下的 全部 附件
+     **/
     @ResponseBody
     @RequestMapping("/downloadOneTopicFile")
-    public void downloadOneTopicFile(HttpServletRequest request, HttpServletResponse response, Integer dTId) throws Exception{
-        WeekDocument weekDocument = weekDocumentService.selectByDTId(dTId);
+    public void downloadOneTopicFile(HttpServletRequest request, HttpServletResponse response,Integer dId) throws Exception{
+        WeekDocument weekDocument = weekDocumentService.selectById(dId);
         String documentname = weekDocument.getDocumentname();
         //下载文件路径
-        String pathFileName = "";
+        String pathFileName="";
         if (weekDocument.getCategory().equals("3")){
+            Integer dTId = weekDocument.getdTId();
             Integer tno = topicService.selectTopicById(dTId).getTno();
             pathFileName = request.getSession().getServletContext().getRealPath("upload")+"/"+tno+"/topic/"+dTId+"/"+documentname;
         }

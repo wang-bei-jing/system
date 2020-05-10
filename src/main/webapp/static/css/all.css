@@ -1,0 +1,54 @@
+.table-hover > tbody > tr:hover > td {
+    background: #e4e4e4;
+}
+
+table{
+    table-layout:fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #404060;
+    width: 500px;
+    font-size: 13px;
+    font-family: "微软雅黑";
+}
+th{
+
+    border: 1px solid #404060;
+    padding: 10px;
+    background-color: rgba(0, 56, 78, 0.74);
+    font: bold 15px "微软雅黑";
+    color: #fff;
+}
+.table tr th,.table tr td {
+    text-align: center;
+    vertical-align: top;
+}
+td{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 1px solid #404060;
+    padding: 10px;
+}
+
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    color: white;
+    font-size: 18px;
+    height: 7%;
+    background:#204d74;
+}
+
+.page-header{
+    float: left;
+    z-index: 0;
+    height: 120%;
+    width: 100%;
+    border: 1px solid #DBDBDB;
+    margin: 2% 2% 0% 1%;
+    padding: 0% 0% 0% 0%;
+}

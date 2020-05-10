@@ -62,9 +62,6 @@ public class WeekDocumentServiceImpl implements WeekDocumentService {
         return weekDocumentMapper.deleteByPrimaryKey(dId);
     }
 
-    public WeekDocument selectByDTId(Integer dTId) {
-        return weekDocumentMapper.selectBydTId(dTId);
-    }
 
     public List<WeekDocument> findDIdlist(Integer dTId) {
         return weekDocumentMapper.findDIdlist(dTId);

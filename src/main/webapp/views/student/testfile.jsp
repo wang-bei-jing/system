@@ -15,36 +15,13 @@
     <!-- 引入 Bootstrap样式-->
     <link href="${pageContext.request.contextPath}/static/mainstatic/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <script src="${pageContext.request.contextPath}/static/mainstatic/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-    /*  function todown(dname){
-            var ssno=${student.sno};
 
-            if (tpsStatus=='0'||tpsStatus=='2'){
-                $.ajax({
-                    type:"post",
-                    url:"/system/TopicSelectDel",
-                    data:{"sSno":ssno,"tpId":tpId},
-                    dateType:"json",
-                    success:function(data){
-                        if(data == "1"){
-                            alert("退选成功！")
-                            $("#tr_"+tpId).remove();
-                            /!*$("#mytopic-information").reload();*!/
-                            window.location.reload();
-                            /!*location.href="${pageContext.request.contextPath}/myTopic?sSno=${student.sno}"*!/
-                        }else {
-                            alert("退选失败！请联系管理员！")
-                        }
-                    }
-                });
-            }else {
-                alert("已被老师确认，无法取消!");
-            }
-
-        }*/
-    </script>
     <style>
+        .table-hover > tbody > tr:hover > td {
+            background: #e4e4e4;
+        }
         table{
+            table-layout:fixed;
             border-collapse: collapse;
             border-spacing: 0;
             border: 1px solid #404060;
@@ -61,10 +38,14 @@
             font: bold 15px "微软雅黑";
             color: #fff;
         }
-        td{
+        td {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
             border: 1px solid #404060;
             padding: 10px;
         }
+
         .header{
             position: fixed;
             top: 0;
@@ -76,16 +57,22 @@
             height: 7%;
             background:#204d74;
         }
+
     </style>
     <script type="text/javascript">
-            /*弹出添加模块框*/
-            $(document).ready(function() {
-                $("#add_modal", this).click(function () {
-                    $("#Add").modal({
-                        backdrop: "static"
-                    });
-                })
-            });
+        /*弹出添加模块框*/
+        $(document).ready(function () {
+            $("#add_modal", this).click(function () {
+                $("#Add").modal({
+                    backdrop: "static"
+                });
+            })
+        });
+
+        $(document).ready(function(){
+            $("tbody>tr:odd").css("background-color","#e4e4e4");
+            $("tbody>tr:even").css("background-color","white");
+        });
     </script>
 </head>
 <body >

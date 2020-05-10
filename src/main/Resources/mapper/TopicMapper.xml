@@ -301,12 +301,13 @@
     select
     <include refid="BaseWithTeacher_Column_List" />
     from t_topic tp left join t_teacher tr on tp.tno=tr.tno
-    where tp.name  like concat('%',#{name},'%')
+    where tp.name  like concat('%',#{name},'%') and tp.status=1
   </select>
 
   <select id="selectAll"  resultMap="BaseResultMapWithTeacher">
     select
     <include refid="BaseWithTeacher_Column_List" />
     from t_topic tp left join t_teacher tr on tp.tno=tr.tno
+    where tp.status=1
   </select>
 </mapper>

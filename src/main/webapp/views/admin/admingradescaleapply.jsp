@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>修改成绩比例页面</title>
+    <link href="${pageContext.request.contextPath}/static/css/all.css" rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/static/mainstatic/css/index.css" rel="stylesheet" type="text/css" />
     <script src="${pageContext.request.contextPath}/static/mainstatic/js/index.js"></script>
     <%--引入jquery--%>
@@ -17,7 +18,7 @@
         $(document).ready(function(){
             $("tbody>tr:odd").css("background-color","#e4e4e4");
             $("tbody>tr:even").css("background-color","white");
-        })
+        });
         //点击同意，同意申请
         $(document).on("click","#agree_btn",function(){
             var department = $(this).parents("tr").find("td:eq(0)").text();
@@ -66,56 +67,7 @@
         });
     </script>
 
-    <style>
-        table{
-            border-collapse: collapse;
-            border-spacing: 0;
-            border: 1px solid #404060;
-            width: 500px;
-            font-size: 10px;
-            font-family: "微软雅黑";
 
-
-        }
-        th {
-            text-align: center;
-            vertical-align: middle;
-            border: 1px solid #404060;
-            padding: 10px;
-            background-color: rgba(0, 56, 78, 0.74);
-            font: bold 15px "微软雅黑";
-            color: #fff;
-        }
-        td{
-            text-align: center;
-            vertical-align: middle;
-            border: 1px solid #404060;
-            padding: 10px;
-        }
-    </style>
-
-   <style>
-        .page-header{
-            float: left;
-            z-index: 0;
-            height: 100%;
-            width: 100%;
-            border: 1px solid #DBDBDB;
-            margin: 4.5% 2% 0% 1%;
-            padding: 0% 0% 0% 0%;
-        }
-        .header{
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 3;
-            color: white;
-            font-size: 18px;
-            height: 7%;
-            background:#204d74;
-        }
-    </style>
 </head>
 <body>
 

@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>全部教师</title>
+    <link href="${pageContext.request.contextPath}/static/css/all.css" rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/static/mainstatic/css/index.css" rel="stylesheet" type="text/css" />
     <script src="${pageContext.request.contextPath}/static/mainstatic/js/index.js"></script>
     <%--引入jquery--%>
@@ -11,8 +12,6 @@
     <link href="${pageContext.request.contextPath}/static/mainstatic/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <script src="${pageContext.request.contextPath}/static/mainstatic/bootstrap/js/bootstrap.min.js"></script>
     <c:set var="request" value="${pageContext.request.contextPath}"></c:set>
-
-
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/mainstatic/bootstrap/css/bootstrap-theme.css">
     <script type="text/javascript">
         /*弹出添加模块框*/
@@ -53,22 +52,6 @@
                 return false;
             }
         });
-       /* /!*导入*!/
-        function dataimport(){
-            var file=document.getElementById("myfile").files[0];
-            alert("1231241241");
-            alert(file);
-            $.ajax({
-                type:"post",
-                url:"/system/importExcel",
-                data:file,
-                success:function (data) {
-                    if(data=="1"){
-                        window.location.reload();
-                    }
-                }
-            });
-        };*/
         $(document).ready(function(){
             $("tbody>tr:odd").css("background-color","#e4e4e4");
             $("tbody>tr:even").css("background-color","white");
@@ -79,60 +62,6 @@
         };
     </script>
 
-    <style>
-
-
-        .table-hover > tbody > tr:hover > td {
-            color: red;
-            cursor: pointer;
-        }
-        table{
-            border-collapse: collapse;
-            border-spacing: 0;
-            border: 1px solid #404060;
-            width: 500px;
-            font-size: 10px;
-            font-family: "微软雅黑";
-        }
-        th {
-            text-align: center;
-            vertical-align: middle;
-            border: 1px solid #404060;
-            padding: 10px;
-            background-color: rgba(0, 56, 78, 0.74);
-            font: bold 15px "微软雅黑";
-            color: #fff;
-        }
-        td{
-            text-align: center;
-            vertical-align: middle;
-            border: 1px solid #404060;
-            padding: 10px;
-        }
-    </style>
-
-   <style>
-        .page-header{
-            float: left;
-            z-index: 0;
-            height: 100%;
-            width: 100%;
-            border: 1px solid #DBDBDB;
-            margin: 4.5% 2% 0% 1%;
-            padding: 0% 0% 0% 0%;
-        }
-        .header{
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 3;
-            color: white;
-            font-size: 18px;
-            height: 7%;
-            background:#204d74;
-        }
-    </style>
 </head>
 <body>
 
@@ -189,10 +118,10 @@
             <div class="col-md-12">
             <c:choose>
                 <c:when test="${studentList.list[0]!=null}">
-                    <table class="table table-condensed table-striped  table-hover">
-                    <thead style="color: red">
+                    <table class="table table-hover">
+                    <thead>
                     <tr>
-                        <th>操作</th>
+                        <th style="width: 150px;">操作</th>
                         <th>学号</th>
                         <th>姓名</th>
                         <th>性别</th>
@@ -207,22 +136,21 @@
                     <c:forEach items="${studentList.list}" var="list">
                         <tr class="mytr">
                             <td>
-                              <%--  <a  href="javascript:void(0)" onclick="signup('${list.num}','${list.tno}','${list.id}')">报名</a>--%>
                                 <button class="btn btn-primary btn-sm edit_btn" id="edit_btn" onclick="edit('${list.sno}')" >
                                     <span class="glyphicon glyphicon-pencil"></span>编辑
                                 </button>
-                                <a <%--id="delete_btn"--%> href="${pageContext.request.contextPath}/studentDel?sno=${list.sno}" class="btn btn-danger btn-sm delete_btn">
+                                <a  href="${pageContext.request.contextPath}/studentDel?sno=${list.sno}" class="btn btn-danger btn-sm delete_btn">
                                     <span class="glyphicon glyphicon-trash"></span>删除
                                 </a>
                             </td>
-                            <td>${list.sno}</td>
-                            <td>${list.name}</td>
-                            <td>${list.sex}</td>
-                            <td>${list.department}</td>
-                            <td>${list.classes}</td>
-                            <td>${list.tel}</td>
-                            <td>${list.email}</td>
-                            <td>${list.password}</td>
+                            <td title="${list.sno}">${list.sno}</td>
+                            <td title="${list.name}">${list.name}</td>
+                            <td title="${list.sex}">${list.sex}</td>
+                            <td title="${list.department}">${list.department}</td>
+                            <td title="${list.classes}">${list.classes}</td>
+                            <td title="${list.tel}">${list.tel}</td>
+                            <td title="${list.email}">${list.email}</td>
+                            <td title="${list.password}">${list.password}</td>
                         </tr>
                     </c:forEach>
                     </tbody>

@@ -7,7 +7,7 @@
     <link href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <script src="${pageContext.request.contextPath}/static/bootstrap/js/bootstrap.min.js"></script>
     <link href="${pageContext.request.contextPath}/static/css/system.css" rel="stylesheet" type="text/css"/>
-    <script src="${pageContext.request.contextPath}/static/js/index.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/all.js"></script>
     <script type="text/javascript">
         /*弹出添加模块框*/
         $(document).ready(function() {

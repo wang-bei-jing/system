@@ -8,6 +8,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>文件上传下载</title>
+
     <link href="${pageContext.request.contextPath}/static/mainstatic/css/index.css" rel="stylesheet" type="text/css"/>
     <script src="${pageContext.request.contextPath}/static/mainstatic/js/index.js"></script>
     <%--引入jquery--%>
@@ -16,45 +17,13 @@
     <link href="${pageContext.request.contextPath}/static/mainstatic/bootstrap/css/bootstrap.min.css" rel="stylesheet"
           type="text/css">
     <script src="${pageContext.request.contextPath}/static/mainstatic/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-        /*  function todown(dname){
-                var ssno=${student.sno};
 
-            if (tpsStatus=='0'||tpsStatus=='2'){
-                $.ajax({
-                    type:"post",
-                    url:"/system/TopicSelectDel",
-                    data:{"sSno":ssno,"tpId":tpId},
-                    dateType:"json",
-                    success:function(data){
-                        if(data == "1"){
-                            alert("退选成功！")
-                            $("#tr_"+tpId).remove();
-                            /!*$("#mytopic-information").reload();*!/
-                            window.location.reload();
-                            /!*location.href="${pageContext.request.contextPath}/myTopic?sSno=${student.sno}"*!/
-                        }else {
-                            alert("退选失败！请联系管理员！")
-                        }
-                    }
-                });
-            }else {
-                alert("已被老师确认，无法取消!");
-            }
-
-        }*/
-       /* function isExist() {
-            var titleVal = $("input[name=remark]").val();
-            if (titleVal=="" || titleVal == null) {
-                $(".msg").html("请选择文件").css("color", "red");
-                return;
-
-            }
-            ;
-        }*/
-    </script>
     <style>
-        table {
+        .table-hover > tbody > tr:hover > td {
+            background: #e4e4e4;
+        }
+        table{
+            table-layout:fixed;
             border-collapse: collapse;
             border-spacing: 0;
             border: 1px solid #404060;
@@ -62,7 +31,6 @@
             font-size: 10px;
             font-family: "微软雅黑";
         }
-
         th {
             text-align: center;
             vertical-align: middle;
@@ -72,13 +40,15 @@
             font: bold 15px "微软雅黑";
             color: #fff;
         }
-
         td {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
             border: 1px solid #404060;
             padding: 10px;
         }
 
-        .header {
+        .header{
             position: fixed;
             top: 0;
             left: 0;
@@ -87,8 +57,9 @@
             color: white;
             font-size: 18px;
             height: 7%;
-            background: #204d74;
+            background:#204d74;
         }
+
     </style>
     <script type="text/javascript">
         /*弹出添加模块框*/
@@ -98,6 +69,11 @@
                     backdrop: "static"
                 });
             })
+        });
+
+        $(document).ready(function(){
+            $("tbody>tr:odd").css("background-color","#e4e4e4");
+            $("tbody>tr:even").css("background-color","white");
         });
     </script>
 </head>
@@ -167,7 +143,7 @@
                                                             <%-- <button class="btn btn-primary btn-sm edit_btn" id="edit_btn">
                                                                  <span class="glyphicon glyphicon-pencil"></span>编辑
                                                              </button>--%>
-                                                        <a href="${pageContext.request.contextPath}/deleteWeekDocument?documentname=${weekDocument.documentname}&dId=${weekDocument.dId}&sSno=${student.sno}&week=${weekDocument.week}"
+                                                        <a href="${pageContext.request.contextPath}/deleteWeekDocument?dId=${weekDocument.dId}&sSno=${student.sno}&week=${weekDocument.week}"
                                                            class="btn btn-danger btn-sm delete_btn">
                                                             <span class="glyphicon glyphicon-trash"></span>删除
                                                         </a>

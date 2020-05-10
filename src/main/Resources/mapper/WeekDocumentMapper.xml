@@ -338,13 +338,6 @@
  </select>
 
 
-  <select id="selectBydTId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from t_weekdocument
-    where d_t_id = #{dTId,jdbcType=INTEGER}
-  </select>
-
   <select id="findDIdlist" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

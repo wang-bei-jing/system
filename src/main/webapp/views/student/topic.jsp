@@ -22,10 +22,11 @@
         java.util.Date endtime = dateFormat.parse(etimestr);*/
     if(currenttime.after(begintime)&&currenttime.before(endtime)){
 %>
-
+<!DOCTYPE html>
 <html>
 <head>
     <title>全部课题页面</title>
+    <link href="${pageContext.request.contextPath}/static/css/all.css" rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/static/mainstatic/css/index.css" rel="stylesheet" type="text/css" />
     <script src="${pageContext.request.contextPath}/static/mainstatic/js/index.js"></script>
     <%--引入jquery--%>
@@ -64,12 +65,20 @@
                     data:{"dTId":dTId},
                     dateType:"json",
                     success:function(data){
+                        var files = [];
                         for(var i=0;i<data.length;i++){
                             var dId = data[i];
-                            location.href="${pageContext.request.contextPath}/downloadOneTopicFile?dId="+dId;
-
-                        }
-
+                            var href = "${pageContext.request.contextPath}/downloadOneTopicFile?dId="+dId;
+                            files.push(href);
+                        };
+                        files.forEach(url => {
+                                let a = document.createElement('a'); // 创建a标签
+                                let e = document.createEvent('MouseEvents'); // 创建鼠标事件对象
+                                e.initEvent('click', false, false);// 初始化事件对象
+                                a.href = url; // 设置下载地址
+                                a.download = ''; // 设置下载文件名
+                                a.dispatchEvent(e);
+                        });
                     }
                 });
 
@@ -137,76 +146,18 @@
                     } else {
                         alert("已被老师确认，无法报名!");
                     };
-
-
-
                 }
             });
-
-
-
-        }
-
-
-    </script>
-    <script type="text/javascript">
+        };
         $(document).ready(function(){
             $("tbody>tr:odd").css("background-color","#e4e4e4");
             $("tbody>tr:even").css("background-color","white");
-        })
+        });
     </script>
 
-    <style>
-        table{
-            border-collapse: collapse;
-            border-spacing: 0;
-            border: 1px solid #404060;
-            width: 500px;
-            font-size: 10px;
-            font-family: "微软雅黑";
 
-
-        }
-        th {
-            text-align: center;
-            vertical-align: middle;
-            border: 1px solid #404060;
-            padding: 10px;
-            background-color: rgba(0, 56, 78, 0.74);
-            font: bold 15px "微软雅黑";
-            color: #fff;
-        }
-        td{
-            border: 1px solid #404060;
-            padding: 10px;
-        }
-    </style>
-
-    <style>
-        .page-header{
-            float: left;
-            z-index: 0;
-            height: 100%;
-            width: 100%;
-            border: 1px solid #DBDBDB;
-            margin: 4.5% 2% 0% 1%;
-            padding: 0% 0% 0% 0%;
-        }
-        .header{
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 3;
-            color: white;
-            font-size: 18px;
-            height: 7%;
-            background:#204d74;
-        }
-    </style>
 </head>
 <body>
-
 <header >
     <div class="header" style="text-align: center">
         <row>
@@ -235,9 +186,9 @@
         <br>
         <!-- 显示表格数据 -->
         <div class="row" id="table_page">
-            <div class="col-md-12">
-                <table class="table table-hover" style="text-align: center">
-                    <thead style="color: red">
+            <div  class="col-md-12" >
+                <table class="table table-hover" >
+                    <thead>
                     <tr>
                         <th>操作</th>
                         <th>课题名</th>
@@ -260,20 +211,20 @@
                     <c:forEach items="${topicList.list}" var="list">
                         <tr class="mytr">
                             <td><a  href="javascript:void(0)" onclick="signup('${list.num}','${list.tno}','${list.id}')">报名</a> | <a  href="javascript:void(0)" onclick="see('${list.name}','${list.contents}','${list.type}','${list.teacher.name}','${list.source}','${list.difficulty}','${list.support}','${list.department}','${list.num}','${list.selectNum}','${list.id}')">详情</a></td>
-                            <td>${list.name}</td>
-                            <td>${list.contents}</td>
-                            <td>${list.teacher.name}</td>
-                            <td>${list.type}</td>
-                            <td>${list.source}</td>
-                            <td>${list.difficulty}</td>
-                            <td>${list.support}</td>
-                            <td>${list.department}</td>
-                            <td>${list.num}</td>
-                            <td>${list.selectNum}</td>
-                            <td>${list.teacher.title}</td>
-                            <td>${list.teacher.office}</td>
-                            <td>${list.teacher.tel}</td>
-                            <td>${list.teacher.email}</td>
+                            <td title="${list.name}">${list.name}</td>
+                            <td title="${list.contents}">${list.contents}</td>
+                            <td title="${list.teacher.name}">${list.teacher.name}</td>
+                            <td title="${list.type}">${list.type}</td>
+                            <td title="${list.source}">${list.source}</td>
+                            <td title="${list.difficulty}">${list.difficulty}</td>
+                            <td title="${list.support}">${list.support}</td>
+                            <td title="${list.department}">${list.department}</td>
+                            <td title="${list.num}">${list.num}</td>
+                            <td title="${list.selectNum}">${list.selectNum}</td>
+                            <td title="${list.teacher.title}">${list.teacher.title}</td>
+                            <td title="${list.teacher.office}">${list.teacher.office}</td>
+                            <td title="${list.teacher.tel}">${list.teacher.tel}</td>
+                            <td title="${list.teacher.email}">${list.teacher.email}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -291,7 +242,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">课题名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" id="name" class="form-control" readonly >
+                                    <input type="text"  id="name" class="form-control" readonly >
                                     <span class="help-block"></span>
                                     <!--一个较长的帮助文本块，超过一行，需要扩展到下一行 -->
                                 </div>
@@ -390,9 +341,10 @@
             <div class="col-md-6">
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
-                        <li><a href="${pageContext.request.contextPath}/TopicSelectAll?pn=1">首页</a></li>
+
+                        <li><a href="${pageContext.request.contextPath}/TopicSelectByName?name=${topicname}&pn=1">首页</a></li>
                         <c:if test="${topicList.hasPreviousPage }">
-                            <li><a href="${pageContext.request.contextPath}/TopicSelectAll?pn=${topicList.pageNum-1}"
+                            <li><a href="${pageContext.request.contextPath}/TopicSelectByName?name=${topicname}&pn=${topicList.pageNum-1}"
                                    aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
                             </a></li>
                         </c:if>
@@ -402,17 +354,17 @@
                                 <li class="active"><a href="#">${page_Num }</a></li>
                             </c:if>
                             <c:if test="${page_Num != topicList.pageNum }">
-                                <li><a href="${pageContext.request.contextPath}/TopicSelectAll?pn=${page_Num }">${page_Num }</a></li>
+                                <li><a href="${pageContext.request.contextPath}/TopicSelectByName?name=${topicname}&pn=${page_Num }">${page_Num }</a></li>
                             </c:if>
                         </c:forEach>
 
                         <c:if test="${topicList.hasNextPage }">
-                            <li><a href="${pageContext.request.contextPath}/TopicSelectAll?pn=${topicList.pageNum+1 }"
+                            <li><a href="${pageContext.request.contextPath}/TopicSelectByName?name=${topicname}&pn=${topicList.pageNum+1 }"
                                    aria-label="Next"> <span aria-hidden="true">&raquo;</span>
                             </a></li>
                         </c:if>
 
-                        <li><a href="${pageContext.request.contextPath}/TopicSelectAll?pn=${topicList.pages}">末页</a></li>
+                        <li><a href="${pageContext.request.contextPath}/TopicSelectByName?name=${topicname}&pn=${topicList.pages}">末页</a></li>
                     </ul>
                 </nav>
             </div>
@@ -440,54 +392,6 @@
     <script src="${pageContext.request.contextPath}/static/mainstatic/bootstrap/js/bootstrap.min.js"></script>
     <c:set var="request" value="${pageContext.request.contextPath}"></c:set>
 
-    <style>
-        table{
-            border-collapse: collapse;
-            border-spacing: 0;
-            border: 1px solid #404060;
-            width: 500px;
-            font-size: 10px;
-            font-family: "微软雅黑";
-
-
-        }
-        th {
-            text-align: center;
-            vertical-align: middle;
-            border: 1px solid #404060;
-            padding: 10px;
-            background-color: rgba(0, 56, 78, 0.74);
-            font: bold 15px "微软雅黑";
-            color: #fff;
-        }
-        td{
-            border: 1px solid #404060;
-            padding: 10px;
-        }
-    </style>
-
-    <style>
-        .page-header{
-            float: left;
-            z-index: 0;
-            height: 100%;
-            width: 100%;
-            border: 1px solid #DBDBDB;
-            margin: 4.5% 2% 0% 1%;
-            padding: 0% 0% 0% 0%;
-        }
-        .header{
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 3;
-            color: white;
-            font-size: 18px;
-            height: 7%;
-            background:#204d74;
-        }
-    </style>
 </head>
 <body>
 

@@ -32,7 +32,7 @@ public interface WeekDocumentService {
 
     int deleteByPrimaryKey(Integer dId);
 
-    WeekDocument selectByDTId(Integer dTId);
+
     List<WeekDocument> findDIdlist(Integer dTId);
     //shc
 }

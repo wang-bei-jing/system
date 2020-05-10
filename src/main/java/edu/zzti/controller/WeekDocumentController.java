@@ -44,6 +44,10 @@ public class WeekDocumentController {
 
     //=========================================以下是施昊晨部分==============================================================
     //------------------------------------周报部分---------------------------------------
+    /**
+     * @Author ：shc
+     * @Description ：查询所有周报
+     **/
     @RequestMapping("/findWeekDocument")
     public ModelAndView findWeekDocument(HttpServletRequest request, String sSno, Model model) {
         String status="1";
@@ -59,14 +63,17 @@ public class WeekDocumentController {
                 weeks.add(weekDocuments.get(i).getWeek());
             }
 
-        System.out.println(weeks.toString());
+            System.out.println(weeks.toString());
             model.addAttribute("weeks",weeks);
             request.getSession().setAttribute("wdaddtpsId",tpsId);
             request.getSession().setAttribute("weekDocuments",weekDocuments);
             return new ModelAndView("student/weekfileupdown");
 
     }
-
+/**
+ * @Author ：shc
+ * @Description ：下载周报
+ **/
     @ResponseBody
     @RequestMapping(value="/uploadWeekDocument",method=RequestMethod.POST)
     public ModelAndView uploadDocument(MultipartFile file, HttpServletRequest request, WeekDocument weekDocument, String sSno) throws IOException, ParseException {
@@ -100,7 +107,10 @@ public class WeekDocumentController {
         return new ModelAndView("redirect:/findWeekDocument?sSno="+sSno+"");
     }
 
-
+    /**
+     * @Author ：shc
+     * @Description ：下载周报
+     **/
     @RequestMapping("/downWeekDocument")
     public void downWeekDocument(HttpServletRequest request, HttpServletResponse response,String documentname,String sSno,String week) throws Exception{
         //下载文件路径
@@ -124,13 +134,14 @@ public class WeekDocumentController {
         }
         out.close();
     }
+    /**
+     * @Author ：shc
+     * @Description ：通过week第几周，删除周报
+     **/
     @RequestMapping("/deleteWeekDocument")
-    public ModelAndView deleteWeekDocument(HttpServletRequest request,String documentname,int dId,String sSno,String week) throws Exception{
+    public ModelAndView deleteWeekDocument(HttpServletRequest request,int dId,String sSno,String week){
         String pathFileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/weekDocuments/"+week;
         System.out.println(pathFileName);
-
-       /* File deletefile = new File(pathFileName);*/
-        /*deletefile.delete();*/
         File file = new File(pathFileName);
         deleteFile(file);
         int i=0;
@@ -139,6 +150,10 @@ public class WeekDocumentController {
         return new ModelAndView("redirect:/findWeekDocument?sSno="+sSno+"");
 
     }
+    /**
+     * @Author ：shc
+     * @Description ：删除文件前的判断
+     **/
     private void deleteFile(File file) {
         if (file.exists()) {//判断文件是否存在
             if (file.isFile()) {//判断是否是文件
