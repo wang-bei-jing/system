@@ -16,6 +16,7 @@ public interface StudentCommentMapper {
 
     //shc
     List<StudentComment> findAllCommentsBySnoAndStatus(String sno);
+    List<StudentComment> findTopCommentsBySno(String sno);
     //shc
     int deleteByPrimaryKey(Integer scId);
 

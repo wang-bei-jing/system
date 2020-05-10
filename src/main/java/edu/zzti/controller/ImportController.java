@@ -25,7 +25,7 @@ import java.util.List;
  * @Description ：导入excel的控制器
  **/
 @Controller
-public class MapController {
+public class ImportController {
 
     @Autowired
     StudentService studentService;
@@ -60,7 +60,7 @@ public class MapController {
         File deletefile = new File(delpathName);
         deletefile.delete();
         System.out.println("删除完毕");
-            return new ModelAndView("redirect:/studentSelectAll");
+            return new ModelAndView("redirect:/studentSelectByName");
 
     }
 
@@ -132,7 +132,7 @@ public class MapController {
         File deletefile = new File(delpathName);
         deletefile.delete();
         System.out.println("删除完毕");
-        return new ModelAndView("redirect:/teacherSelectAll");
+        return new ModelAndView("redirect:/teacherSelectByName");
     }
 
     protected List<Teacher> loadTeachersExcelData(String excelPath) throws Exception {

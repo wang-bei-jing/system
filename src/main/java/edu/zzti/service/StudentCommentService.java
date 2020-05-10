@@ -16,6 +16,7 @@ public interface StudentCommentService {
 
     //shc
     List<StudentComment> findAllCommentsBySnoAndStatus(String sno);
+    List<StudentComment> findTopCommentsBySno(String sno);
 
     int insertSelective(StudentComment record);
     //shc

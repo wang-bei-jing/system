@@ -17,9 +17,10 @@ public interface TeacherService {
     //xwq结束
 
     //shc
-    List<Teacher> finAllTeacher();
+
 
     List<Teacher> selectAllTeacherByName(String name);
+    List<Teacher> findOneTeacherByTno(Integer tno);
 
     Integer deleteTeacherByTno(Integer tno);
 

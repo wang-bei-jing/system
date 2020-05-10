@@ -88,12 +88,14 @@ public class TopicSelectServiceImpl implements TopicSelectService {
     }
 
 
-    public List<TopicSelect> adminFindAllStudentAndTopicAndTeacher(String status) {
-        return topicSelectMapper.adminFindAllStudentAndTopicAndTeacher(status);
-    }
+
 
     public List<TopicSelect> adminFindAllStudentAndTopicAndTeacherByName(String name, String status) {
         return topicSelectMapper.adminFindAllStudentAndTopicAndTeacherByName(name, status);
+    }
+
+    public List<TopicSelect> findOneStudentWithTopicAndTeacherBySno(String sno, String status) {
+        return topicSelectMapper.findOneStudentWithTopicAndTeacherBySno(sno, status);
     }
 }
 

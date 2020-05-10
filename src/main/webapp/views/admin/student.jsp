@@ -79,18 +79,24 @@
             <h2>全部学生 <small>(Information  of all students)</small></h2>
             <!-- 按钮 -->
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <form action="${pageContext.request.contextPath}/studentSelectByName" method="post" class="navbar-form navbar-left" role="search">
-                        <input  type="text" name="name" value="${studentname}" class="form-control" autocomplete="on" placeholder="按学生姓名查询">
+                        <input  type="text" name="name" value="${studentname}" class="form-control" autocomplete="on" placeholder="按学生姓名模糊查询">
                         <button type="submit" class="btn btn-info">查询</button>
                     </form>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="col-md-7">
+                    <form action="${pageContext.request.contextPath}/findOneStudentBySno" method="post" class="navbar-form navbar-left" role="search">
+                        <input  type="text" name="sno"  value="${studentsno}" class="form-control" autocomplete="on" placeholder="按学生学号查询">
+                        <button type="submit" class="btn btn-info">查询</button>
+                    </form>
+                </div>
+                <div class="form-group col-md-5">
                     <span  class=" btn btn-primary" style="background: white;color: #0f6674">批量导入学生 :</span>
                 </div>
                 <div>
                     <form action="${pageContext.request.contextPath}/importStudents" method="post" class="form-horizontal" enctype="multipart/form-data">
-                            <div class="col-md-7"></div>
+                            <div class="col-md-8"></div>
                             <div class="col-md-1" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
                                 <button id="" class="btn btn-success fileinput-button" width="120px" type="button">选择excel</button>
                                 <input type="file" id="myfile" name="file" onchange="loadFile(this.files[0])" width="120px" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
@@ -106,7 +112,7 @@
 
 
                 <div class="col-md-4 col-md-offset-10">
-                    <a id="seeall"  href="${request}/studentSelectAll" methods="post" class="btn btn-primary">查看所有学生</a>
+                    <a id="seeall"  href="${request}/studentSelectByName" methods="post" class="btn btn-primary">查看所有学生</a>
                     <button class="btn btn-success" id="add_modal" >添加学生</button>
                 </div>
 
@@ -173,9 +179,9 @@
             <div class="col-md-6">
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
-                        <li><a href="${pageContext.request.contextPath}/studentSelectAll?pn=1">首页</a></li>
+                        <li><a href="${pageContext.request.contextPath}/studentSelectByName?name=${studentname}&pn=1">首页</a></li>
                         <c:if test="${studentList.hasPreviousPage }">
-                            <li><a href="${pageContext.request.contextPath}/studentSelectAll?pn=${studentList.pageNum-1}"
+                            <li><a href="${pageContext.request.contextPath}/studentSelectByName?name=${studentname}&pn=${studentList.pageNum-1}"
                                    aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
                             </a></li>
                         </c:if>
@@ -185,17 +191,17 @@
                                 <li class="active"><a href="#">${page_Num }</a></li>
                             </c:if>
                             <c:if test="${page_Num != studentList.pageNum }">
-                                <li><a href="${pageContext.request.contextPath}/studentSelectAll?pn=${page_Num }">${page_Num }</a></li>
+                                <li><a href="${pageContext.request.contextPath}/studentSelectByName?name=${studentname}&pn=${page_Num }">${page_Num }</a></li>
                             </c:if>
                         </c:forEach>
 
                         <c:if test="${studentList.hasNextPage }">
-                            <li><a href="${pageContext.request.contextPath}/studentSelectAll?pn=${studentList.pageNum+1 }"
+                            <li><a href="${pageContext.request.contextPath}/studentSelectByName?name=${studentname}&pn=${studentList.pageNum+1 }"
                                    aria-label="Next"> <span aria-hidden="true">&raquo;</span>
                             </a></li>
                         </c:if>
 
-                        <li><a href="${pageContext.request.contextPath}/studentSelectAll?pn=${studentList.pages}">末页</a></li>
+                        <li><a href="${pageContext.request.contextPath}/studentSelectByName?name=${studentname}&pn=${studentList.pages}">末页</a></li>
                     </ul>
                 </nav>
             </div>

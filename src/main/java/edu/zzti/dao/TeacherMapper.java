@@ -20,9 +20,11 @@ public interface TeacherMapper {
     List<Teacher> finAllTeacher();
 
     List<Teacher> selectAllTeacherByName(String name);
+    List<Teacher> findOneTeacherByTno(Integer tno);
 
     Integer deleteTeacherByTno(Integer tno);
     int batchInsertTeacher(List<Teacher> teacherList);
+
     //shc
 
     long countByExample(TeacherExample example);

@@ -23,14 +23,14 @@ public interface StudentMapper {
 
     void updatePassword(@Param("sno") String sno,@Param("password") String password);
 
-    List<Student> findAllStudent();
-
     List<Student> findAllStudentByName(String name);
-
+    List<Student> findOneStudentBySno(String sno);
     Integer studentDel(String sno);
 
     List<Student> findAllStudentByStatus(String status);
     List<Student> findAllStudentByStatusAndName(@Param("status") String status,@Param("name") String name);
+
+    List<Student> findAllStudentByStatusAndSno(@Param("status") String status,@Param("sno") String sno);
 
     int batchInsert(List<Student> studentList);
     //shc

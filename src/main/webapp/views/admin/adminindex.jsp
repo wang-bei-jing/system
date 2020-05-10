@@ -86,7 +86,7 @@
                     </a>
                     <ul class="collapse submenu list-unstyled" id="teachers" data-parent="#accordionExample">
                         <li>
-                            <a href="${pageContext.request.contextPath}/teacherSelectAll" target="myfrm"> 全部教师 </a>
+                            <a href="${pageContext.request.contextPath}/teacherSelectByName" target="myfrm"> 全部教师 </a>
                         </li>
                     </ul>
                 </li>
@@ -102,7 +102,7 @@
                     </a>
                     <ul class="collapse submenu list-unstyled" id="students" data-parent="#accordionExample">
                         <li>
-                            <a href="${pageContext.request.contextPath}/studentSelectAll" target="myfrm"> 全部学生  </a>
+                            <a href="${pageContext.request.contextPath}/studentSelectByName" target="myfrm"> 全部学生  </a>
                         </li>
                     </ul>
                 </li>
@@ -119,13 +119,13 @@
                     </a>
                     <ul class="collapse submenu list-unstyled" id="elements" data-parent="#accordionExample">
                         <li>
-                            <a href="${pageContext.request.contextPath}/adminTopicSelectAll" target="myfrm"> 全部课题 </a>
+                            <a href="${pageContext.request.contextPath}/adminTopicSelectByName" target="myfrm"> 全部课题 </a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath}/adminFindAllStudentAndTopicAndTeacher" target="myfrm"> 已选题学生 </a>
+                            <a href="${pageContext.request.contextPath}/adminFindAllStudentAndTopicAndTeacherByName" target="myfrm"> 已选题学生 </a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath}/findAllStudentNotSelect" target="myfrm"> 未选题学生 </a>
+                            <a href="${pageContext.request.contextPath}/adminFindAllStudentNOTSELECTByName" target="myfrm"> 未选题学生 </a>
                         </li>
                         <li>
                             <a href="${pageContext.request.contextPath}/timeMangerFind" target="myfrm"> 选题时间管理 </a>

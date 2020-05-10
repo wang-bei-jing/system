@@ -38,14 +38,20 @@
             <h2>未选题学生信息</h2>
             <!-- 按钮 -->
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <form action="${pageContext.request.contextPath}/adminFindAllStudentNOTSELECTByName" method="post" class="navbar-form navbar-left" role="search">
-                        <input  type="text" value="${studentname}" name="name" class="form-control" placeholder="按学生姓名查询">
+                        <input  type="text" value="${studentname}" name="name" class="form-control" placeholder="按学生姓名模糊查询">
+                        <button type="submit" class="btn btn-info">查询</button>
+                    </form>
+                </div>
+                <div class="col-md-7">
+                    <form action="${pageContext.request.contextPath}/findOneStudentNOTSELECTBySno" method="post" class="navbar-form navbar-left" role="search">
+                        <input  type="text" name="sno"  value="${studentsno}" class="form-control" autocomplete="on" placeholder="按学生学号查询">
                         <button type="submit" class="btn btn-info">查询</button>
                     </form>
                 </div>
                 <div class="col-md-4 col-md-offset-10">
-                    <a id="seeall"  href="${request}/findAllStudentNotSelect" methods="post" class="btn btn-primary">查看所有未选题学生</a>
+                    <a id="seeall"  href="${request}/adminFindAllStudentNOTSELECTByName" methods="post" class="btn btn-primary">查看所有未选题学生</a>
                 </div>
             </div>
         </div>
@@ -59,6 +65,7 @@
                             <thead style="color: red">
                             <tr>
                                 <th>学生姓名</th>
+                                <th>学号</th>
                                 <th>班级</th>
                                 <th>联系方式</th>
                             </tr>
@@ -67,6 +74,7 @@
                             <c:forEach items="${studentList.list}" var="list">
                                 <tr class="mytr">
                                     <td>${list.name}</td>
+                                    <td>${list.sno}</td>
                                     <td>${list.classes}</td>
                                     <td>${list.tel}</td>
                                 </tr>
@@ -85,9 +93,9 @@
                     <div class="col-md-6">
                         <nav aria-label="Page navigation">
                             <ul class="pagination">
-                                <li><a href="${pageContext.request.contextPath}/findAllStudentByStatus?pn=1">首页</a></li>
+                                <li><a href="${pageContext.request.contextPath}/adminFindAllStudentNOTSELECTByName?name=${studentname}&pn=1">首页</a></li>
                                 <c:if test="${studentList.hasPreviousPage }">
-                                    <li><a href="${pageContext.request.contextPath}/findAllStudentByStatus?pn=${studentList.pageNum-1}"
+                                    <li><a href="${pageContext.request.contextPath}/adminFindAllStudentNOTSELECTByName?name=${studentname}&pn=${studentList.pageNum-1}"
                                            aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
                                     </a></li>
                                 </c:if>
@@ -97,17 +105,17 @@
                                         <li class="active"><a href="#">${page_Num }</a></li>
                                     </c:if>
                                     <c:if test="${page_Num != studentList.pageNum }">
-                                        <li><a href="${pageContext.request.contextPath}/findAllStudentByStatus?pn=${page_Num }">${page_Num }</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/adminFindAllStudentNOTSELECTByName?name=${studentname}&pn=${page_Num }">${page_Num }</a></li>
                                     </c:if>
                                 </c:forEach>
 
                                 <c:if test="${studentList.hasNextPage }">
-                                    <li><a href="${pageContext.request.contextPath}/findAllStudentByStatus?pn=${studentList.pageNum+1 }"
+                                    <li><a href="${pageContext.request.contextPath}/adminFindAllStudentNOTSELECTByName?name=${studentname}&pn=${studentList.pageNum+1 }"
                                            aria-label="Next"> <span aria-hidden="true">&raquo;</span>
                                     </a></li>
                                 </c:if>
 
-                                <li><a href="${pageContext.request.contextPath}/findAllStudentByStatus?pn=${studentList.pages}">末页</a></li>
+                                <li><a href="${pageContext.request.contextPath}/adminFindAllStudentNOTSELECTByName?name=${studentname}&pn=${studentList.pages}">末页</a></li>
                             </ul>
                         </nav>
                     </div>

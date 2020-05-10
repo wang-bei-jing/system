@@ -519,11 +519,15 @@ select ts.department,ts.classes,ts.tel,ts.name tsname,tp.name tpname,tr.name trn
   </select>
 
   <select id="adminFindAllStudentAndTopicAndTeacherByName" parameterType="map" resultMap="BaseResultMapWithStudentTopicAndTeacher">
-select ts.department,ts.classes,ts.tel,ts.name tsname,tp.name tpname,tr.name trname from t_teacher tr,t_topic tp,t_student ts,t_topicselect tps
+select ts.department,ts.classes,ts.tel,ts.name tsname,ts.sno,tp.name tpname,tr.name trname from t_teacher tr,t_topic tp,t_student ts,t_topicselect tps
  WHERE ts.sno=tps.s_sno and tps.t_tno=tr.tno and tps.tp_id=tp.id and tps.status=#{status,jdbcType=VARCHAR} and ts.name like concat('%',#{name},'%')
 
   </select>
 
+  <select id="findOneStudentWithTopicAndTeacherBySno" parameterType="map" resultMap="BaseResultMapWithStudentTopicAndTeacher">
+select ts.department,ts.classes,ts.tel,ts.name tsname,ts.sno,tp.name tpname,tr.name trname from t_teacher tr,t_topic tp,t_student ts,t_topicselect tps
+ WHERE ts.sno=tps.s_sno and tps.t_tno=tr.tno and tps.tp_id=tp.id and tps.status=#{status,jdbcType=VARCHAR} and ts.sno=#{sno,jdbcType=VARCHAR}
 
+  </select>
 
 </mapper>

@@ -49,7 +49,7 @@ public class TopicController {
 
 
     //=========================================以下是施昊晨部分==============================================================
-    @ResponseBody
+   /* @ResponseBody
     @RequestMapping(value = "/TopicSelectAll")
     public ModelAndView TopicSelectAll(HttpServletRequest request, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5);
@@ -66,7 +66,7 @@ public class TopicController {
         PageInfo page = new PageInfo(topics, 5);
         request.getSession().setAttribute("topicList", page);
         return new ModelAndView("student/topic");
-    }
+    }*/
 
     @ResponseBody
     @RequestMapping(value = "/TopicSelectByName")

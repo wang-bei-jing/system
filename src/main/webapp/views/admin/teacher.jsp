@@ -86,19 +86,25 @@
             <h2>全部教师 <small>(Information  of all teachers)</small></h2>
             <!-- 按钮 -->
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <form action="${pageContext.request.contextPath}/teacherSelectByName" method="post" class="navbar-form navbar-left" role="search">
-                        <input  type="text" name="name" value="${teachername}" class="form-control" autocomplete="on" placeholder="按教师姓名查询">
+                        <input  type="text" name="name" value="${teachername}" class="form-control" autocomplete="on" placeholder="按教师姓名模糊查询">
+                        <button type="submit" class="btn btn-info">查询</button>
+                    </form>
+                </div>
+                <div class="col-md-7">
+                    <form action="${pageContext.request.contextPath}/findOneTeacherByTno" method="post" class="navbar-form navbar-left" role="search">
+                        <input  type="text" name="tno"  value="${teachertno}" class="form-control" autocomplete="on" placeholder="按教师工号查询">
                         <button type="submit" class="btn btn-info">查询</button>
                     </form>
                 </div>
 
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-5">
                     <span  class=" btn btn-primary" style="background: white;color: #0f6674">批量导入教师 :</span>
                 </div>
                 <div>
                     <form action="${pageContext.request.contextPath}/importTeachers" method="post" class="form-horizontal" enctype="multipart/form-data">
-                        <div class="col-md-7"></div>
+                        <div class="col-md-8"></div>
                         <div class="col-md-1" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
                             <button id="" class="btn btn-success fileinput-button" width="120px" type="button">选择excel</button>
                             <input type="file" id="myfile" name="file" onchange="loadFile(this.files[0])" width="120px" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
@@ -112,7 +118,7 @@
                 </div>
 
                 <div class="col-md-4 col-md-offset-10">
-                    <a id="seeall"  href="${request}/teacherSelectAll" methods="post" class="btn btn-primary">查看所有教师</a>
+                    <a id="seeall"  href="${request}/teacherSelectByName" methods="post" class="btn btn-primary">查看所有教师</a>
                     <button class="btn btn-success" id="add_modal" >添加教师</button>
                 </div>
 
@@ -128,7 +134,7 @@
                     <thead style="color: red">
                     <tr>
                         <th style="width: 150px;">操作</th>
-                        <th>教师编号</th>
+                        <th>教师工号</th>
                         <th>姓名</th>
                         <th>性别</th>
                         <th>职称</th>
@@ -179,6 +185,7 @@
             </c:choose>
             </div>
         </div>
+
         <%--分页信息--%>
         <div class="row">
             <div class="col-md-6">
@@ -189,9 +196,9 @@
             <div class="col-md-6">
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
-                        <li><a href="${pageContext.request.contextPath}/teacherSelectAll?pn=1">首页</a></li>
+                        <li><a href="${pageContext.request.contextPath}/teacherSelectByName?name=${teachername}&pn=1">首页</a></li>
                         <c:if test="${teacherList.hasPreviousPage }">
-                            <li><a href="${pageContext.request.contextPath}/teacherSelectAll?pn=${teacherList.pageNum-1}"
+                            <li><a href="${pageContext.request.contextPath}/teacherSelectByName?name=${teachername}&pn=${teacherList.pageNum-1}"
                                    aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
                             </a></li>
                         </c:if>
@@ -201,21 +208,22 @@
                                 <li class="active"><a href="#">${page_Num }</a></li>
                             </c:if>
                             <c:if test="${page_Num != teacherList.pageNum }">
-                                <li><a href="${pageContext.request.contextPath}/teacherSelectAll?pn=${page_Num }">${page_Num }</a></li>
+                                <li><a href="${pageContext.request.contextPath}/teacherSelectByName?name=${teachername}&pn=${page_Num }">${page_Num }</a></li>
                             </c:if>
                         </c:forEach>
 
                         <c:if test="${teacherList.hasNextPage }">
-                            <li><a href="${pageContext.request.contextPath}/teacherSelectAll?pn=${teacherList.pageNum+1 }"
+                            <li><a href="${pageContext.request.contextPath}/teacherSelectByName?name=${teachername}&pn=${teacherList.pageNum+1 }"
                                    aria-label="Next"> <span aria-hidden="true">&raquo;</span>
                             </a></li>
                         </c:if>
 
-                        <li><a href="${pageContext.request.contextPath}/teacherSelectAll?pn=${teacherList.pages}">末页</a></li>
+                        <li><a href="${pageContext.request.contextPath}/teacherSelectByName?name=${teachername}&pn=${teacherList.pages}">末页</a></li>
                     </ul>
                 </nav>
             </div>
         </div>
+
         <!-- 添加模态框 -->
         <div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -227,9 +235,9 @@
                     <div class="modal-body">
                         <form action="${pageContext.request.contextPath}/addTeacher" method="post" class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">教师编号</label>
+                                <label class="col-sm-2 control-label">教师工号</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="tno" class="form-control" placeholder="教师编号">
+                                    <input type="text" name="tno" class="form-control" placeholder="教师工号">
                                     <span class="help-block"></span>
                                 </div>
                             </div>
@@ -291,9 +299,9 @@
                             <input id="email" name="email" type="text" style="display: none" value="">
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">教师编号</label>
+                                <label class="col-sm-2 control-label">教师工号</label>
                                 <div class="col-sm-10">
-                                    <input id="tno" type="text" name="tno" class="form-control"  placeholder="教师编号" readonly>
+                                    <input id="tno" type="text" name="tno" class="form-control"  placeholder="教师工号" readonly>
                                     <span class="help-block"></span>
                                     <span style="color: red">*不允许修改</span>
                                 </div>

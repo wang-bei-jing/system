@@ -328,6 +328,10 @@
     select * from t_student where name like concat('%',#{name},'%')
   </select>
 
+  <select id="findOneStudentBySno" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from t_student where  sno=#{sno,jdbcType=VARCHAR}
+  </select>
+
   <delete id="studentDel" parameterType="java.lang.String" >
     delete from  t_student where  sno=#{sno,jdbcType=VARCHAR}
   </delete>
@@ -337,6 +341,10 @@
   </select>
   <select id="findAllStudentByStatusAndName" parameterType="map" resultMap="BaseResultMap">
     select * from t_student where status=#{status,jdbcType=VARCHAR} and name like concat('%',#{name},'%')
+  </select>
+
+    <select id="findAllStudentByStatusAndSno" parameterType="map" resultMap="BaseResultMap">
+    select * from t_student where status=#{status,jdbcType=VARCHAR} and sno=#{sno,jdbcType=VARCHAR}
   </select>
 
   <insert id="batchInsert" parameterType="list">

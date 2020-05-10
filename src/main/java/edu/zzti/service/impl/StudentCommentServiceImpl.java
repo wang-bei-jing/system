@@ -35,6 +35,10 @@ public class StudentCommentServiceImpl implements StudentCommentService {
         return studentCommentMapper.findAllCommentsBySnoAndStatus(sno);
     }
 
+    public List<StudentComment> findTopCommentsBySno(String sno) {
+        return studentCommentMapper.findTopCommentsBySno(sno);
+    }
+
     public int insertSelective(StudentComment record) {
         return studentCommentMapper.insertSelective(record);
     }

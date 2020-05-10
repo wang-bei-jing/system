@@ -35,12 +35,14 @@ public class TeacherServiceImpl implements TeacherService {
     //xwq结束
 
     //shc
-    public List<Teacher> finAllTeacher() {
-        return teacherMapper.finAllTeacher();
-    }
+
 
     public List<Teacher> selectAllTeacherByName(String name) {
         return teacherMapper.selectAllTeacherByName(name);
+    }
+
+    public List<Teacher> findOneTeacherByTno(Integer tno) {
+        return teacherMapper.findOneTeacherByTno(tno);
     }
 
     public Integer deleteTeacherByTno(Integer tno) {

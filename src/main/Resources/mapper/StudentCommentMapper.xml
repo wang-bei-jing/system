@@ -184,4 +184,11 @@
     where sc.sc_tps_id=
     (select tps.id from t_topicselect tps where s_sno=#{sno,jdbcType=VARCHAR} and status='1')
   </select>
+  <select id="findTopCommentsBySno" parameterType="java.lang.String" resultMap="BaseResultMapWithTeacherComment">
+    select *
+    from t_studentcomment sc left join t_teachercomment tc on sc.sc_id=tc.tc_sc_id
+    where tc.tc_tno=
+    (select tps.t_tno from t_topicselect tps where s_sno=#{sno,jdbcType=VARCHAR} and status='1') and tc.tc_all=1
+  </select>
+
 </mapper>

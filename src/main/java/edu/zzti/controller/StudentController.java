@@ -96,20 +96,24 @@ public class StudentController {
 //=====================================提问================================================
     @ResponseBody
     @RequestMapping(value = "/findAllCommentsBySnoAndStatus")
-    public ModelAndView findAllCommentsBySnoAndStatus(HttpServletRequest request, String sno, Model model){
-        //查询出tpsId 以便add的时候存入数据库
+    public ModelAndView findAllCommentsBySnoAndStatus(String sno, Model model){
+        //查询出tpsId 以便新建提问的时候存入数据库
         String status="1";
-        //通过sSno,status="1"查询实训课题的tpsId来删除周报
         Integer tpsId=topicSelectService.findTpsId(sno,status);
+        List<StudentComment> topCommentList=studentCommentService.findTopCommentsBySno(sno);
+
+
         List<StudentComment> studentCommentList=studentCommentService.findAllCommentsBySnoAndStatus(sno);
         for (int i=0;i<studentCommentList.size();i++){
             System.out.println(studentCommentList.get(i).toString());
         }
 
+        model.addAttribute("topCommentList",topCommentList);
         model.addAttribute("studentCommentList",studentCommentList);
         model.addAttribute("stutpsId",tpsId);
         return new ModelAndView("student/ask");
     }
+
     @ResponseBody
     @RequestMapping(value = "/addComment")
     public ModelAndView addComment(StudentComment studentComment,String sno){

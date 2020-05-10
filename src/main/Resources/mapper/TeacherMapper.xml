@@ -339,6 +339,10 @@
     select * from t_teacher where  name  like concat('%',#{name},'%')
   </select>
 
+  <select id="findOneTeacherByTno" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from t_teacher where  tno=#{tno,jdbcType=INTEGER}
+  </select>
+
   <select id="deleteTeacherByTno" parameterType="java.lang.Integer">
     delete  from t_teacher where  tno=#{tno,jdbcType=INTEGER}
   </select>

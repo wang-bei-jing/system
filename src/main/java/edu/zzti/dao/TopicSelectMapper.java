@@ -45,9 +45,9 @@ public interface TopicSelectMapper {
     Integer findTpsId(@Param("sSno") String sSno, @Param("status") String status);
 
 
-    List<TopicSelect> adminFindAllStudentAndTopicAndTeacher(String status);
 
     List<TopicSelect> adminFindAllStudentAndTopicAndTeacherByName(@Param("name") String name,@Param("status") String status);
+    List<TopicSelect> findOneStudentWithTopicAndTeacherBySno(@Param("sno") String sno,@Param("status") String status);
     //shc
 
     long countByExample(TopicSelectExample example);

@@ -15,9 +15,20 @@
     <link href="${pageContext.request.contextPath}/static/mainstatic/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <script src="${pageContext.request.contextPath}/static/mainstatic/bootstrap/js/bootstrap.min.js"></script>
     <c:set var="request" value="${pageContext.request.contextPath}"></c:set>
-
-
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/mainstatic/bootstrap/css/bootstrap-theme.css">
+
+
+    <script type="text/javascript">
+        function see(ask,answer){
+            $("#ask").val(ask);
+            $("#answer").val(answer);
+
+            $("#display").modal({
+                backdrop: "static",
+            });
+        };
+
+    </script>
     <script type="text/javascript">
         /*弹出添加模块框*/
         $(document).ready(function() {
@@ -60,8 +71,46 @@
                    </div>
                </div>
                <br>
-               <!-- 显示表格数据 -->
+               <span><strong style="color: darkred">置顶提问:</strong></span>
+               <!-- 置顶表格数据 -->
                <div class="row" id="table_page">
+                   <div class="col-md-12" >
+                       <c:choose>
+                           <c:when test="${topCommentList[0]!=null}">
+                               <table class="table table-condensed table-striped  table-hover"  >
+                                   <thead style="color: red">
+                                   <tr>
+                                       <th style="width: 110px;">操作</th>
+                                       <th>提问内容</th>
+                                       <th>提问时间</th>
+                                       <th>教师答复</th>
+                                       <th>答复时间</th>
+
+                                   </tr>
+                                   </thead>
+                                   <tbody>
+                                   <c:forEach items="${topCommentList}" var="list">
+                                       <tr class="mytr">
+                                           <td><button class="btn btn-primary btn-sm edit_btn"  href="javascript:void(0)" onclick="see('${list.scContent}','${list.teacherComment.tcContent}')">查看内容</button></td>
+                                           <td title="${list.scContent}">${list.scContent}</td>
+                                           <td><fmt:formatDate value="${list.scTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                                           <td title="${list.teacherComment.tcContent}">${list.teacherComment.tcContent}</td>
+                                           <td><fmt:formatDate value="${list.teacherComment.tcTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                                       </tr>
+                                   </c:forEach>
+                                   </tbody>
+                               </table>
+
+                           </c:when>
+                           <c:otherwise>
+                               <span><strong>您未向老师提问</strong></span>
+                           </c:otherwise>
+                       </c:choose>
+                   </div>
+               </div>
+               <span><strong>我的提问:</strong></span>&nbsp;
+               <!-- 显示表格数据 -->
+               <div class="row">
                    <div class="col-md-12" >
                        <c:choose>
                            <c:when test="${studentCommentList[0]!=null}">
@@ -69,6 +118,7 @@
                                    <table class="table table-condensed table-striped  table-hover"  >
                                        <thead style="color: red">
                                        <tr>
+                                           <th style="width: 110px;">操作</th>
                                            <th>提问内容</th>
                                            <th>提问时间</th>
                                            <th>教师答复</th>
@@ -79,7 +129,8 @@
                                        <tbody>
                                        <c:forEach items="${studentCommentList}" var="list">
                                        <tr class="mytr">
-                                           <td>${list.scContent}</td>
+                                           <td><button class="btn btn-primary btn-sm edit_btn"  href="javascript:void(0)" onclick="see('${list.scContent}','${list.teacherComment.tcContent}')">查看内容</button></td>
+                                           <td title="${list.scContent}">${list.scContent}</td>
                                            <td><fmt:formatDate value="${list.scTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 
                                                <c:choose>
@@ -87,7 +138,7 @@
                                                          <td style="color: red"> 教师暂未回复 </td>
                                                    </c:when>
                                                    <c:otherwise>
-                                                       <td style="color: green">${list.teacherComment.tcContent}</td>
+                                                       <td title="${list.teacherComment.tcContent}" style="color: green">${list.teacherComment.tcContent}</td>
                                                    </c:otherwise>
                                                </c:choose>
 
@@ -130,6 +181,35 @@
                                        <button type="submit" class="btn btn-primary" >保存</button>
                                    </div>
                                </form>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <!-- 显示模态框 -->
+               <div class="modal fade" id="display" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                   <div class="modal-dialog modal-lg" role="document">
+                       <div class="modal-content">
+                           <div class="modal-header">
+                               <h4 class="modal-title" >课题详情</h4>
+                           </div>
+                           <div class="modal-body">
+                               <div class="form-group">
+                                   <label class="col-sm-2 control-label">提问内容</label>
+                                   <div class="col-sm-10">
+                                       <textarea id="ask" cols="80px" rows="10px" name="scContent"></textarea>
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                   <label class="col-sm-2 control-label">提问内容</label>
+                                   <div class="col-sm-10">
+                                       <textarea id="answer" cols="80px" rows="10px" name="scContent"></textarea>
+                                   </div>
+                               </div>
+
+                               <div class="modal-footer">
+                                   <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                               </div>
+
                            </div>
                        </div>
                    </div>

@@ -20,9 +20,10 @@ public interface StudentService {
 
     void studentUpdatePassword(String sno,String newPassword);
 
-    List<Student> findAllStudent();
+
 
     List<Student> findAllStudentByName(String name);
+    List<Student> findOneStudentBySno(String sno);
 
     int studentDel(String sno);
 
@@ -30,9 +31,10 @@ public interface StudentService {
 
     int studentUpdSelective(Student record);
 
-    List<Student> findAllStudentByStatus(String status);
+
     List<Student> findAllStudentByStatusAndName(String status,String name);
 
+    List<Student> findAllStudentByStatusAndSno(String status,String sno);
 
     int batchInsert(List<Student> studentList);
 

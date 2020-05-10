@@ -23,6 +23,8 @@ public class StudentServiceImpl implements StudentService {
     }
     //xwq结束
 
+
+    //shc
     public Integer studentLogin(String sno, String password){
         HashMap map=new HashMap();
         map.put("sno",sno);
@@ -42,12 +44,14 @@ public class StudentServiceImpl implements StudentService {
         studentMapper.updatePassword(sno, newPassword);
     }
 
-    public List<Student> findAllStudent() {
-        return studentMapper.findAllStudent();
-    }
+
 
     public List<Student> findAllStudentByName(String name) {
         return studentMapper.findAllStudentByName(name);
+    }
+
+    public List<Student> findOneStudentBySno(String sno) {
+        return studentMapper.findOneStudentBySno(sno);
     }
 
     public int studentDel(String sno) {
@@ -63,12 +67,13 @@ public class StudentServiceImpl implements StudentService {
 
     }
 
-    public List<Student> findAllStudentByStatus(String status) {
-        return studentMapper.findAllStudentByStatus(status);
-    }
 
     public List<Student> findAllStudentByStatusAndName(String status, String name) {
         return studentMapper.findAllStudentByStatusAndName(status, name);
+    }
+
+    public List<Student> findAllStudentByStatusAndSno(String status, String sno) {
+        return studentMapper.findAllStudentByStatusAndSno(status, sno);
     }
 
     public int batchInsert(List<Student> studentList) {

@@ -43,9 +43,10 @@ public interface TopicSelectService {
 
     Integer findTpsId(String sSno,String status);
 
-    List<TopicSelect> adminFindAllStudentAndTopicAndTeacher(String status);
 
     List<TopicSelect> adminFindAllStudentAndTopicAndTeacherByName(String name,String status);
+    List<TopicSelect> findOneStudentWithTopicAndTeacherBySno(String sno,String status);
+
 }
 
 

@@ -130,7 +130,7 @@
         </c:choose>
 
         <%--分页信息--%>
-        <c:if test="${studentsGradesSize>=6}">
+      <%--  <c:if test="${studentsGradesSize>=6}">--%>
             <div class="row">
                 <div class="col-md-6">
                     当前是第${studentsGrades.pageNum }页,
@@ -167,7 +167,7 @@
                     </nav>
                 </div>
             </div>
-        </c:if>
+      <%--  </c:if>--%>
 
     </div>
 </div>

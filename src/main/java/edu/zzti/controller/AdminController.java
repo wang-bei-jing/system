@@ -84,57 +84,55 @@ public class AdminController {
     }
 
     //-----------------------------------------教师部分--------------------------------
+
    /**
     * @Author ：shc
-    * @Param ：
-    * @Return ：teacherList
-    * @Date ：2020/4/10
-    * @Description ：查询所有教师
+    * @Description ：查询教师，可以全查也可以模糊查询
     **/
     @ResponseBody
-    @RequestMapping("/teacherSelectAll")
-    public ModelAndView teacherSelectAll(HttpServletRequest request,@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
-        PageHelper.startPage(pn, 5);
-        System.out.println("进入");
-        List<Teacher> teacherList=teacherService.finAllTeacher();
-        for(int i=0;i<teacherList.size();i++){
-            System.out.println(teacherList.toString());
-        }
-        PageInfo page = new PageInfo(teacherList, 5);
-        request.setAttribute("teacherList",page);
-        return  new ModelAndView("admin/teacher");
-    }
-   /**
-    * @Author ：shc
-    * @Param ：教师的name
-    * @Return ：根据教师name模糊查询的teacherList
-    * @Date ：2020/4/10
-    * @Description ：
-    **/
-    @ResponseBody
-    @PostMapping("/teacherSelectByName")
-    public ModelAndView teacherSelectByName(HttpServletRequest request,@RequestParam(value = "pn", defaultValue = "1") Integer pn,String name) {
+    @RequestMapping("/teacherSelectByName")
+    public ModelAndView teacherSelectByName(HttpServletRequest request,@RequestParam(value = "pn", defaultValue = "1") Integer pn,@RequestParam(value = "name", defaultValue = "") String name) {
         PageHelper.startPage(pn, 5);
         List<Teacher> teacherList=teacherService.selectAllTeacherByName(name);
+        for (int i=0;i<teacherList.size();i++){
+            System.out.println(teacherList.get(i).toString());
+        }
+
         PageInfo page = new PageInfo(teacherList, 5);
         request.setAttribute("teacherList",page);
         request.setAttribute("teachername",name);
+
         return  new ModelAndView("admin/teacher");
     }
+    /**
+     * @Author ：shc
+     * @Description ：通过id查询教师
+     **/
+    @RequestMapping("/findOneTeacherByTno")
+    public ModelAndView findOneTeacherByTno(HttpServletRequest request,@RequestParam(value = "pn", defaultValue = "1") Integer pn,Integer tno) {
+        PageHelper.startPage(pn, 5);
+        List<Teacher> teacherList=teacherService.findOneTeacherByTno(tno);
+        PageInfo page = new PageInfo(teacherList, 5);
+        request.setAttribute("teacherList",page);
+        request.setAttribute("teachertno",tno);
+        return  new ModelAndView("admin/teacher");
+    }
+
+    /**
+     * @Author ：shc
+     * @Description ：删除单个教师
+     **/
     @RequestMapping("/teacherDel")
     public ModelAndView TopicSelectDel(Integer tno){
         System.out.println("111111111"+tno);
         Integer i=0;
         i=teacherService.deleteTeacherByTno(tno);
         System.out.println(i);
-        return new ModelAndView("redirect:/teacherSelectAll");
+        return new ModelAndView("redirect:/teacherSelectByName");
     }
     /**
      * @Author ：shc
-     * @Param ：teacher
-     * @Return ：添加成功，返回页面
-     * @Date ：2020/4/11
-     * @Description ：
+     * @Description ：单个添加教师
      **/
     @ResponseBody
     @PostMapping("/addTeacher")
@@ -143,28 +141,22 @@ public class AdminController {
         int i=0;
         i=teacherService.addteacher(teacher);
         System.out.println("添加成了吗"+i);
-        return new ModelAndView("redirect:/teacherSelectAll");
+        return new ModelAndView("redirect:/teacherSelectByName");
     }
     /**
      * @Author ：shc
-     * @Param ：教师的工号tno
-     * @Return ：teacher对象
-     * @Date ：2020/4/11
-     * @Description ：
+     * @Description ：通过工号查询教师，返回一个对象到ajax，查过去做修改模态框的数据保持
      **/
     @ResponseBody
     @PostMapping("/selectTeacherByTno")
-    public Teacher selectTeacherByTno(HttpServletRequest request, int tno){
+    public Teacher selectTeacherByTno(int tno){
        Teacher oneteacher=teacherService.selectTeacherByTno(tno);
         System.out.println(oneteacher);
         return oneteacher;
     }
     /**
      * @Author ：shc
-     * @Param ：teacher
-     * @Return ：更新后跳转页面
-     * @Date ：2020/4/12
-     * @Description ：
+     * @Description ：更新修改后的教师信息
      **/
     @ResponseBody
     @PostMapping("/updateTeacher")
@@ -172,38 +164,17 @@ public class AdminController {
         System.out.println("新的"+teacher);
         int i=teacherService.updateTeacher(teacher);
         System.out.println(i);
-        return new ModelAndView("redirect:/teacherSelectAll");
+        return new ModelAndView("redirect:/teacherSelectByName");
     }
     //-------------------------------------学生部分----------------------------------------------------
-    /**
-     * @Author ：shc
-     * @Param ：
-     * @Return ：teacherList
-     * @Date ：2020/4/10
-     * @Description ：查询所有教师
-     **/
+
+   /**
+    * @Author ：shc
+    * @Description ：查询学生信息，可以全查也可以模糊查询
+    **/
     @ResponseBody
-    @RequestMapping("/studentSelectAll")
-    public ModelAndView studentSelectAll(HttpServletRequest request,@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
-        PageHelper.startPage(pn, 5);
-        List<Student> studentList=studentService.findAllStudent();
-        for(int i=0;i<studentList.size();i++){
-            System.out.println(studentList.toString());
-        }
-        PageInfo page = new PageInfo(studentList, 5);
-        request.setAttribute("studentList",page);
-        return  new ModelAndView("admin/student");
-    }
-    /**
-     * @Author ：shc
-     * @Param ：教师的name
-     * @Return ：根据教师name模糊查询的teacherList
-     * @Date ：2020/4/10
-     * @Description ：
-     **/
-    @ResponseBody
-    @PostMapping("/studentSelectByName")
-    public ModelAndView studentSelectByName(HttpServletRequest request,@RequestParam(value = "pn", defaultValue = "1") Integer pn,String name) {
+    @RequestMapping("/studentSelectByName")
+    public ModelAndView studentSelectByName(HttpServletRequest request,@RequestParam(value = "pn", defaultValue = "1") Integer pn,@RequestParam(value = "name", defaultValue = "")String name) {
         PageHelper.startPage(pn, 5);
         System.out.println(name);
         List<Student> studentList=studentService.findAllStudentByName(name);
@@ -213,6 +184,23 @@ public class AdminController {
         request.setAttribute("studentname",name);
         return  new ModelAndView("admin/student");
     }
+    /**
+     * @Author ：shc
+     * @Description ：通过id查询学生
+     **/
+    @RequestMapping("/findOneStudentBySno")
+    public ModelAndView findOneStudentBySno(HttpServletRequest request,@RequestParam(value = "pn", defaultValue = "1") Integer pn,String sno) {
+        PageHelper.startPage(pn, 5);
+        List<Student> studentList=studentService.findOneStudentBySno(sno);
+        PageInfo page = new PageInfo(studentList, 5);
+        request.setAttribute("studentList",page);
+        request.setAttribute("studentsno",sno);
+        return  new ModelAndView("admin/student");
+    }
+    /**
+     * @Author ：shc
+     * @Description ：删除学生
+     **/
     @RequestMapping("/studentDel")
     public ModelAndView studentDel(String sno){
         System.out.println("111111111+"+sno);
@@ -220,8 +208,12 @@ public class AdminController {
         i=studentService.studentDel(sno);
         System.out.println(i);
 
-        return new ModelAndView("redirect:/studentSelectAll");
+        return new ModelAndView("redirect:/studentSelectByName");
     }
+    /**
+     * @Author ：shc
+     * @Description ：添加学生
+     **/
     @ResponseBody
     @PostMapping("/studentAdd")
     public ModelAndView studentAdd(Student student){
@@ -229,71 +221,40 @@ public class AdminController {
         int i=0;
         i=studentService.studentAdd(student);
         System.out.println("添加成了吗"+i);
-        return new ModelAndView("redirect:/studentSelectAll");
+        return new ModelAndView("redirect:/studentSelectByName");
     }
     /**
      * @Author ：shc
-     * @Param ：sno
-     * @Return ：student对象
-     * @Date ：2020/4/11
-     * @Description ：查过去做数据保持
+     * @Description ：通过学号查询学生，返回一个对象到ajax，查过去做修改模态框的数据保持
      **/
     @ResponseBody
     @PostMapping("/studentSelectBySno")
-    public Student studentSelectByTno(HttpServletRequest request, String sno){
+    public Student studentSelectByTno(String sno){
         Student onestudent=studentService.studentFindBySno(sno);
         System.out.println(onestudent);
-
         return onestudent;
     }
-    /**
-     * @Author ：shc
-     * @Param ：student
-     * @Return ：更新后跳转页面
-     * @Date ：2020/4/12
-     * @Description ：
-     **/
+   /**
+    * @Author ：shc
+    * @Description ：更新修改后的学生信息
+    **/
     @ResponseBody
     @PostMapping("/studentUpd")
     public ModelAndView studentUpd(HttpServletRequest request, Student student){
         System.out.println("新的"+student);
         int i=studentService.studentUpdSelective(student);
         System.out.println(i);
-        return new ModelAndView("redirect:/studentSelectAll");
+        return new ModelAndView("redirect:/studentSelectByName");
     }
     //=====================================课题管理================================================
-    /**
-     * @Author ：shc
-     * @Param ：
-     * @Return ：topicList返回到admintopic
-     * @Date ：2020/4/13
-     * @Description ：
-     **/
-    @ResponseBody
-    @RequestMapping(value = "/adminTopicSelectAll")
-    public ModelAndView adminTopicSelectAll(HttpServletRequest request, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
-        PageHelper.startPage(pn, 5);
-        List<Topic> topics = topicService.selectAll();
-        System.out.println(topics.size());
-        for (int i = 0; i < topics.size(); i++) {
-            System.out.println(topics.get(i).toString());
-            System.out.println(topics.get(i).getTeacher().toString());
-        }
 
-        PageInfo page = new PageInfo(topics, 5);
-        request.setAttribute("topicList", page);
-        return new ModelAndView("admin/admintopic");
-    }
-    /**
-     * @Author ：shc
-     * @Param ：
-     * @Return ：
-     * @Date ：2020/4/14
-     * @Description ：name模糊查询全部选题
-     **/
+   /**
+    * @Author ：shc
+    * @Description ：查询全部课题，也支持模糊查询
+    **/
     @ResponseBody
     @RequestMapping(value = "/adminTopicSelectByName")
-    public ModelAndView TopicSelectByCname(HttpServletRequest request,String name, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+    public ModelAndView TopicSelectByCname(HttpServletRequest request,@RequestParam(value = "name", defaultValue = "") String name, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5);
         List<Topic> topics = topicService.selectByName(name);
         System.out.println(topics.size());
@@ -307,38 +268,14 @@ public class AdminController {
         request.setAttribute("topicList", page);
         return new ModelAndView("admin/admintopic");
     }
-    /**
-     * @Author ：shc
-     * @Param ：
-     * @Return ：
-     * @Date ：2020/4/13
-     * @Description ：已选课题学生及其课题信息
-     **/
-    @ResponseBody
-    @RequestMapping(value = "/adminFindAllStudentAndTopicAndTeacher")
-    public ModelAndView adminFindAllStudentAndTopicAndTeacher(HttpServletRequest request, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
-        PageHelper.startPage(pn, 5);
-        String status="1";
-        List<TopicSelect> topicSelectList=topicSelectService.adminFindAllStudentAndTopicAndTeacher(status);
-        System.out.println(topicSelectList.size());
-        for (int i = 0; i < topicSelectList.size(); i++) {
-            System.out.println(topicSelectList.get(i).toString());
-        }
 
-        PageInfo page = new PageInfo(topicSelectList, 5);
-        request.getSession().setAttribute("sttList", page);
-        return new ModelAndView("admin/adminstudentselect");
-    }
-    /**
-     * @Author ：shc
-     * @Param ：
-     * @Return ：
-     * @Date ：2020/4/13
-     * @Description ：name模糊查询已选课题学生及其课题信息
-     **/
+   /**
+    * @Author ：shc
+    * @Description ：查询已选课题学生信息及其课题信息，也支持模糊查询
+    **/
     @ResponseBody
     @RequestMapping(value = "/adminFindAllStudentAndTopicAndTeacherByName")
-    public ModelAndView adminFindAllStudentAndTopicAndTeacherByName(HttpServletRequest request,@RequestParam String name, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+    public ModelAndView adminFindAllStudentAndTopicAndTeacherByName(HttpServletRequest request,@RequestParam(value = "name", defaultValue = "") String name, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5);
         String status="1";
         List<TopicSelect> topicSelectList=topicSelectService.adminFindAllStudentAndTopicAndTeacherByName(name,status);
@@ -353,35 +290,30 @@ public class AdminController {
     }
     /**
      * @Author ：shc
-     * @Param ：
-     * @Return ：
-     * @Date ：2020/4/14
-     * @Description ：未选题学生
+     * @Description ：通过id查询已选课题学生的信息
      **/
-    @ResponseBody
-    @RequestMapping(value = "/findAllStudentNotSelect")
-    public ModelAndView findAllStudentNotSelect(HttpServletRequest request,@RequestParam(value = "pn", defaultValue = "1") Integer pn){
+    @RequestMapping(value = "/findOneStudentWithTopicAndTeacherBySno")
+    public ModelAndView findOneStudentWithTopicAndTeacherBySno(HttpServletRequest request,@RequestParam(value = "sno") String sno, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5);
-        String status="0";
-        System.out.println("进findAllStudentNotSelect了");
-        List<Student> studentList=studentService.findAllStudentByStatus(status);
-        for (int i = 0; i < studentList.size(); i++) {
-            System.out.println(studentList.get(i).toString());
+        String status="1";
+        List<TopicSelect> topicSelectList=topicSelectService.findOneStudentWithTopicAndTeacherBySno(sno,status);
+        System.out.println(topicSelectList.size());
+        for (int i = 0; i < topicSelectList.size(); i++) {
+            System.out.println(topicSelectList.get(i).toString());
         }
-        PageInfo page = new PageInfo(studentList, 5);
-        request.setAttribute("studentList",page);
-        return new ModelAndView("admin/adminstudentnotselect");
+        PageInfo page = new PageInfo(topicSelectList, 5);
+        request.setAttribute("studentsno", sno);
+        request.setAttribute("sttList", page);
+        return new ModelAndView("admin/adminstudentselect");
     }
-    /**
-     * @Author ：shc
-     * @Param ：
-     * @Return ：
-     * @Date ：2020/4/14
-     * @Description ：name模糊查询未选题学生
-     **/
+
+   /**
+    * @Author ：shc
+    * @Description ：查询未选题学生信息，也支持模糊查询
+    **/
     @ResponseBody
     @RequestMapping(value = "/adminFindAllStudentNOTSELECTByName")
-    public ModelAndView adminFindAllStudentNOTSELECTByName(HttpServletRequest request,@RequestParam String name, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+    public ModelAndView adminFindAllStudentNOTSELECTByName(HttpServletRequest request,@RequestParam(value = "name", defaultValue = "") String name, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5);
         String status="0";
         List<Student> studentList=studentService.findAllStudentByStatusAndName(status,name);
@@ -390,6 +322,23 @@ public class AdminController {
         }
         PageInfo page = new PageInfo(studentList, 5);
         request.setAttribute("studentname", name);
+        request.setAttribute("studentList",page);
+        return new ModelAndView("admin/adminstudentnotselect");
+    }
+    /**
+     * @Author ：shc
+     * @Description ：通过学号查询单个未选课学生信息
+     **/
+    @RequestMapping(value = "/findOneStudentNOTSELECTBySno")
+    public ModelAndView findOneStudentNOTSELECTBySno(HttpServletRequest request,@RequestParam(value = "sno") String sno, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+        PageHelper.startPage(pn, 5);
+        String status="0";
+        List<Student> studentList=studentService.findAllStudentByStatusAndSno(status,sno);
+        for (int i = 0; i < studentList.size(); i++) {
+            System.out.println(studentList.get(i).toString());
+        }
+        PageInfo page = new PageInfo(studentList, 5);
+        request.setAttribute("studentsno", sno);
         request.setAttribute("studentList",page);
         return new ModelAndView("admin/adminstudentnotselect");
     }
@@ -460,6 +409,10 @@ public class AdminController {
         return new ModelAndView("redirect:/timeMangerFind");
     }
 //=====================================成绩管理================================================
+    /**
+     * @Author ：shc
+     * @Description ：查询所有学生的成绩
+     **/
     @ResponseBody
     @RequestMapping(value = "/adminGradeSelectAll")
     public ModelAndView adminGradeSelectAll(HttpServletRequest request,@RequestParam(value = "min", defaultValue = "0")Integer min,@RequestParam(value = "max", defaultValue = "101")Integer max, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
@@ -469,17 +422,15 @@ public class AdminController {
         for (int i = 0; i < studentsGrades.size(); i++) {
             System.out.println(studentsGrades.get(i).toString());
         }
-        int studentsGradesSize=studentsGrades.size();
-        System.out.println(studentsGradesSize);
+
         PageInfo page = new PageInfo(studentsGrades, 5);
         request.setAttribute("studentsGrades", page);
-        request.setAttribute("studentsGradesSize", studentsGradesSize);
+
         return new ModelAndView("admin/admingrade");
     }
     /**
      * @Author ：shc
-     * @Date ：2020/4/20
-     * @Description ：根据学号查学生成绩，
+     * @Description ：根据学号查学生成绩
      **/
     @ResponseBody
     @RequestMapping(value = "/adminGradeFindBySno")
@@ -495,11 +446,10 @@ public class AdminController {
         request.setAttribute("studentsGradesSize", studentsGradesSize);
         return new ModelAndView("admin/admingrade");
     }
-    /**
-     * @Author ：shc
-     * @Date ：2020/4/20
-     * @Description ：根据老师的名字查学生成绩。
-     **/
+  /**
+   * @Author ：shc
+   * @Description ：根据老师的名字查其学生成绩。
+   **/
     @ResponseBody
     @RequestMapping(value = "/adminGradeFindByTeacherName")
     public ModelAndView adminGradeFindByTeacherName(HttpServletRequest request,String tname,@RequestParam(value = "min", defaultValue = "0")Integer min,@RequestParam(value = "max", defaultValue = "101")Integer max, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
