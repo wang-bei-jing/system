@@ -202,12 +202,6 @@
                                                 <c:if test="${weeks.contains('第六周')==false}">
                                                     <option>第六周</option>
                                                 </c:if>
-                                                <c:if test="${weeks.contains('第七周')==false}">
-                                                    <option>第七周</option>
-                                                </c:if>
-                                                <c:if test="${weeks.contains('第八周')==false}">
-                                                    <option>第八周</option>
-                                                </c:if>
                                             </select>
                                         </div>
                                     </div>
