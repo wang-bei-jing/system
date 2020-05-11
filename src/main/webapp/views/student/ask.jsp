@@ -62,7 +62,7 @@
            <!-- 搭建显示页面 -->
            <div class="container" style="width: 100%">
                <div class="modal-header">
-                   <h2>学生选题时间管理</h2>
+                   <h2>提问与答复管理</h2>
                    <!-- 按钮 -->
                    <div class="row">
                        <div class="col-md-4 col-md-offset-10">
@@ -103,7 +103,7 @@
 
                            </c:when>
                            <c:otherwise>
-                               <span><strong>您未向老师提问</strong></span>
+                               <span style="color:red;"><strong>暂无置顶提问！</strong></span>
                            </c:otherwise>
                        </c:choose>
                    </div>
@@ -151,7 +151,7 @@
 
                            </c:when>
                            <c:otherwise>
-                               <span><strong>您未向老师提问</strong></span>
+                               <span style="color:red;"><strong>您还未向老师提问！</strong></span>
                            </c:otherwise>
                        </c:choose>
                    </div>

@@ -32,29 +32,33 @@
        function signup(tpId,tpsStatus){
 
             var ssno=${student.sno};
-
-
-            if (tpsStatus=='0'||tpsStatus=='2'){
-                $.ajax({
-                    type:"post",
-                    url:"/system/TopicSelectDel",
-                    data:{"sSno":ssno,"tpId":tpId},
-                    dateType:"json",
-                    success:function(data){
-                        if(data == "1"){
-                            alert("退选成功！")
-                           $("#tr_"+tpId).remove();
-                            /*$("#mytopic-information").reload();*/
-                            window.location.reload();
-                         /*location.href="${pageContext.request.contextPath}/myTopic?sSno=${student.sno}"*/
-                        }else {
-                            alert("退选失败！请联系管理员！")
-                        }
-                    }
-                });
-            }else {
-               alert("已被老师确认，无法取消!");
+           if(confirm("确认退选该课题吗?")){
+                   if (tpsStatus=='0'||tpsStatus=='2'){
+                       $.ajax({
+                           type:"post",
+                           url:"/system/TopicSelectDel",
+                           data:{"sSno":ssno,"tpId":tpId},
+                           dateType:"json",
+                           success:function(data){
+                               if(data == "1"){
+                                   alert("退选成功！")
+                                   $("#tr_"+tpId).remove();
+                                   /*$("#mytopic-information").reload();*/
+                                   window.location.reload();
+                                   /*location.href="${pageContext.request.contextPath}/myTopic?sSno=${student.sno}"*/
+                               }else {
+                                   alert("退选失败！请联系管理员！")
+                               }
+                           }
+                       });
+                   }else {
+                       alert("已被老师确认，无法取消!");
+                   }
+           }else{
+               return false;
            }
+
+
 
         }
 
