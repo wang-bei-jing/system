@@ -13,7 +13,7 @@
     <script src="${pageContext.request.contextPath}/static/mainstatic/bootstrap/js/bootstrap.min.js"></script>
     <c:set var="request" value="${pageContext.request.contextPath}"></c:set>
     <script type="text/javascript">
-        function see(name,contents,type,tname,source,difficulty,support,department,num,selectNum,dTId){
+        function see(name,contents,type,tname,source,difficulty,support,department,num,selectNum,dTId,office,tel,email){
             $("#name").val(name);
             $("#contents").val(contents);
             $("#type").val(type);
@@ -24,6 +24,9 @@
             $("#department").val(department);
             $("#num").val(num);
             $("#selectNum").val(selectNum);
+            $("#office").val(office);
+            $("#tel").val(tel);
+            $("#email").val(email);
             $("#dTId").val(dTId);
             $("#Add").modal({
                 backdrop: "static",
@@ -81,7 +84,7 @@
         </row>
     </div>
 </header>
-<div id="main_page" class="page-header">
+<div id="main_page" class="page-header" >
     <!-- 搭建显示页面 -->
     <div class="container" style="width: 100%">
         <div class="modal-header">
@@ -127,7 +130,7 @@
                     <tbody>
                     <c:forEach items="${topicList.list}" var="list">
                         <tr class="mytr">
-                            <td><a  href="javascript:void(0)" onclick="see('${list.name}','${list.contents}','${list.type}','${list.teacher.name}','${list.source}','${list.difficulty}','${list.support}','${list.department}','${list.num}','${list.selectNum}','${list.id}')">详情</a></td></td>
+                            <td><button  class="btn btn-primary" href="javascript:void(0)" onclick="see('${list.name}','${list.contents}','${list.type}','${list.teacher.name}','${list.source}','${list.difficulty}','${list.support}','${list.department}','${list.num}','${list.selectNum}','${list.id}','${list.teacher.office}','${list.teacher.tel}','${list.teacher.email}')">详情</button></td></td>
                             <td title="${list.name}">${list.name}</td>
                             <td title="${list.contents}">${list.contents}</td>
                             <td title="${list.teacher.name}">${list.teacher.name}</td>
@@ -185,90 +188,113 @@
                 </nav>
             </div>
         </div>
-        <!-- 添加模态框 -->
+        <!-- 显示模态框 -->
         <div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
+                <div class="modal-content" >
                     <div class="modal-header">
                         <h4 class="modal-title" >课题详情</h4>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body"  >
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">课题名</label>
-                            <div class="col-sm-10">
+                            <label class="col-md-2 control-label">课题名:</label>
+                            <div class="col-md-10">
                                 <input type="text"  id="name" class="form-control" readonly >
                                 <span class="help-block"></span>
                                 <!--一个较长的帮助文本块，超过一行，需要扩展到下一行 -->
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">简介</label>
-                            <div class="col-sm-10">
+                            <label class="col-md-2 control-label">简介:</label>
+                            <div class="col-md-10">
                                 <textarea id="contents" cols="94px" rows="5px"  disabled></textarea>
                             </div>
                         </div>
+                        &nbsp;
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">教师姓名</label>
-                            <div class="col-sm-10">
+                            <label class="col-md-2 control-label">教师姓名:</label>
+                            <div class="col-md-10">
                                 <input type="text" id="tname" class="form-control" readonly >
                                 <!--一个较长的帮助文本块，超过一行，需要扩展到下一行 -->
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">类型</label>
-                            <div class="col-sm-10">
+                            <label class="col-md-2 control-label">类型:</label>
+                            <div class="col-md-10">
                                 <input type="text" id="type" class="form-control" readonly >
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">来源</label>
-                            <div class="col-sm-10">
+                            <label class="col-md-2 control-label">来源:</label>
+                            <div class="col-md-10">
                                 <input type="text" id="source" class="form-control" readonly >
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">难度</label>
-                            <div class="col-sm-10">
+                            <label class="col-md-2 control-label">难度:</label>
+                            <div class="col-md-10">
                                 <input type="text" id="difficulty" class="form-control" readonly >
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">是否重点扶持项目</label>
-                            <div class="col-sm-10">
+                            <label class="col-md-2 control-label" style="font-size:12px">是否为重点扶持项目:</label>
+                            <div class="col-md-10">
                                 <input type="text" id="support" class="form-control" readonly >
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">审题教研室</label>
-                            <div class="col-sm-10">
+                            <label class="col-md-2 control-label">审题教研室:</label>
+                            <div class="col-md-10">
                                 <input type="text" id="department" class="form-control" readonly >
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">所需人数</label>
-                            <div class="col-sm-10">
+                            <label class="col-md-2 control-label">所需人数:</label>
+                            <div class="col-md-10">
                                 <input type="text" id="num" class="form-control" readonly >
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">已选人数</label>
-                            <div class="col-sm-10">
+                            <label class="col-md-2 control-label">已选人数:</label>
+                            <div class="col-md-10">
                                 <input type="text" id="selectNum" class="form-control" readonly >
                                 <span class="help-block"></span>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">办公室:</label>
+                            <div class="col-md-10">
+                                <input type="text" id="office" class="form-control" readonly >
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">联系方式:</label>
+                            <div class="col-md-10">
+                                <input type="text" id="tel" class="form-control" readonly >
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">电子邮箱:</label>
+                            <div class="col-md-10">
+                                <input type="text" id="email" class="form-control" readonly >
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
                         <input id="dTId" style="display: none">
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">下载附件</label>
-                            <div class="col-sm-10">
+                            <label class="col-md-2 control-label">下载附件:</label>
+                            <div class="col-md-10">
 
                                 <button class="btn btn-primary btn-sm edit_btn"
                                         id="down_btn">

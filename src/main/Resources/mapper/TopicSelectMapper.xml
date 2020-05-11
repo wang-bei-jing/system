@@ -339,13 +339,13 @@
 
 
   <resultMap id="BaseResultMapWithTopicAndTeacher" type="edu.zzti.bean.TopicSelect">
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="tp_id" jdbcType="INTEGER" property="id" />
     <result column="s_sno" jdbcType="VARCHAR" property="sSno" />
     <result column="t_tno" jdbcType="INTEGER" property="tTno" />
     <result column="tp_id" jdbcType="INTEGER" property="tpId" />
     <result column="status" jdbcType="VARCHAR" property="status" />
     <association property="topic" javaType="edu.zzti.bean.Topic">
-      <id column="id" jdbcType="INTEGER" property="id" />
+      <id column="tpid" jdbcType="INTEGER" property="id" />
       <result column="tpname" jdbcType="VARCHAR" property="name" />
       <result column="contents" jdbcType="VARCHAR" property="contents" />
       <result column="tno" jdbcType="INTEGER" property="tno" />
@@ -356,6 +356,7 @@
       <result column="department" jdbcType="VARCHAR" property="department" />
       <result column="status" jdbcType="INTEGER" property="status" />
       <result column="num" jdbcType="INTEGER" property="num" />
+      <result column="select_num" jdbcType="INTEGER" property="selectNum" />
     </association>
     <association property="teacher" javaType="edu.zzti.bean.Teacher">
       <result column="tno"  property="tno"  jdbcType="INTEGER"/>
@@ -370,6 +371,8 @@
       <result column="status"  property="status"  jdbcType="INTEGER"/>
     </association>
   </resultMap>
+
+
 
 
   <resultMap id="BaseResultMapWithStudentTopicAndTeacher" type="edu.zzti.bean.TopicSelect">
@@ -401,6 +404,7 @@
       <result column="department" jdbcType="VARCHAR" property="department" />
       <result column="status" jdbcType="INTEGER" property="status" />
       <result column="num" jdbcType="INTEGER" property="num" />
+      <result column="select_num" jdbcType="INTEGER" property="selectNum" />
     </association>
     <association property="teacher" javaType="edu.zzti.bean.Teacher">
       <result column="tno"  property="tno"  jdbcType="INTEGER"/>
@@ -418,7 +422,7 @@
   <sql id="BaseWithTopicAndTeacher_Column_List">
     tps.id, tps.s_sno, tps.t_tno, tps.tp_id, tps.status,
     tp.id, tp.name,  tp.contents, tp.tno, tp.type, tp.nature, tp.difficulty, tp.support,
-    tp.department, tp.status, tp.num,
+    tp.department, tp.status, tp.num,tp.select_num,
     tr.tno,
     tr.password,
     tr.name,
@@ -434,10 +438,10 @@
   <select id="findBySSno" parameterType="java.lang.String" resultMap="BaseResultMapWithTopicAndTeacher">
 
  SELECT distinct  tps.status,tps.tp_id,
- f.id tpid,f.contents,f.type,f.source,f.difficulty,f.support,f.department,f.num,f.tpname,f.trname,f.title,f.office,f.tel,f.email
+ f.id tpid,f.contents,f.type,f.source,f.difficulty,f.support,f.department,f.num,f.select_num,f.tpname,f.trname,f.title,f.office,f.tel,f.email
  FROM
  (
-  select tp.id,tp.name tpname,tp.contents,tp.type,tp.source,tp.difficulty,tp.support,tp.department,tp.num,tr.name trname,tr.title,tr.office,tr.tel,tr.email
+  select tp.id,tp.name tpname,tp.contents,tp.type,tp.source,tp.difficulty,tp.support,tp.department,tp.num,tp.select_num,tr.name trname,tr.title,tr.office,tr.tel,tr.email
  from t_topic tp left join t_teacher tr on tp.tno=tr.tno
 where tp.id in(select tps.tp_id  from t_topicselect tps where s_sno=#{sSno,jdbcType=VARCHAR})
 	) as f left join  t_topicselect tps  on f.id=tps.tp_id
@@ -503,7 +507,7 @@ where s_sno=#{sSno,jdbcType=VARCHAR} and tp_id=#{tpId,jdbcType=INTEGER}
 
   <select id="myTopicSelect" parameterType="map"  resultMap="BaseResultMapWithTopicAndTeacher">
  SELECT
-tp.name tpname,tp.contents,tr.name trname,tr.title,tr.office,tr.tel,tr.email
+tp.name tpname,tp.contents,tp.type,tp.source,tp.difficulty,tp.support,tp.department,tp.num,tp.select_num,tp.id tpid,tr.name trname,tr.title,tr.office,tr.tel,tr.email
 FROM t_topic tp left JOIN t_teacher tr on tp.tno=tr.tno
 WHERE tp.id = (select tp_id from t_topicselect where s_sno=#{sSno,jdbcType=VARCHAR} and status=#{status,jdbcType=VARCHAR})
   </select>

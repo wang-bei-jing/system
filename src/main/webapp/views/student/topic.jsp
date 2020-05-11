@@ -26,7 +26,7 @@
 <html>
 <head>
     <title>全部课题页面</title>
-    <link href="${pageContext.request.contextPath}/static/css/all.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/static/css/all.css" rel="stylesheet" type="text/css" charset="utf-8"/>
     <link href="${pageContext.request.contextPath}/static/mainstatic/css/index.css" rel="stylesheet" type="text/css" />
     <script src="${pageContext.request.contextPath}/static/mainstatic/js/index.js"></script>
     <%--引入jquery--%>
@@ -37,7 +37,7 @@
     <c:set var="request" value="${pageContext.request.contextPath}"></c:set>
 
     <script type="text/javascript">
-        function see(name,contents,type,tname,source,difficulty,support,department,num,selectNum,dTId){
+        function see(name,contents,type,tname,source,difficulty,support,department,num,selectNum,dTId,office,tel,email){
             $("#name").val(name);
             $("#contents").val(contents);
             $("#type").val(type);
@@ -48,6 +48,9 @@
             $("#department").val(department);
             $("#num").val(num);
             $("#selectNum").val(selectNum);
+            $("#office").val(office);
+            $("#tel").val(tel);
+            $("#email").val(email);
             $("#dTId").val(dTId);
             $("#Add").modal({
                 backdrop: "static",
@@ -165,52 +168,51 @@
         </row>
     </div>
 </header>
-<div id="main_page" class="page-header">
+<div id="main_page" class="page-header" style="width: 150%">
     <!-- 搭建显示页面 -->
     <div class="container" style="width: 100%">
         <div class="modal-header">
             <h2>全部课题信息 <small>(Information  of all topics)</small></h2>
             <!-- 按钮 -->
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <form action="${pageContext.request.contextPath}/TopicSelectByName" method="post" class="navbar-form navbar-left" role="search">
                         <input  type="text" name="name" class="form-control" placeholder="按课程名称查询">
                         <button type="submit" class="btn btn-info">查询</button>
                     </form>
                 </div>
-                <div class="col-md-4 col-md-offset-10">
-                    <a id="seeall"  href="${request}/TopicSelectAll" methods="post" class="btn btn-primary">查看所有课程</a>
+                <div class="col-md-4">
+                    <a id="seeall"  href="${request}/TopicSelectByName" methods="post" class="btn btn-primary">查看所有课程</a>
                 </div>
             </div>
         </div>
-        <br>
         <!-- 显示表格数据 -->
         <div class="row" id="table_page">
             <div  class="col-md-12" >
                 <table class="table table-hover" >
                     <thead>
                     <tr>
-                        <th>操作</th>
-                        <th>课题名</th>
+                        <th style="width: 140px">操作</th>
+                        <th style="width: 220px">课题名</th>
                         <th>简介</th>
                         <th>教师姓名</th>
                         <th>类型</th>
                         <th>来源</th>
                         <th>难度</th>
                         <th>是否重点扶持项目</th>
-                        <th>审题教研室</th>
+                        <th style="width: 140px">审题教研室</th>
                         <th>所需人数</th>
                         <th>已选人数</th>
                         <th>职称</th>
-                        <th>办公室</th>
-                        <th>联系方式</th>
-                        <th>电子邮箱</th>
+                        <th style="width: 150px">办公室</th>
+                        <th style="width: 150px">联系方式</th>
+                        <th style="width: 150px">电子邮箱</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${topicList.list}" var="list">
                         <tr class="mytr">
-                            <td><a  href="javascript:void(0)" onclick="signup('${list.num}','${list.tno}','${list.id}')">报名</a> | <a  href="javascript:void(0)" onclick="see('${list.name}','${list.contents}','${list.type}','${list.teacher.name}','${list.source}','${list.difficulty}','${list.support}','${list.department}','${list.num}','${list.selectNum}','${list.id}')">详情</a></td>
+                            <td><button class="btn btn-primary" style="font-style: initial" href="javascript:void(0)" onclick="signup('${list.num}','${list.tno}','${list.id}')">报名</button>  <button class="btn btn-success" style="font-style: initial" href="javascript:void(0)" onclick="see('${list.name}','${list.contents}','${list.type}','${list.teacher.name}','${list.source}','${list.difficulty}','${list.support}','${list.department}','${list.num}','${list.selectNum}','${list.id}','${list.teacher.office}','${list.teacher.tel}','${list.teacher.email}')">详情</button></td>
                             <td title="${list.name}">${list.name}</td>
                             <td title="${list.contents}">${list.contents}</td>
                             <td title="${list.teacher.name}">${list.teacher.name}</td>
@@ -231,90 +233,113 @@
                 </table>
             </div>
         </div>
-        <!-- 添加模态框 -->
+        <!-- 显示模态框 -->
         <div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
+                <div class="modal-content" >
                     <div class="modal-header">
                         <h4 class="modal-title" >课题详情</h4>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body"  >
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">课题名</label>
-                                <div class="col-sm-10">
+                                <label class="col-md-2 control-label">课题名:</label>
+                                <div class="col-md-10">
                                     <input type="text"  id="name" class="form-control" readonly >
                                     <span class="help-block"></span>
                                     <!--一个较长的帮助文本块，超过一行，需要扩展到下一行 -->
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">简介</label>
-                                <div class="col-sm-10">
+                                <label class="col-md-2 control-label">简介:</label>
+                                <div class="col-md-10">
                                     <textarea id="contents" cols="94px" rows="5px"  disabled></textarea>
                                 </div>
                             </div>
+                            &nbsp;
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">教师姓名</label>
-                                <div class="col-sm-10">
+                                <label class="col-md-2 control-label">教师姓名:</label>
+                                <div class="col-md-10">
                                     <input type="text" id="tname" class="form-control" readonly >
                                     <!--一个较长的帮助文本块，超过一行，需要扩展到下一行 -->
                                     <span class="help-block"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">类型</label>
-                                <div class="col-sm-10">
+                                <label class="col-md-2 control-label">类型:</label>
+                                <div class="col-md-10">
                                     <input type="text" id="type" class="form-control" readonly >
                                     <span class="help-block"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">来源</label>
-                                <div class="col-sm-10">
+                                <label class="col-md-2 control-label">来源:</label>
+                                <div class="col-md-10">
                                     <input type="text" id="source" class="form-control" readonly >
                                     <span class="help-block"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">难度</label>
-                                <div class="col-sm-10">
+                                <label class="col-md-2 control-label">难度:</label>
+                                <div class="col-md-10">
                                     <input type="text" id="difficulty" class="form-control" readonly >
                                     <span class="help-block"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">是否重点扶持项目</label>
-                                <div class="col-sm-10">
+                                <label class="col-md-2 control-label" style="font-size:12px">是否为重点扶持项目:</label>
+                                <div class="col-md-10">
                                     <input type="text" id="support" class="form-control" readonly >
                                     <span class="help-block"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">审题教研室</label>
-                                <div class="col-sm-10">
+                                <label class="col-md-2 control-label">审题教研室:</label>
+                                <div class="col-md-10">
                                     <input type="text" id="department" class="form-control" readonly >
                                     <span class="help-block"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">所需人数</label>
-                                <div class="col-sm-10">
+                                <label class="col-md-2 control-label">所需人数:</label>
+                                <div class="col-md-10">
                                     <input type="text" id="num" class="form-control" readonly >
                                     <span class="help-block"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">已选人数</label>
-                                <div class="col-sm-10">
+                                <label class="col-md-2 control-label">已选人数:</label>
+                                <div class="col-md-10">
                                     <input type="text" id="selectNum" class="form-control" readonly >
                                     <span class="help-block"></span>
                                 </div>
                             </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">办公室:</label>
+                            <div class="col-md-10">
+                                <input type="text" id="office" class="form-control" readonly >
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">联系方式:</label>
+                            <div class="col-md-10">
+                                <input type="text" id="tel" class="form-control" readonly >
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                        <label class="col-md-2 control-label">电子邮箱:</label>
+                        <div class="col-md-10">
+                            <input type="text" id="email" class="form-control" readonly >
+                            <span class="help-block"></span>
+                        </div>
+                        </div>
+
                         <input id="dTId" style="display: none">
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">下载附件</label>
-                            <div class="col-sm-10">
+                            <label class="col-md-2 control-label">下载附件:</label>
+                            <div class="col-md-10">
 
                                     <button class="btn btn-primary btn-sm edit_btn"
                                             id="down_btn">
@@ -371,15 +396,11 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>
-
-
 <%
     }else {
 %>
-
 <html>
 <head>
     <title>全部课题页面</title>

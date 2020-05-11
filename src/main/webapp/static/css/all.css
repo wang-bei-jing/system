@@ -1,29 +1,32 @@
 .table-hover > tbody > tr:hover > td {
     background: #e4e4e4;
 }
-
-table{
+.table{
     table-layout:fixed;
     border-collapse: collapse;
     border-spacing: 0;
     border: 1px solid #404060;
     width: 500px;
-    font-size: 13px;
+    font-size: 15px;
     font-family: "微软雅黑";
 }
-th{
-
+.table thead th{
+    text-align: center;
+    vertical-align: middle!important;
     border: 1px solid #404060;
     padding: 10px;
     background-color: rgba(0, 56, 78, 0.74);
     font: bold 15px "微软雅黑";
     color: #fff;
 }
-.table tr th,.table tr td {
+/*.table th, .table td {
     text-align: center;
-    vertical-align: top;
-}
-td{
+    vertical-align: middle!important;
+}*/
+.table tbody td{
+    text-align: center;
+    vertical-align: middle!important;
+
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
