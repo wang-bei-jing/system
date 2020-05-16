@@ -112,7 +112,7 @@
         <li role="presentation" class="Login1"><a href="#">管理员登录</a></li>
     </ul>
     <br>
-    <form action="${pageContext.request.contextPath}/index" method="post">
+    <form action="${pageContext.request.contextPath}/teacher/login" method="post">
         <div class="login-wrap" style="text-align: center">
             <div class="input-group">
                 <span class="input-group-addon">账号</span>
