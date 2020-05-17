@@ -72,7 +72,7 @@ public class TopicSelectController {
     }
 
     @RequestMapping("/TopicSelectExistBySSno")
-    public Integer TopicSelectExistBySSno(HttpServletRequest request, String sSno) {
+    public Integer TopicSelectExistBySSno(String sSno) {
         int exist=topicSelectService.findExistBySSno(sSno);
         System.out.println(exist);
         return exist;

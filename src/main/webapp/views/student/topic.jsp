@@ -91,7 +91,7 @@
 
     </script>
     <script type="text/javascript">
-        function signup(num,tno,id){
+        function signup(num,selectNum,tno,id){
 
             var sstatus=${student.status};
             var ssno=${student.sno};
@@ -102,28 +102,27 @@
                 data:{"sSno":ssno,"tpId":id},
                 dataType:"json",
                 success:function(exist){
-                    /* alert("exist进来了"+exist);*/
+                    /* 判断学生是否已选课0*/
                     if (sstatus==0){
-                        if (num>0){
-                            /* alert("num进来了");*/
+                        /* 判断是否还有空余*/
+                        if (num-selectNum>0){
+                            /* 判断学生选题个数是否大于3*/
                             if (exist<3){
-                                /*    alert("要提交了");*/
                                 $.ajax({
                                     type:"post",
                                     url:"/system/TopicSelectExistBySSnoandtpid",
                                     data:{"sSno":ssno,"tpId":id},
                                     dataType:"json",
                                     success:function(data){
-                                        /*  alert("我回来啦");*/
+                                        /* 如果查询结果data == "0"则说明该学生已选该课题 */
                                         if(data == "0"){
-                                            /*alert("我回来啦2");*/
                                             $.ajax({
                                                 type:"post",
                                                 url:"/system/TopicSelectAdd",
                                                 data:{"sSno":ssno,"tTno":tno,"tpId":id},
                                                 dateType:"json",
                                                 success:function (data) {
-                                                    /* alert("我you回来啦");*/
+                                                    /* 报名成功*/
                                                     if(data=="1"){
                                                         alert("报名成功，等待老师确认！")
                                                         $.ajax({
@@ -212,7 +211,7 @@
                     <tbody>
                     <c:forEach items="${topicList.list}" var="list">
                         <tr class="mytr">
-                            <td><button class="btn btn-primary" style="font-style: initial" href="javascript:void(0)" onclick="signup('${list.num}','${list.tno}','${list.id}')">报名</button>  <button class="btn btn-success" style="font-style: initial" href="javascript:void(0)" onclick="see('${list.name}','${list.contents}','${list.type}','${list.teacher.name}','${list.source}','${list.difficulty}','${list.support}','${list.department}','${list.num}','${list.selectNum}','${list.id}','${list.teacher.office}','${list.teacher.tel}','${list.teacher.email}')">详情</button></td>
+                            <td><button class="btn btn-primary" style="font-style: initial" href="javascript:void(0)" onclick="signup('${list.num}','${list.selectNum}','${list.tno}','${list.id}')">报名</button>  <button class="btn btn-success" style="font-style: initial" href="javascript:void(0)" onclick="see('${list.name}','${list.contents}','${list.type}','${list.teacher.name}','${list.source}','${list.difficulty}','${list.support}','${list.department}','${list.num}','${list.selectNum}','${list.id}','${list.teacher.office}','${list.teacher.tel}','${list.teacher.email}')">详情</button></td>
                             <td title="${list.name}">${list.name}</td>
                             <td title="${list.contents}">${list.contents}</td>
                             <td title="${list.teacher.name}">${list.teacher.name}</td>

@@ -8,42 +8,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <title>欢迎</title>
 
-    <link href="${pageContext.request.contextPath}/static/cork/assets/css/loader.css" rel="stylesheet" type="text/css" />
-    <script src="${pageContext.request.contextPath}/static/cork/assets/js/loader.js"></script>
+    <link href="${pageContext.request.contextPath}/static/mainstatic/img" rel="stylesheet" type="text/css" />
+    <script src="${pageContext.request.contextPath}/static/mainstatic/js/index.js"></script>
+    <%--引入jquery--%>
+    <script src="${pageContext.request.contextPath}/static/mainstatic/bootstrap/jquery/jquery-1.12.4.min.js"></script>
+    <!-- 引入 Bootstrap样式-->
+    <link href="${pageContext.request.contextPath}/static/mainstatic/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="${pageContext.request.contextPath}/static/mainstatic/bootstrap/js/bootstrap.min.js"></script>
+<style>
+    body{
 
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/static/cork/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="${pageContext.request.contextPath}/static/cork/assets/css/plugins.css" rel="stylesheet" type="text/css" />
-
+        background-image: url(${pageContext.request.contextPath}/static/mainstatic/img/bg_2.jpg);
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+</style>
 </head>
 <body>
 
-    <!-- BEGIN LOADER -->
-    <div id="load_screen"> <div class="loader"> <div class="loader-content"> <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 792 723" style="enable-background:new 0 0 792 723;" xml:space="preserve"> <g> <g> <path class="st0" d="M213.9,584.4c-47.4-25.5-84.7-60.8-111.8-106.1C75,433.1,61.4,382,61.4,324.9c0-57,13.6-108.1,40.7-153.3 S166.5,91,213.9,65.5s100.7-38.2,159.9-38.2c49.9,0,95,8.8,135.3,26.3s74.1,42.8,101.5,75.7l-85.5,78.9 c-38.9-44.9-87.2-67.4-144.7-67.4c-35.6,0-67.4,7.8-95.4,23.4s-49.7,37.4-65.4,65.4c-15.6,28-23.4,59.8-23.4,95.4 s7.8,67.4,23.4,95.4s37.4,49.7,65.4,65.4c28,15.6,59.7,23.4,95.4,23.4c57.6,0,105.8-22.7,144.7-68.2l85.5,78.9 c-27.4,33.4-61.4,58.9-102,76.5c-40.6,17.5-85.8,26.3-135.7,26.3C314.3,622.7,261.3,809.9,213.9,584.4z"/> </g> <circle class="st1" cx="375.4" cy="322.9" r="100"/> </g> <g> <circle class="st2" cx="275.4" cy="910" r="65"></circle> <circle class="st4" cx="475.4" cy="910" r="65"></circle> </g> </svg> </div></div></div>
-    <!--  END LOADER -->
+
 
     <div class="layout-px-spacing" style="text-align: center">
         <div class="row layout-top-spacing">
             <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
-                <div class="widget-content widget-content-area br-6">
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
-                    <p>数据库软件综合实训系统欢迎您</p>
+                <div class="widget-content widget-content-area br-6" style="padding-top: 300px">
+                    <h1>数据库软件综合实训系统欢迎您</h1>
                 </div>
             </div>
         </div>

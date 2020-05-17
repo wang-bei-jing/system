@@ -275,9 +275,10 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">学号</label>
                                 <div class="col-sm-10">
-                                    <input type="text" id="sno" name="sno" class="form-control" placeholder="学号">
+                                    <input type="text" id="sno" name="sno" class="form-control" placeholder="学号" readonly>
                                     <!--一个较长的帮助文本块，超过一行，需要扩展到下一行 -->
                                     <span class="help-block"></span>
+                                    <span style="color: red">*不允许修改</span>
                                 </div>
                             </div>
                             <div class="form-group">

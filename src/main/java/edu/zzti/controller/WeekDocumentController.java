@@ -76,7 +76,7 @@ public class WeekDocumentController {
  **/
     @ResponseBody
     @RequestMapping(value="/uploadWeekDocument",method=RequestMethod.POST)
-    public ModelAndView uploadDocument(MultipartFile file, HttpServletRequest request, WeekDocument weekDocument, String sSno) throws IOException, ParseException {
+    public ModelAndView uploadDocument(MultipartFile file, HttpServletRequest request, WeekDocument weekDocument, String sSno) throws IOException {
         /* Date date=new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String currenttimestr = dateFormat.format(date);
@@ -174,6 +174,10 @@ public class WeekDocumentController {
 
 
     //------------------------------------------------实训文件部分---------------------------
+    /**
+     * @Author ：shc
+     * @Description ：查询实训文件
+     **/
     @RequestMapping("/findTestfile")
     public ModelAndView findTestfile(HttpServletRequest request, String sSno) {
         String status="1";
@@ -189,7 +193,10 @@ public class WeekDocumentController {
             request.getSession().setAttribute("testfiles",testfiles);
             return new ModelAndView("student/testfile");
     }
-
+    /**
+     * @Author ：shc
+     * @Description ：上传实训文件
+     **/
     @ResponseBody
     @RequestMapping(value="/uploadTestfile",method=RequestMethod.POST)
     public ModelAndView uploadTestfile(MultipartFile file, HttpServletRequest request, WeekDocument weekDocument,String sSno) throws IOException {
@@ -217,8 +224,10 @@ public class WeekDocumentController {
         //进入下一个控制器函数/findTestfile
         return new ModelAndView("redirect:/findTestfile?sSno="+sSno+"");
     }
-
-
+    /**
+     * @Author ：shc
+     * @Description ：下载实训文件
+     **/
     @RequestMapping("/downTestfile")
     public void downTestfile(HttpServletRequest request, HttpServletResponse response,String documentname,String sSno) throws Exception{
 
@@ -242,6 +251,10 @@ public class WeekDocumentController {
         }
         out.close();
     }
+    /**
+     * @Author ：shc
+     * @Description ：删除实训文件
+     **/
     @RequestMapping("/deleteTestfile")
     public ModelAndView deleteTestfile(HttpServletRequest request,String documentname,int dId,String sSno) throws Exception{
         String fileName = request.getSession().getServletContext().getRealPath("upload")+"/"+sSno+"/testFile/"+documentname;

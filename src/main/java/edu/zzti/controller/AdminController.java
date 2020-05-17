@@ -342,72 +342,8 @@ public class AdminController {
         request.setAttribute("studentList",page);
         return new ModelAndView("admin/adminstudentnotselect");
     }
-    /**
-     * @Author ：shc
-     * @Param ：
-     * @Return ：
-     * @Date ：2020/4/25
-     * @Description ：学生选题时间的管理
-     **/
-    @RequestMapping(value = "/timeMangerFind")
-    public ModelAndView timeMangerFind(HttpServletRequest request){
-        Integer categoty=2;
-        TimeManger tpsTimeManger=timeMangerService.findTimeMangerByCategory(categoty);
-        System.out.println(tpsTimeManger);
-            if (tpsTimeManger!=null){
-                Date begintime=tpsTimeManger.getTiBegin();
-                Date endtime=tpsTimeManger.getTiEnd();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-                String begintimestr=dateFormat.format(begintime);
-                String endtimestr=dateFormat.format(endtime);
-                begintimestr=begintimestr.replace(" ","T");
-                endtimestr=endtimestr.replace(" ","T");
-                request.setAttribute("begintimestr",begintimestr);
-                request.setAttribute("endtimestr",endtimestr);
-            }
-        request.setAttribute("tpsTimeManger",tpsTimeManger);
-        return new ModelAndView("admin/admintopicselecttime");
-    }
-    @ResponseBody
-    @RequestMapping(value = "/timeMangerAdd")
-    public ModelAndView timeMangerAdd(int tiCategory,String tiBegin,String tiEnd) throws ParseException {
-        String tiBeginstr=tiBegin.replace("T"," ");
-        String tiEndstr=tiEnd.replace("T"," ");
-        System.out.println(tiBeginstr);
-        Date begintime=new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(tiBeginstr);
-        Date endtime=new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(tiEndstr);
-        TimeManger timeManger=new TimeManger();
-        timeManger.setTiCategory(tiCategory);
-        timeManger.setTiBegin(begintime);
-        timeManger.setTiEnd(endtime);
-        int i=timeMangerService.insertSelective(timeManger);
-        System.out.println(i);
-        return new ModelAndView("redirect:/timeMangerFind");
-    }
-    @ResponseBody
-    @RequestMapping(value = "/timeMangerUpd")
-    public ModelAndView timeMangerUpd(int tiId,int tiCategory,String tiBegin,String tiEnd) throws ParseException {
-        String tiBeginstr=tiBegin.replace("T"," ");
-        String tiEndstr=tiEnd.replace("T"," ");
-        System.out.println(tiBeginstr);
-        Date begintime=new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(tiBeginstr);
-        Date endtime=new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(tiEndstr);
-        TimeManger timeManger=new TimeManger();
-        timeManger.setTiId(tiId);
-        timeManger.setTiCategory(tiCategory);
-        timeManger.setTiBegin(begintime);
-        timeManger.setTiEnd(endtime);
-        int i=timeMangerService.updateByPrimaryKeySelective(timeManger);
-        System.out.println(i);
-        return new ModelAndView("redirect:/timeMangerFind");
-    }
-    @ResponseBody
-    @RequestMapping(value = "/timeMangerDel")
-    public ModelAndView timeMangerDel(int tiId)  {
-        int i=timeMangerService.deleteByPrimaryKey(tiId);
-        System.out.println(i);
-        return new ModelAndView("redirect:/timeMangerFind");
-    }
+   
+  
 //=====================================成绩管理================================================
     /**
      * @Author ：shc
@@ -434,7 +370,7 @@ public class AdminController {
      **/
     @ResponseBody
     @RequestMapping(value = "/adminGradeFindBySno")
-    public ModelAndView adminGradeFindBySno(HttpServletRequest request,String sno,@RequestParam(value = "min", defaultValue = "0")Integer min,@RequestParam(value = "max", defaultValue = "101")Integer max, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+    public ModelAndView adminGradeFindBySno(HttpServletRequest request,String sno,@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5);
         List<Grade> studentsGrades=gradeService.findStudentGradeBySno(sno);
         System.out.println(studentsGrades.size());
@@ -482,6 +418,10 @@ public class AdminController {
       return  new ModelAndView("admin/admingradescaleapply");
 
     }
+    /**
+     * @Author ：shc
+     * @Description ：成绩比例状态的修改
+     **/
     @ResponseBody
     @RequestMapping(value = "/adminGradeScaleChange")
     public Integer adminGradeScaleChange(@RequestParam("gsId") Integer gsId,@RequestParam("gsStatus")Integer gsStatus ){
@@ -490,7 +430,84 @@ public class AdminController {
         int i=gradeScaleService.updateGradeScaleByIdAndGsStatus(gsId,gsStatus);
         System.out.println(i);
         return i;
+    }
 
+    //=====================================选题时间管理================================================
+    /**
+     * @Author ：shc
+     * @Description ：学生选题时间的管理
+     **/
+    @RequestMapping(value = "/timeMangerFind")
+    public ModelAndView timeMangerFind(HttpServletRequest request){
+        Integer categoty=2;
+        TimeManger tpsTimeManger=timeMangerService.findTimeMangerByCategory(categoty);
+        System.out.println(tpsTimeManger);
+        if (tpsTimeManger!=null){
+            Date begintime=tpsTimeManger.getTiBegin();
+            Date endtime=tpsTimeManger.getTiEnd();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            String begintimestr=dateFormat.format(begintime);
+            String endtimestr=dateFormat.format(endtime);
+            //在jsp中"yyyy-MM-ddThh:mm"才能显示在表格中
+            begintimestr=begintimestr.replace(" ","T");
+            endtimestr=endtimestr.replace(" ","T");
+            request.setAttribute("begintimestr",begintimestr);
+            request.setAttribute("endtimestr",endtimestr);
+        }
+        request.setAttribute("tpsTimeManger",tpsTimeManger);
+        return new ModelAndView("admin/admintopicselecttime");
+    }
+    /**
+     * @Author ：shc
+     * @Description ：添加时间管理
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/timeMangerAdd")
+    public ModelAndView timeMangerAdd(int tiCategory,String tiBegin,String tiEnd) throws ParseException {
+        String tiBeginstr=tiBegin.replace("T"," ");
+        String tiEndstr=tiEnd.replace("T"," ");
+        System.out.println(tiBeginstr);
+        Date begintime=new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(tiBeginstr);
+        Date endtime=new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(tiEndstr);
+        TimeManger timeManger=new TimeManger();
+        timeManger.setTiCategory(tiCategory);
+        timeManger.setTiBegin(begintime);
+        timeManger.setTiEnd(endtime);
+        int i=timeMangerService.insertSelective(timeManger);
+        System.out.println(i);
+        return new ModelAndView("redirect:/timeMangerFind");
+    }
+    /**
+     * @Author ：shc
+     * @Description ：更改时间管理
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/timeMangerUpd")
+    public ModelAndView timeMangerUpd(int tiId,int tiCategory,String tiBegin,String tiEnd) throws ParseException {
+        String tiBeginstr=tiBegin.replace("T"," ");
+        String tiEndstr=tiEnd.replace("T"," ");
+        System.out.println(tiBeginstr);
+        Date begintime=new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(tiBeginstr);
+        Date endtime=new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(tiEndstr);
+        TimeManger timeManger=new TimeManger();
+        timeManger.setTiId(tiId);
+        timeManger.setTiCategory(tiCategory);
+        timeManger.setTiBegin(begintime);
+        timeManger.setTiEnd(endtime);
+        int i=timeMangerService.updateByPrimaryKeySelective(timeManger);
+        System.out.println(i);
+        return new ModelAndView("redirect:/timeMangerFind");
+    }
+    /**
+     * @Author ：shc
+     * @Description ：删除时间管理
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/timeMangerDel")
+    public ModelAndView timeMangerDel(int tiId)  {
+        int i=timeMangerService.deleteByPrimaryKey(tiId);
+        System.out.println(i);
+        return new ModelAndView("redirect:/timeMangerFind");
     }
 
 
