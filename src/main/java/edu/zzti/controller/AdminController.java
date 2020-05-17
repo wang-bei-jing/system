@@ -452,7 +452,7 @@ public class AdminController {
    **/
     @ResponseBody
     @RequestMapping(value = "/adminGradeFindByTeacherName")
-    public ModelAndView adminGradeFindByTeacherName(HttpServletRequest request,String tname,@RequestParam(value = "min", defaultValue = "0")Integer min,@RequestParam(value = "max", defaultValue = "101")Integer max, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+    public ModelAndView adminGradeFindByTeacherName(HttpServletRequest request,String tname, @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5);
         List<Grade> studentsGrades=gradeService.adminGradeFindByTeacherName(tname);
         System.out.println(studentsGrades.size());

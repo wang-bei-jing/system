@@ -44,13 +44,16 @@
                         </button>
                     </form>
                 </div>
-                <div class="col-xs-12" >
+                <div class="col-xs-10" >
                     <form action="${pageContext.request.contextPath}/adminGradeFindByTeacherName" method="post" class="navbar-form navbar-left" role="search">
                         <input  style="width: 245px;height: 35px" type="text" value="${admingradeteachername}" name="tname" class="form-control" placeholder="根据教师姓名查询其学生们的成绩">
                         <button type="submit" class="btn btn-info">
                             <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;查询
                         </button>
                     </form>
+                </div>
+                <div class="col-xs-2" >
+                    <a  href="${request}/adminGradeSelectAll" methods="post" class="btn btn-primary">查看所有学生</a>
                 </div>
                 <div class="col-xs-5">
                     <span></span>
@@ -107,11 +110,11 @@
                                     <td>${list.student.classes}</td>
                                     <td>${list.topic.name}</td>
                                     <td>${list.teacher.name}</td>
-                                    <td>${list.gPeacetime}</td>
-                                    <td>${list.gMidterm}</td>
-                                    <td>${list.gCheck}</td>
-                                    <td>${list.gPresentation}</td>
-                                    <td>${list.gTotal}</td>
+                                    <td <c:if test="${list.gPeacetime<60}">style="color: red" </c:if> >${list.gPeacetime}</td>
+                                    <td <c:if test="${list.gMidterm<60}">style="color: red" </c:if> >${list.gMidterm}</td>
+                                    <td <c:if test="${list.gCheck<60}">style="color: red" </c:if> >${list.gCheck}</td>
+                                    <td <c:if test="${list.gPresentation<60}">style="color: red" </c:if> >${list.gPresentation}</td>
+                                    <td <c:if test="${list.gTotal<60}">style="color: red" </c:if> >${list.gTotal}</td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -130,7 +133,7 @@
         </c:choose>
 
         <%--分页信息--%>
-      <%--  <c:if test="${studentsGradesSize>=6}">--%>
+        <c:if test="${studentsGrades.list[0]!=null}">
             <div class="row">
                 <div class="col-md-6">
                     当前是第${studentsGrades.pageNum }页,
@@ -167,7 +170,7 @@
                     </nav>
                 </div>
             </div>
-      <%--  </c:if>--%>
+        </c:if>
 
     </div>
 </div>

@@ -11,6 +11,47 @@
     <link href="${pageContext.request.contextPath}/static/mainstatic/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <script src="${pageContext.request.contextPath}/static/mainstatic/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
+        function beforeSubmit(){
+            var tel=document.getElementById('inputTel').value;
+            var email=document.getElementById('inputEmail').value;
+            if (tel ==  null || tel == '')
+            {
+                alert('联系方式必填！');
+                return false;
+            }
+            else if (email ==  null || email == '')
+            {
+                alert("电子邮箱必填!");
+                return false;
+            }
+            else
+            {
+                alert("修改成功");
+                return true;
+            };
+        }
+
+       /* function check() {*/
+          /*  var inputoldPassword=document.getElementById('inputoldPassword').value;*/
+           /*  var student="<%=request.getSession().getAttribute("student")%>";*/
+          /*  var oldPassword='${student.password}';*/
+         /*   alert("oldPassword:"+oldPassword+"--inputoldPassword:"+inputoldPassword);*/
+            /*var inputNewPassword=document.getElementById('inputNewPassword').value;
+            var inputTwiceNewPassword=document.getElementById('inputTwiceNewPassword').value;
+            alert(inputNewPassword+inputTwiceNewPassword);
+                if(inputNewPassword.equals(inputTwiceNewPassword)){
+                    alert("密码重置成功");
+                    return true;
+                }else {
+                    alert('两次输入的密码不相同！');
+                    document.getElementById('notsame').innerText='两次输入的密码不相同!';
+                    return false;
+                };
+
+        }*/
+    </script>
+
+    <script type="text/javascript">
         function openStudentInfo(){
             document.getElementById('studentInfo').style.display='block';
             document.getElementById('passwordRevise').style.display='none';
@@ -19,14 +60,7 @@
             document.getElementById('studentInfo').style.display='none';
             document.getElementById('passwordRevise').style.display='block';
         }
-        $(document).ready(function() {
-            $("#reviseInfo", this).click(function () {
-                alert("修改成功")
-            });
-            $("#revisePassword", this).click(function () {
-                alert("密码重置成功")
-            });
-        });
+
     </script>
     <style>
         .student_page {
@@ -71,13 +105,13 @@
         <div class="student_page">
             <div class="student_menu">
                 <div class="list-group" style="padding: 10px;text-align: center">
-                    <a href="#"onclick="openStudentInfo()" class="list-group-item active">基本信息</a>
+                    <a href="#" onclick="openStudentInfo()" class="list-group-item active">基本信息</a>
                     <a href="#" onclick="openPasswordRevise()" class="list-group-item">密码修改</a>
                 </div>
             </div>
             <div class="student_main">
                 <div class="student_Info" id="studentInfo">
-                    <form class="form-horizontal" action="${pageContext.request.contextPath}/studentInfoRevise" method="post" style="width: 70%;margin: 1% 10%">
+                    <form class="form-horizontal" action="${pageContext.request.contextPath}/studentInfoRevise" onSubmit="return beforeSubmit();" method="post" style="width: 70%;margin: 1% 10%">
                         <div class="form-group list-group-item">
                             <label for="inputUserSno" class="col-sm-2 control-label">账号：</label>
                             <div class="col-sm-8">
@@ -94,7 +128,12 @@
                         <div class="form-group list-group-item">
                             <label for="inputSex" class="col-sm-2 control-label">性别：</label>
                             <div class="col-sm-8">
-                                <input type="text" name="sex" value="${student.sex}" class="form-control" id="inputSex">
+                                <select id="inputSex" class="form-control" name="sex">
+
+                                    <option  <c:if test="${student.sex.equals('男')}"> selected</c:if>>男</option>
+
+                                    <option  <c:if test="${student.sex.equals('女')}"> selected</c:if>>女</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group list-group-item">
@@ -114,7 +153,7 @@
                         <div class="form-group list-group-item">
                             <label for="inputTel" class="col-sm-2 control-label">联系方式：</label>
                             <div class="col-sm-8">
-                                <input type="text" name="tel" value="${student.tel}" class="form-control" id="inputTel">
+                                <input type="text"  name="tel" value="${student.tel}" class="form-control" id="inputTel">
                             </div>
                         </div>
                         <div class="form-group list-group-item">
@@ -134,19 +173,20 @@
                     </form>
                 </div>
                 <div class="password_Revise" id="passwordRevise">
-                    <form class="form-horizontal" action="${pageContext.request.contextPath}/studentPasswordRevise" method="post" style="width: 70%;margin: 1% 10%">
+                    <form class="form-horizontal" action="${pageContext.request.contextPath}/studentPasswordRevise"  method="post" style="width: 70%;margin: 1% 10%">
                         <div class="form-group list-group-item" style="text-align: center">
                             <c:if test="${!empty passworderror}">
                                 <font color="red"><c:out value="${passworderror}" /></font>
                             </c:if>
+                            <span id="notsame"></span>
                         </div>
                         <div>
                             <input type="text" name="sno" value="${student.sno}" style="display: none">
                         </div>
                         <div class="form-group list-group-item">
-                            <label for="inputPassword" class="col-sm-2 control-label">旧密码：</label>
+                            <label for="inputoldPassword" class="col-sm-2 control-label">旧密码：</label>
                             <div class="col-sm-8">
-                                <input type="password" name="oldPassword" class="form-control" id="inputPassword">
+                                <input type="password" name="oldPassword" class="form-control" id="inputoldPassword">
                             </div>
                         </div>
                         <div class="form-group list-group-item">
@@ -155,6 +195,7 @@
                                 <input type="password" name="newPassword" class="form-control" id="inputNewPassword">
                             </div>
                         </div>
+
                         <div class="form-group list-group-item">
                             <div class="row">
                                 <div class="col-md-offset-8">

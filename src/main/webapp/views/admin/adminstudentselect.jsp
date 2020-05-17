@@ -64,7 +64,7 @@
                     <tr>
                         <th>学生姓名</th>
                         <th>学号</th>
-                        <th>课题名</th>
+                        <th style="width: 280px">课题名</th>
                         <th>指导教师姓名</th>
                         <th>专业</th>
                         <th>班级</th>
@@ -74,13 +74,13 @@
                     <tbody>
                     <c:forEach items="${sttList.list}" var="list">
                         <tr class="mytr">
-                            <td>${list.student.name}</td>
-                            <td>${list.student.sno}</td>
-                            <td>${list.topic.name}</td>
-                            <td>${list.teacher.name}</td>
-                            <td>${list.student.department}</td>
-                            <td>${list.student.classes}</td>
-                            <td>${list.student.tel}</td>
+                            <td title="${list.student.name}">${list.student.name}</td>
+                            <td title="${list.student.sno}">${list.student.sno}</td>
+                            <td title="${list.topic.name}">${list.topic.name}</td>
+                            <td title="${list.teacher.name}">${list.teacher.name}</td>
+                            <td title="${list.student.department}">${list.student.department}</td>
+                            <td title="${list.student.classes}">${list.student.classes}</td>
+                            <td title="${list.student.tel}">${list.student.tel}</td>
                         </tr>
                     </c:forEach>
                     </tbody>

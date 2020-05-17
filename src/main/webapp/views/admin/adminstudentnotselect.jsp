@@ -73,10 +73,10 @@
                             <tbody>
                             <c:forEach items="${studentList.list}" var="list">
                                 <tr class="mytr">
-                                    <td>${list.name}</td>
-                                    <td>${list.sno}</td>
-                                    <td>${list.classes}</td>
-                                    <td>${list.tel}</td>
+                                    <td title="${list.name}">${list.name}</td>
+                                    <td title="${list.sno}">${list.sno}</td>
+                                    <td title="${list.classes}">${list.classes}</td>
+                                    <td title="${list.tel}">${list.tel}</td>
                                 </tr>
                             </c:forEach>
                             </tbody>

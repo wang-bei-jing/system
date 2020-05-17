@@ -262,7 +262,7 @@ from t_teacher tr,t_topic tp,t_student ts,t_topicselect tps ,t_grade tg
   <select id="adminGradeFindByTeacherName" parameterType="java.lang.String" resultMap="BaseResultMapWithAllInfo">
 select ts.name tsname,ts.sno,ts.classes,tp.name tpname,tr.name trname,tg.g_peacetime,tg.g_midterm,tg.g_presentation,tg.g_check,tg.g_total
 from t_teacher tr,t_topic tp,t_student ts,t_topicselect tps ,t_grade tg
- WHERE ts.sno=tps.s_sno and tps.t_tno=tr.tno and tps.tp_id=tp.id and tg.g_ts_id=tps.id and tr.name like concat('%',#{tno},'%')
+ WHERE ts.sno=tps.s_sno and tps.t_tno=tr.tno and tps.tp_id=tp.id and tg.g_ts_id=tps.id and tr.name like concat('%',#{tname},'%')
 
   </select>
   <!-- shc -->

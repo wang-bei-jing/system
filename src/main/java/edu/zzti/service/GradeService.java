@@ -24,6 +24,6 @@ public interface GradeService {
     Grade findStudentGradeBySnoAndStatus(String sno, String status);
     List<Grade> findStudentGradeByBoundary(Integer min, Integer max);
     List<Grade> findStudentGradeBySno(String sno);
-    List<Grade> adminGradeFindByTeacherName(String sno);
+    List<Grade> adminGradeFindByTeacherName(String tname);
     //shc
 }

@@ -138,8 +138,8 @@
                         <thead style="color: red">
                         <tr>
                             <th style="width: 140px">操作</th>
-                            <th>状态</th>
-                            <th style="width: 250px">课题名</th>
+                            <th  style="width: 140px">状态</th>
+                            <th style="width: 300px">课题名</th>
                             <th>简介</th>
                             <th>教师姓名</th>
                             <th>职称</th>
@@ -161,13 +161,13 @@
                                 <td id="td_${list.tpId}"><button class="btn btn-primary"  href="javascript:void(0)"  onclick="signup('${list.tpId}','${list.status}')">退选</button>    <button class="btn btn-success" href="javascript:void(0)" onclick="see('${list.topic.name}','${list.topic.contents}','${list.topic.type}','${list.teacher.name}','${list.topic.source}','${list.topic.difficulty}','${list.topic.support}','${list.topic.department}','${list.topic.num}','${list.topic.selectNum}','${list.topic.id}','${list.teacher.office}','${list.teacher.tel}','${list.teacher.email}')">详情</button></td>
                                 <c:choose>
                                     <c:when  test="${list.status=='0'}">
-                                        <td>等待教师确认</td>
+                                        <td title="等待教师确认">等待教师确认</td>
                                     </c:when>
                                     <c:when  test="${list.status=='1'}">
-                                        <td style="color: green">教师已确认!</td>
+                                        <td title="教师已确认!" style="color: green;">教师已确认!</td>
                                     </c:when>
                                     <c:otherwise>
-                                        <td style="color: red">教师驳回申请!</td>
+                                        <td title="教师驳回申请!" style="color: red">教师驳回申请!</td>
                                     </c:otherwise>
                                 </c:choose>
                                 <td title="${list.topic.name}">${list.topic.name}</td>

@@ -71,7 +71,10 @@
                    </div>
                </div>
                <br>
-               <span><strong style="color: darkred">置顶提问:</strong></span>
+               <span><strong style="color: red;font-size: 20px">置顶提问:</strong></span>
+               <br>
+               &nbsp;
+               &nbsp;
                <!-- 置顶表格数据 -->
                <div class="row" id="table_page">
                    <div class="col-md-12" >
@@ -108,7 +111,10 @@
                        </c:choose>
                    </div>
                </div>
-               <span><strong>我的提问:</strong></span>&nbsp;
+               <span style="font-size: 20px"><strong>我的提问:</strong></span>
+               <br>
+               &nbsp;
+               &nbsp;
                <!-- 显示表格数据 -->
                <div class="row">
                    <div class="col-md-12" >
