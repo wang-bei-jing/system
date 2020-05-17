@@ -235,7 +235,7 @@
                         </a>
                         <ul class="collapse submenu list-unstyled" id="comment" data-parent="#accordionExample">
                             <li>
-                                <a href="${pageContext.request.contextPath}/views/teacher/t_test.jsp" target="mainFrame">学生提问</a>
+                                <a href="${pageContext.request.contextPath}/views/teacher/t_comment.jsp" target="mainFrame">学生提问</a>
                             </li>
                         </ul>
                     </li>
@@ -287,7 +287,7 @@
             success:function(){
             }
         });
-        setTimeout(automatic,2*1000);
+        setTimeout(compareTime,2*1000);
     }
 </script>
 </body>

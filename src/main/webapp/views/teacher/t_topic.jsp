@@ -769,7 +769,6 @@
         $("#topic").empty();
         var dTId = $(this).attr("file-id");
         $("#dTId").val(dTId);
-        alert($(this).attr("file-name"));
         $("#topic").append("课题名称："+$(this).attr("file-name"));
         to_page2(1,dTId);
         $("#peaceTimeUpdateModal").modal({
