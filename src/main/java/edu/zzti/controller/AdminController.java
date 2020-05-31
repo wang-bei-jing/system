@@ -455,6 +455,8 @@ public class AdminController {
             request.setAttribute("endtimestr",endtimestr);
         }
         request.setAttribute("tpsTimeManger",tpsTimeManger);
+        Date nowdate=new Date();
+        request.setAttribute("nowdate",nowdate);
         return new ModelAndView("admin/admintopicselecttime");
     }
     /**

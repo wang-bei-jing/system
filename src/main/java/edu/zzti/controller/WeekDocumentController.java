@@ -72,7 +72,7 @@ public class WeekDocumentController {
     }
 /**
  * @Author ：shc
- * @Description ：下载周报
+ * @Description ：上传周报
  **/
     @ResponseBody
     @RequestMapping(value="/uploadWeekDocument",method=RequestMethod.POST)

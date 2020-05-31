@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <html>
 <head>
     <link href="${pageContext.request.contextPath}/static/css/all.css" rel="stylesheet" type="text/css" />
@@ -108,17 +109,22 @@
                             <tr class="mytr">
                                 <td><fmt:formatDate value="${tpsTimeManger.tiBegin}" pattern="yyyy-MM-dd HH:mm" /></td>
                                 <td><fmt:formatDate value="${tpsTimeManger.tiEnd}" pattern="yyyy-MM-dd HH:mm" /></td>
-                                <%--<td>${tpsTimeManger.tiBegin}</td>
-                                <td>${tpsTimeManger.tiEnd}</td>--%>
-                                <td>
-                                        <%--  <a  href="javascript:void(0)" onclick="signup('${list.num}','${list.tno}','${list.id}')">报名</a>--%>
-                                    <button class="btn btn-primary btn-sm edit_btn" id="edit_btn" onclick="edit('${tpsTimeManger.tiId}')" >
-                                        <span class="glyphicon glyphicon-pencil"></span>编辑
-                                    </button>
-                                    <a id="delete_btn" href="${pageContext.request.contextPath}/timeMangerDel?tiId=${tpsTimeManger.tiId}" class="btn btn-danger btn-sm delete_btn">
-                                        <span class="glyphicon glyphicon-trash"></span>删除
-                                    </a>
-                                </td>
+                                <c:choose>
+                                    <c:when test="${nowdate>tpsTimeManger.tiBegin and nowdate<tpsTimeManger.tiEnd}">
+                                        <td style="color: red">实训在进行中，无法更改时间</td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>
+                                        <button class="btn btn-primary btn-sm edit_btn" id="edit_btn" onclick="edit('${tpsTimeManger.tiId}')" >
+                                            <span class="glyphicon glyphicon-pencil"></span>编辑
+                                        </button>
+                                        <a id="delete_btn" href="${pageContext.request.contextPath}/timeMangerDel?tiId=${tpsTimeManger.tiId}" class="btn btn-danger btn-sm delete_btn">
+                                            <span class="glyphicon glyphicon-trash"></span>删除
+                                        </a>
+                                        </td>
+                                    </c:otherwise>
+                                </c:choose>
+
                             </tr>
                             </tbody>
                         </table>
@@ -190,7 +196,6 @@
                                             begintimestr=begintimestr.replace(" ","T");
                                             request.getSession().setAttribute("begintimestr",begintimestr);
                                         }
-
                                     %>--%>
                                     <input type="datetime-local" min="1970-01-01" max="2099-12-31" value="${begintimestr}" name="tiBegin">
                                 </div>
